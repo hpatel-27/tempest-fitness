@@ -4,8 +4,7 @@
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
-        <option value="$PROJECT_DIR$/Tempest/pom.xml" />
-        <option value="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/pom.xml" />
+        <option value="$PROJECT_DIR$/Tempest-Fitness/pom.xml" />
       </list>
     </option>
   </component>
