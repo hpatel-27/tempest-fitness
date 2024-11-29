@@ -4,56 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a71980e7-21ae-4057-ba7b-0f47135f5a03" name="Changes" comment="Rome wasn't built in a day.">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Tempest.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/app/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/app/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/app/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/app/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/app/public/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/app/public/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/app/public/logo192.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/app/public/logo512.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/app/public/manifest.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/app/public/robots.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/app/src/App.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/app/src/App.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/app/src/App.test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/app/src/AppNavbar.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/app/src/GroupEdit.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/app/src/GroupList.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/app/src/Home.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/app/src/index.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/app/src/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/app/src/logo.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/app/src/reportWebVitals.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/app/src/setupTests.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/src/main/java/com/okta/developer/jugtours/Initializer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/src/main/java/com/okta/developer/jugtours/JugtoursApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/src/main/java/com/okta/developer/jugtours/model/Event.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/src/main/java/com/okta/developer/jugtours/model/Group.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/src/main/java/com/okta/developer/jugtours/model/GroupRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/src/main/java/com/okta/developer/jugtours/model/User.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/src/main/java/com/okta/developer/jugtours/model/UserRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/src/main/java/com/okta/developer/jugtours/web/GroupController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/src/main/java/com/okta/developer/jugtours/web/UserController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/okta-spring-boot-react-crud-example-main/src/test/java/com/okta/developer/jugtours/JugtoursApplicationTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest/src/main/resources/application.properties" beforeDir="false" />
+    <list default="true" id="a71980e7-21ae-4057-ba7b-0f47135f5a03" name="Changes" comment="Remaking the spring initializr, so delete this one">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,8 +48,8 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/hpate/personal_projects/Tempest-Fitness/Tempest-Fitness",
-    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings"
+    "last_opened_file_path": "C:/Users/hpate/personal_projects/Tempest-Fitness",
+    "settings.editor.selected.configurable": "configurable.group.editor"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -184,7 +136,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731217060030</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Remaking the spring initializr, so delete this one">
+      <option name="closed" value="true" />
+      <created>1732845002262</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1732845002262</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -208,6 +168,7 @@
     <MESSAGE value="Copied over the starter for the Okta Auth and Spring Boot React project" />
     <MESSAGE value="Deleted the starter and am just going to start from the ground up myself. Rome wasn't built in a day." />
     <MESSAGE value="Rome wasn't built in a day." />
-    <option name="LAST_COMMIT_MESSAGE" value="Rome wasn't built in a day." />
+    <MESSAGE value="Remaking the spring initializr, so delete this one" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remaking the spring initializr, so delete this one" />
   </component>
 </project>
