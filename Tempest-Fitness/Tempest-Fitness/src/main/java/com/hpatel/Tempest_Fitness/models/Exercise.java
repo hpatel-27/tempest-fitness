@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Exercise extends DomainObject {
-    /** Id for the Exercise in the database */
+    /** ID for the Exercise in the database */
     @Id
     @GeneratedValue
     private long id;
@@ -24,11 +24,15 @@ public class Exercise extends DomainObject {
     /** The weight at which the exercise was completed */
     private double weight;
 
-    public Exercise () {
+//    public Exercise () {
+//        // empty default constructor
+//    }
 
-    }
-
-    public Exercise (final int sets, final int reps, final double weight) {
+    public Exercise (final String name, final int sets, final int reps, final double weight) {
+        setName(name);
+        setSets(sets);
+        setReps(reps);
+        setWeight(weight);
 
     }
 
@@ -42,7 +46,15 @@ public class Exercise extends DomainObject {
         return id;
     }
 
-    private void setSets(int sets) {
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setSets(int sets) {
         this.sets = sets;
     }
 
@@ -50,7 +62,7 @@ public class Exercise extends DomainObject {
         return sets;
     }
 
-    private void setReps(int reps) {
+    public void setReps(int reps) {
         this.reps = reps;
     }
 
@@ -58,7 +70,7 @@ public class Exercise extends DomainObject {
         return reps;
     }
 
-    private void setWeight(double weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 
