@@ -1,11 +1,13 @@
 package com.hpatel.Tempest_Fitness.models;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity
 public class Exercise extends DomainObject {
     /** ID for the Exercise in the database */
     @Id
@@ -24,9 +26,9 @@ public class Exercise extends DomainObject {
     /** The weight at which the exercise was completed */
     private double weight;
 
-//    public Exercise () {
-//        // empty default constructor
-//    }
+    public Exercise () {
+        // empty default constructor
+    }
 
     public Exercise (final String name, final int sets, final int reps, final double weight) {
         setName(name);

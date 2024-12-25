@@ -1,14 +1,24 @@
 package com.hpatel.Tempest_Fitness.models;
 
+import com.hpatel.Tempest_Fitness.TestConfig;
+import com.hpatel.Tempest_Fitness.repositories.ExerciseRepository;
 import com.hpatel.Tempest_Fitness.services.ExerciseService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
+@EnableAutoConfiguration
+@SpringBootTest( classes = TestConfig.class )
 public class ExerciseTest {
 
-//    private ExerciseService service;
+    @Autowired
+    private ExerciseService service;
 
     @BeforeEach
     public void setup() {
@@ -123,6 +133,28 @@ public class ExerciseTest {
 
         final Exercise e11 = new Exercise( "Bench Press",2, 3, 186.4 );
         Assertions.assertEquals( "Exercise{sets=2, reps=3, weight=186.4}", e11.toString() );
+
+    }
+
+    @Test
+    @Transactional
+    public void testSaveToDB() {
+        final Exercise exercise1 = new Exercise("Deadlift", 1, 1, 315.0 );
+
+        Assertions.assertEquals( 0, service.count() );
+        service.save( exercise1 );
+        Assertions.assertEquals( 1, service.count());
+
+        List<Exercise> list = service.findAll();
+
+        Assertions.assertEquals( 1, list.size());
+
+        Exercise listE1 = list.getFirst();
+        Assertions.assertEquals( listE1, exercise1 );
+        Assertions.assertEquals( listE1.getName(), exercise1.getName() );
+        Assertions.assertEquals( listE1.getSets(), exercise1.getSets() );
+        Assertions.assertEquals( listE1.getReps(), exercise1.getReps() );
+        Assertions.assertEquals( listE1.getWeight(), exercise1.getWeight() );
 
     }
 }
