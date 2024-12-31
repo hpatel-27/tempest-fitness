@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a71980e7-21ae-4057-ba7b-0f47135f5a03" name="Changes" comment="Testing the Exercise class and resolving the problems with the Entity and loading the service class to save to the db and find it">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="a71980e7-21ae-4057-ba7b-0f47135f5a03" name="Changes" comment="Setting up the models, repositories, and services for the workout and weight objects, along with testing the response of the routes of the ExerciseController" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -332,7 +330,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735114499793</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Setting up the models, repositories, and services for the workout and weight objects, along with testing the response of the routes of the ExerciseController">
+      <option name="closed" value="true" />
+      <created>1735622075481</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1735622075481</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -364,7 +370,8 @@
     <MESSAGE value="Creating an Exercise object and the related repo and service classes" />
     <MESSAGE value="Added a name field to the Exercise class since i forgot about that and then testing the class" />
     <MESSAGE value="Testing the Exercise class and resolving the problems with the Entity and loading the service class to save to the db and find it" />
-    <option name="LAST_COMMIT_MESSAGE" value="Testing the Exercise class and resolving the problems with the Entity and loading the service class to save to the db and find it" />
+    <MESSAGE value="Setting up the models, repositories, and services for the workout and weight objects, along with testing the response of the routes of the ExerciseController" />
+    <option name="LAST_COMMIT_MESSAGE" value="Setting up the models, repositories, and services for the workout and weight objects, along with testing the response of the routes of the ExerciseController" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Tempest_Fitness$com_hpatel_Tempest_Fitness_models_in_Tempest_Fitness.ic" NAME="com.hpatel.Tempest_Fitness.models in Tempest-Fitness Coverage Results" MODIFIED="1735087414739" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
