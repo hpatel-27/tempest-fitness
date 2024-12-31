@@ -4,13 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a71980e7-21ae-4057-ba7b-0f47135f5a03" name="Changes" comment="Added a name field to the Exercise class since i forgot about that and then testing the class">
+    <list default="true" id="a71980e7-21ae-4057-ba7b-0f47135f5a03" name="Changes" comment="Testing the Exercise class and resolving the problems with the Entity and loading the service class to save to the db and find it">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/TempestFitnessApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/TempestFitnessApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/models/Exercise.java" beforeDir="false" afterPath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/models/Exercise.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/services/ExerciseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/services/ExerciseService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/test/java/com/hpatel/Tempest_Fitness/models/ExerciseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/test/java/com/hpatel/Tempest_Fitness/models/ExerciseTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,29 +51,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Application.TempestFitnessApplication.executor": "Run",
-    "Downloaded.Files.Path.Enabled": "false",
-    "JUnit.ExerciseTest.executor": "Run",
-    "JUnit.ExerciseTest.testConstructor.executor": "Run",
-    "JUnit.com.hpatel.Tempest_Fitness.models in Tempest-Fitness.executor": "Run",
-    "Maven.Tempest-Fitness.executor": "Run",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/hpate/personal_projects/Tempest-Fitness",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "configurable.group.editor"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Application.TempestFitnessApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;JUnit.ExerciseTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ExerciseTest.testConstructor.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.com.hpatel.Tempest_Fitness.models in Tempest-Fitness.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Tempest-Fitness.executor&quot;: &quot;Run&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/hpate/personal_projects/Tempest-Fitness&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.editor&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\hpate\personal_projects\Tempest-Fitness" />
@@ -87,7 +82,7 @@
       <recent name="C:\Users\hpate\personal_projects\Tempest-Fitness" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ExerciseTest">
+  <component name="RunManager" selected="Application.TempestFitnessApplication">
     <configuration name="TempestFitnessApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.hpatel.Tempest_Fitness.TempestFitnessApplication" />
       <module name="Tempest-Fitness" />
@@ -200,8 +195,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ExerciseTest" />
         <item itemvalue="Application.TempestFitnessApplication" />
+        <item itemvalue="JUnit.ExerciseTest" />
         <item itemvalue="JUnit.com.hpatel.Tempest_Fitness.models in Tempest-Fitness" />
         <item itemvalue="Python tests.Python tests in test" />
         <item itemvalue="JUnit.ExerciseTest.testConstructor" />
@@ -329,7 +324,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735087333270</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Testing the Exercise class and resolving the problems with the Entity and loading the service class to save to the db and find it">
+      <option name="closed" value="true" />
+      <created>1735114499793</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1735114499793</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -360,7 +363,8 @@
     <MESSAGE value="Made a DomainObject to generalize the models and get their ids" />
     <MESSAGE value="Creating an Exercise object and the related repo and service classes" />
     <MESSAGE value="Added a name field to the Exercise class since i forgot about that and then testing the class" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added a name field to the Exercise class since i forgot about that and then testing the class" />
+    <MESSAGE value="Testing the Exercise class and resolving the problems with the Entity and loading the service class to save to the db and find it" />
+    <option name="LAST_COMMIT_MESSAGE" value="Testing the Exercise class and resolving the problems with the Entity and loading the service class to save to the db and find it" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Tempest_Fitness$com_hpatel_Tempest_Fitness_models_in_Tempest_Fitness.ic" NAME="com.hpatel.Tempest_Fitness.models in Tempest-Fitness Coverage Results" MODIFIED="1735087414739" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
