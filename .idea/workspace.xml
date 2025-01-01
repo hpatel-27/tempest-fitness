@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a71980e7-21ae-4057-ba7b-0f47135f5a03" name="Changes" comment="Setting up the models, repositories, and services for the workout and weight objects, along with testing the response of the routes of the ExerciseController" />
+    <list default="true" id="a71980e7-21ae-4057-ba7b-0f47135f5a03" name="Changes" comment="Setting up the models, repositories, and services for the workout and weight objects, along with testing the response of the routes of the ExerciseController">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/controllers/ExerciseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/controllers/ExerciseController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/controllers/WeightController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/controllers/WeightController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/models/Weight.java" beforeDir="false" afterPath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/models/Weight.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
