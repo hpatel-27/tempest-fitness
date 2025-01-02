@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * This is the controller that holds the REST endpoints that handle getting,
  * creating, updating, and deleting Weights.
- * Spring will automatically convert all  the ResponseEntity and List results
+ * Spring will automatically convert all the ResponseEntity and List results
  * to JSON
  */
 @SuppressWarnings ( { "unchecked", "rawtypes" } )
