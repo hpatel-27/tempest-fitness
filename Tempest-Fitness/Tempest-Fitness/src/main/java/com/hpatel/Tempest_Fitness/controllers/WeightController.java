@@ -37,6 +37,13 @@ public class WeightController extends APIController {
         return service.findAll();
     }
 
+    /**
+     * REST API method to provide GET access to a specific Weight
+     *
+     * @param date
+     *            Date of the exercise to get
+     * @return JSON representation of the specific Weight
+     */
     @GetMapping( BASE_PATH + "/weights/{date}" )
     public ResponseEntity getWeight( @PathVariable("date") final String date ) {
         final Weight w = service.findByDate( date );
