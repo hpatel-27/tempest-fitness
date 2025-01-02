@@ -1,13 +1,13 @@
 package com.hpatel.Tempest_Fitness.models;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
 public class Workout extends DomainObject {
 
     /** ID for the Workout in the database */
@@ -15,6 +15,7 @@ public class Workout extends DomainObject {
     @GeneratedValue
     private long id;
 
+    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER )
     private List<Exercise> exercises;
 
     private String date;

@@ -6,7 +6,11 @@ import com.hpatel.Tempest_Fitness.repositories.WeightRepository;
 import com.hpatel.Tempest_Fitness.repositories.WorkoutRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
+@Component
+@Transactional
 public class WorkoutService extends Service<Workout, Long> {
 
     /** The instance of the repository */
