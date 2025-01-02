@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a71980e7-21ae-4057-ba7b-0f47135f5a03" name="Changes" comment="Completed the RESTFUL behavior for the Exercise model">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/controllers/WeightController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/controllers/WeightController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/controllers/WorkoutController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/controllers/WorkoutController.java" afterDir="false" />
-    </list>
+    <list default="true" id="a71980e7-21ae-4057-ba7b-0f47135f5a03" name="Changes" comment="Removing an extra space in the class comment" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -399,7 +395,31 @@
       <option name="project" value="LOCAL" />
       <updated>1735797037425</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Missed a comment on the method to get a specific weight">
+      <option name="closed" value="true" />
+      <created>1735797122390</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1735797122390</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Workspace.xml updated with the new files">
+      <option name="closed" value="true" />
+      <created>1735797152109</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1735797152109</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Removing an extra space in the class comment">
+      <option name="closed" value="true" />
+      <created>1735797247825</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1735797247825</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -439,7 +459,10 @@
     <MESSAGE value="Finished the REST endpoints for a Weight" />
     <MESSAGE value="Updated some of the comments to be more correct" />
     <MESSAGE value="Completed the RESTFUL behavior for the Exercise model" />
-    <option name="LAST_COMMIT_MESSAGE" value="Completed the RESTFUL behavior for the Exercise model" />
+    <MESSAGE value="Missed a comment on the method to get a specific weight" />
+    <MESSAGE value="Workspace.xml updated with the new files" />
+    <MESSAGE value="Removing an extra space in the class comment" />
+    <option name="LAST_COMMIT_MESSAGE" value="Removing an extra space in the class comment" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Tempest_Fitness$com_hpatel_Tempest_Fitness_models_in_Tempest_Fitness.ic" NAME="com.hpatel.Tempest_Fitness.models in Tempest-Fitness Coverage Results" MODIFIED="1735087414739" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
