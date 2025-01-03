@@ -7,6 +7,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Provides access to the repository and getting Exercise models
+ * from the database.
+ */
 @Component
 @Transactional
 public class ExerciseService extends Service<Exercise, Long> {
