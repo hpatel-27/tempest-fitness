@@ -4,16 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a71980e7-21ae-4057-ba7b-0f47135f5a03" name="Changes" comment="Updates to the workspace file">
+    <list default="true" id="a71980e7-21ae-4057-ba7b-0f47135f5a03" name="Changes" comment="Completed adding the CRUD functionality for having exercises within the workout&#10;&#10;Exercises can be added to, deleted from, read, and updated from the exercises list within the Workout object">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/controllers/WorkoutController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/controllers/WorkoutController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/models/Exercise.java" beforeDir="false" afterPath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/models/Exercise.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/models/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/models/Weight.java" beforeDir="false" afterPath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/models/Weight.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/models/Workout.java" beforeDir="false" afterPath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/models/Workout.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/repositories/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/repositories/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/services/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -437,7 +433,31 @@
       <option name="project" value="LOCAL" />
       <updated>1735797552441</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Updated dependencies to use versions without vulnerabilities">
+      <option name="closed" value="true" />
+      <created>1735873835369</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1735873835369</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Added @Entity tag to User and @Component and @Transactional to the UserService">
+      <option name="closed" value="true" />
+      <created>1735873879327</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1735873879327</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Completed adding the CRUD functionality for having exercises within the workout&#10;&#10;Exercises can be added to, deleted from, read, and updated from the exercises list within the Workout object">
+      <option name="closed" value="true" />
+      <created>1735879608121</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1735879608121</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -458,7 +478,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Copied over the starter for the Okta Auth and Spring Boot React project" />
     <MESSAGE value="Deleted the starter and am just going to start from the ground up myself. Rome wasn't built in a day." />
     <MESSAGE value="Rome wasn't built in a day." />
     <MESSAGE value="Remaking the spring initializr, so delete this one" />
@@ -481,7 +500,10 @@
     <MESSAGE value="Workspace.xml updated with the new files" />
     <MESSAGE value="Removing an extra space in the class comment" />
     <MESSAGE value="Updates to the workspace file" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updates to the workspace file" />
+    <MESSAGE value="Updated dependencies to use versions without vulnerabilities" />
+    <MESSAGE value="Added @Entity tag to User and @Component and @Transactional to the UserService" />
+    <MESSAGE value="Completed adding the CRUD functionality for having exercises within the workout&#10;&#10;Exercises can be added to, deleted from, read, and updated from the exercises list within the Workout object" />
+    <option name="LAST_COMMIT_MESSAGE" value="Completed adding the CRUD functionality for having exercises within the workout&#10;&#10;Exercises can be added to, deleted from, read, and updated from the exercises list within the Workout object" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Tempest_Fitness$com_hpatel_Tempest_Fitness_models_in_Tempest_Fitness.ic" NAME="com.hpatel.Tempest_Fitness.models in Tempest-Fitness Coverage Results" MODIFIED="1735087414739" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
