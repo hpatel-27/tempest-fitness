@@ -3,6 +3,7 @@ package com.hpatel.Tempest_Fitness.models;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -23,11 +24,11 @@ public class Workout extends DomainObject {
     private String date;
 
     /**
-     * Constructor that requires a date with "2025-01-25" format
-     * @param date The date to set for the workout
+     * Default Constructor that requires a date with "2025-01-25" format. It
+     * will use the current date to start, which can be updated.
      */
-    public Workout (String date) {
-        setDate(date);
+    public Workout () {
+        setDate(LocalDate.now().toString());
         exercises = new ArrayList<>();
     }
 
@@ -67,7 +68,7 @@ public class Workout extends DomainObject {
      * Sets the date of the workout
      * @param date The new date of the workout
      */
-    private void setDate (String date) {
+    public void setDate (String date) {
         this.date = date;
     }
 
