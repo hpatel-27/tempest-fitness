@@ -51,27 +51,63 @@ public class Weight extends DomainObject {
         setWeight(weight);
     }
 
+    /**
+     * Sets the weight of the User
+     * @param weight The weight to set
+     */
     public void setWeight(double weight) {
         this.weight = weight;
     }
 
+    /**
+     * Sets the date of the weigh-in
+     * @param date Date to set for the weigh-in
+     */
     public void setDate(String date) {
         this.date = date;
     }
 
+    /**
+     * Gets the weight of the user
+     * @return The weight of the user for this object
+     */
     public double getWeight() {
         return weight;
     }
 
+    /**
+     * Gets the date of the weigh-in
+     * @return The date of the weigh-in
+     */
     public String getDate() {
         return date;
     }
 
+    /**
+     * Gets the id of the object
+     * @return The id of the Weight
+     */
     @Override
     public Serializable getId() {
         return id;
     }
 
+    /**
+     * Set the ID of the Weight (Used by Hibernate)
+     *
+     * @param id
+     *            the ID
+     */
+    @SuppressWarnings ( "unused" )
+    private void setId ( final Long id ) {
+        this.id = id;
+    }
+
+    /**
+     * Considers if two Weights are equal by checking their dates and weights
+     * @param o The Weight used for comparison
+     * @return True if the dates and weights are the same in both objects
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -80,6 +116,10 @@ public class Weight extends DomainObject {
         return Double.compare(getWeight(), weight1.getWeight()) == 0 && Objects.equals(getDate(), weight1.getDate());
     }
 
+    /**
+     * Hashing the object
+     * @return The hash value of the object
+     */
     @Override
     public int hashCode() {
         return Objects.hash(getDate(), getWeight());
