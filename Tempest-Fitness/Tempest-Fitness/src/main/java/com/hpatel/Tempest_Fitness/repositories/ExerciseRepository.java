@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * Repository is used to find the specific Exercise models from the database.
  * Spring will generate appropriate code with JPA.
- *
  */
 public interface ExerciseRepository extends JpaRepository<Exercise, Long> {
 
