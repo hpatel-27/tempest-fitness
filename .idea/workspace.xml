@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a71980e7-21ae-4057-ba7b-0f47135f5a03" name="Changes" comment="Completed adding the CRUD functionality for having exercises within the workout&#10;&#10;Exercises can be added to, deleted from, read, and updated from the exercises list within the Workout object">
+    <list default="true" id="a71980e7-21ae-4057-ba7b-0f47135f5a03" name="Changes" comment="Added a Cors configuration file to handle cross-origin requests">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/config/CorsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/config/CorsConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/controllers/WorkoutController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/controllers/WorkoutController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/models/Exercise.java" beforeDir="false" afterPath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/models/Exercise.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/models/Weight.java" beforeDir="false" afterPath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/models/Weight.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/models/Workout.java" beforeDir="false" afterPath="$PROJECT_DIR$/Tempest-Fitness/Tempest-Fitness/src/main/java/com/hpatel/Tempest_Fitness/models/Workout.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -457,7 +455,63 @@
       <option name="project" value="LOCAL" />
       <updated>1735879608121</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Changed the setDate() method to public&#10;&#10;This way the Constructor can be a default constructor and uses the current date to start">
+      <option name="closed" value="true" />
+      <created>1735879818471</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1735879818471</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Added javadoc comments to the Weight object">
+      <option name="closed" value="true" />
+      <created>1735879854885</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1735879854885</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Added javadoc comments to the Exercise object">
+      <option name="closed" value="true" />
+      <created>1735880361445</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1735880361445</updated>
+    </task>
+    <task id="LOCAL-00034" summary="Updated file">
+      <option name="closed" value="true" />
+      <created>1735880385002</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1735880385002</updated>
+    </task>
+    <task id="LOCAL-00035" summary="Updated class comments for the repositories">
+      <option name="closed" value="true" />
+      <created>1735880592627</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1735880592627</updated>
+    </task>
+    <task id="LOCAL-00036" summary="Updated class comments for the Service classes">
+      <option name="closed" value="true" />
+      <created>1735881005496</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1735881005496</updated>
+    </task>
+    <task id="LOCAL-00037" summary="Added a Cors configuration file to handle cross-origin requests">
+      <option name="closed" value="true" />
+      <created>1736541346106</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1736541346106</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -478,13 +532,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Deleted the starter and am just going to start from the ground up myself. Rome wasn't built in a day." />
-    <MESSAGE value="Rome wasn't built in a day." />
-    <MESSAGE value="Remaking the spring initializr, so delete this one" />
-    <MESSAGE value="There are changes to this stuff" />
-    <MESSAGE value="The initial setup files" />
-    <MESSAGE value="The application runner file" />
-    <MESSAGE value="Made a DomainObject to generalize the models and get their ids" />
     <MESSAGE value="Creating an Exercise object and the related repo and service classes" />
     <MESSAGE value="Added a name field to the Exercise class since i forgot about that and then testing the class" />
     <MESSAGE value="Testing the Exercise class and resolving the problems with the Entity and loading the service class to save to the db and find it" />
@@ -503,7 +550,14 @@
     <MESSAGE value="Updated dependencies to use versions without vulnerabilities" />
     <MESSAGE value="Added @Entity tag to User and @Component and @Transactional to the UserService" />
     <MESSAGE value="Completed adding the CRUD functionality for having exercises within the workout&#10;&#10;Exercises can be added to, deleted from, read, and updated from the exercises list within the Workout object" />
-    <option name="LAST_COMMIT_MESSAGE" value="Completed adding the CRUD functionality for having exercises within the workout&#10;&#10;Exercises can be added to, deleted from, read, and updated from the exercises list within the Workout object" />
+    <MESSAGE value="Changed the setDate() method to public&#10;&#10;This way the Constructor can be a default constructor and uses the current date to start" />
+    <MESSAGE value="Added javadoc comments to the Weight object" />
+    <MESSAGE value="Added javadoc comments to the Exercise object" />
+    <MESSAGE value="Updated file" />
+    <MESSAGE value="Updated class comments for the repositories" />
+    <MESSAGE value="Updated class comments for the Service classes" />
+    <MESSAGE value="Added a Cors configuration file to handle cross-origin requests" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added a Cors configuration file to handle cross-origin requests" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Tempest_Fitness$com_hpatel_Tempest_Fitness_models_in_Tempest_Fitness.ic" NAME="com.hpatel.Tempest_Fitness.models in Tempest-Fitness Coverage Results" MODIFIED="1735087414739" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
