@@ -1,33 +1,23 @@
-import React, { useState, useEffect } from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./components/Home";
+import Weights from "./components/Weights";
+import Exercises from "./components/Exercises";
+import Workouts from "./components/Workouts";
+import Navbar from "./components/NavBar";
 
-function App() {
-  const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    dadJokes();
-  }, []);
-
-  const dadJokes = () => {
-    fetch("/api/dadjokes")
-      .then((response) => response.text())
-      .then((message) => {
-        setMessage(message);
-      });
-  };
-
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h3 className="App-title">{message}</h3>
-      </header>
-      <p className="App-intro">
-        To get started, edit <code>src/App.js</code> and save to reload.
-      </p>
+const App = () => (
+  <Router>
+    <div>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/weights" element={<Weights />} />
+        <Route path="/exercises" element={<Exercises />} />
+        <Route path="/workouts" element={<Workouts />} />
+      </Routes>
     </div>
-  );
-}
+  </Router>
+);
 
 export default App;
