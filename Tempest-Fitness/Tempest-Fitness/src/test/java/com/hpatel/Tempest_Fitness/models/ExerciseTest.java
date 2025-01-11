@@ -129,10 +129,10 @@ public class ExerciseTest {
     @Transactional
     public void testToString() {
         final Exercise e10 = new Exercise( "Bench Press",5, 5, 136.0 );
-        Assertions.assertEquals( "Exercise{sets=5, reps=5, weight=136.0}", e10.toString() );
+        Assertions.assertEquals( "Exercise{name=Bench Press, sets=5, reps=5, weight=136.0}", e10.toString() );
 
-        final Exercise e11 = new Exercise( "Bench Press",2, 3, 186.4 );
-        Assertions.assertEquals( "Exercise{sets=2, reps=3, weight=186.4}", e11.toString() );
+        final Exercise e11 = new Exercise( "Deadlift",2, 3, 186.4 );
+        Assertions.assertEquals( "Exercise{name=Deadlift, sets=2, reps=3, weight=186.4}", e11.toString() );
 
     }
 

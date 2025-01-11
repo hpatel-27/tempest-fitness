@@ -167,7 +167,7 @@ public class Exercise extends DomainObject {
     public String toString() {
         return "Exercise{" +
                 "name=" + name +
-                "sets=" + sets +
+                ", sets=" + sets +
                 ", reps=" + reps +
                 ", weight=" + weight +
                 '}';
