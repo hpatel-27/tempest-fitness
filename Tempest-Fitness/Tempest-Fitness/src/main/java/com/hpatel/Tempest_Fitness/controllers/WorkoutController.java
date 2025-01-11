@@ -2,10 +2,8 @@ package com.hpatel.Tempest_Fitness.controllers;
 
 import com.hpatel.Tempest_Fitness.models.Workout;
 import com.hpatel.Tempest_Fitness.services.WorkoutService;
-import org.hibernate.jdbc.Work;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
