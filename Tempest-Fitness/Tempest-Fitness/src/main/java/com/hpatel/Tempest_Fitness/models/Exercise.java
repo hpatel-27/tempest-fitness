@@ -54,7 +54,7 @@ public class Exercise extends DomainObject {
     }
 
     /**
-     * Returns the id for the ingredient
+     * Returns the id for the Exercise
      *
      * @return the id
      */
