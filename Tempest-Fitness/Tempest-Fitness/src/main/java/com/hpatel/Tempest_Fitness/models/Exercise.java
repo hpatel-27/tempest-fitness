@@ -79,6 +79,10 @@ public class Exercise extends DomainObject {
      * @param name Name of the
      */
     public void setName(String name) {
+        // check if a null string was passed or if the string is empty
+        if (name == null || name.isBlank() ) {
+            throw new IllegalArgumentException("Exercise must have name.");
+        }
         this.name = name;
     }
 
@@ -95,6 +99,9 @@ public class Exercise extends DomainObject {
      * @param sets The sets to set
      */
     public void setSets(int sets) {
+        if ( sets < 1 || sets > 20 ) {
+            throw new IllegalArgumentException("Sets value outside of expected range.");
+        }
         this.sets = sets;
     }
 
@@ -111,6 +118,9 @@ public class Exercise extends DomainObject {
      * @param reps Reps completed for the exercise per set
      */
     public void setReps(int reps) {
+        if ( reps < 1 || reps > 100 ) {
+            throw new IllegalArgumentException("Reps value outside of expected range.");
+        }
         this.reps = reps;
     }
 
@@ -127,6 +137,9 @@ public class Exercise extends DomainObject {
      * @param weight The weight to set
      */
     public void setWeight(double weight) {
+        if ( weight < 0.0 || weight > 500.0 ) {
+            throw new IllegalArgumentException("Weight value outside of expected range.");
+        }
         this.weight = weight;
     }
 
