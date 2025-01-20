@@ -12,8 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @EnableAutoConfiguration
 @SpringBootTest( classes = TestConfig.class )
@@ -65,6 +64,14 @@ public class ExerciseTest {
         assertEquals( 6, e0.getReps() );
         assertEquals( 155.0, e0.getWeight() );
 
+        Exception e1 = assertThrows( IllegalArgumentException.class, () -> new Exercise( null, 5, 6, 155.0 ));
+        Exception e2 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "", 5, 6, 155.0 ));
+        Exception e3 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "      ", 5, 6, 155.0 ));
+
+        assertEquals( "Exercise must have a name.", e1.getMessage() );
+        assertEquals( "Exercise must have a name.", e2.getMessage() );
+        assertEquals( "Exercise must have a name.", e3.getMessage() );
+
     }
 
     @Test
@@ -77,12 +84,20 @@ public class ExerciseTest {
         assertEquals( 6, e2.getReps() );
         assertEquals( 155.0, e2.getWeight() );
 
-        e2.setSets( 3 );
+        e2.setSets( 20 );
 
         assertEquals( "Bench Press", e2.getName() );
-        assertEquals( 3, e2.getSets() );
+        assertEquals( 20, e2.getSets() );
         assertEquals( 6, e2.getReps() );
         assertEquals( 155.0, e2.getWeight() );
+
+        Exception exc1 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "Bench Press", 0, 6, 155.0 ));
+        Exception exc2 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "Bench Press", 21, 6, 155.0 ));
+        Exception exc3 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "Squat", -1000, 6, 155.0 ));
+
+        assertEquals( "Sets value outside of expected range.", exc1.getMessage() );
+        assertEquals( "Sets value outside of expected range.", exc2.getMessage() );
+        assertEquals( "Sets value outside of expected range.", exc3.getMessage() );
 
     }
 
@@ -96,12 +111,22 @@ public class ExerciseTest {
         assertEquals( 7, e3.getReps() );
         assertEquals( 145.7, e3.getWeight() );
 
-        e3.setReps( 3 );
+        e3.setReps( 1 );
 
         assertEquals( "Bench Press", e3.getName() );
         assertEquals( 2, e3.getSets() );
-        assertEquals( 3, e3.getReps() );
+        assertEquals( 1, e3.getReps() );
         assertEquals( 145.7, e3.getWeight() );
+
+        Exception exc1 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "Bench Press", 3, 0, 155.0 ));
+        Exception exc2 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "Bench Press", 2, -1000, 115.0 ));
+        Exception exc3 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "Squat", 11, 101, 125.0 ));
+        Exception exc4 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "Squat", 4, 1000, 135.0 ));
+
+        assertEquals( "Reps value outside of expected range.", exc1.getMessage() );
+        assertEquals( "Reps value outside of expected range.", exc2.getMessage() );
+        assertEquals( "Reps value outside of expected range.", exc3.getMessage() );
+        assertEquals( "Reps value outside of expected range.", exc4.getMessage() );
 
     }
 
@@ -115,13 +140,22 @@ public class ExerciseTest {
         assertEquals( 9, e4.getReps() );
         assertEquals( 185.3, e4.getWeight() );
 
-        e4.setWeight( 125.1 );
+        e4.setWeight( 0.0 );
 
         assertEquals( "Bench Press", e4.getName() );
         assertEquals( 7, e4.getSets() );
         assertEquals( 9, e4.getReps() );
-        assertEquals( 125.1, e4.getWeight() );
+        assertEquals( 0.0, e4.getWeight() );
 
+        Exception exc1 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "Bench Press",7, 9, -0.1 ));
+        Exception exc2 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "Bench Press", 2, 3, -100.0 ));
+        Exception exc3 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "Squat", 11, 3, 500.1 ));
+        Exception exc4 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "Squat", 4, 1, 1000.0 ));
+
+        assertEquals( "Weight value outside of expected range.", exc1.getMessage() );
+        assertEquals( "Weight value outside of expected range.", exc2.getMessage() );
+        assertEquals( "Weight value outside of expected range.", exc3.getMessage() );
+        assertEquals( "Weight value outside of expected range.", exc4.getMessage() );
     }
 
     @Test

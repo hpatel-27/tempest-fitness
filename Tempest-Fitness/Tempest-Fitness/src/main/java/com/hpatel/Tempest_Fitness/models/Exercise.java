@@ -81,7 +81,7 @@ public class Exercise extends DomainObject {
     public void setName(String name) {
         // check if a null string was passed or if the string is empty
         if (name == null || name.isBlank() ) {
-            throw new IllegalArgumentException("Exercise must have name.");
+            throw new IllegalArgumentException("Exercise must have a name.");
         }
         this.name = name;
     }
