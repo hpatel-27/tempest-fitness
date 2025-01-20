@@ -92,7 +92,8 @@ public class WeightController extends APIController {
     public ResponseEntity editWeight ( @PathVariable ( "date" ) final String date,
                                            @RequestBody final Weight weight ) {
 
-        if ( null == service.findByDate( date ) ) {
+        final Weight w = service.findByDate( date );
+        if ( w == null ) {
             return new ResponseEntity(
                     errorResponse(
                             "Weight with the date " + weight.getDate() + " does not exist" ),
@@ -103,8 +104,8 @@ public class WeightController extends APIController {
                     errorResponse( "Weight with the date " + date + " does not match object provided" ),
                     HttpStatus.CONFLICT );
         }
-        final Weight w = service.findByDate( date );
         w.setDate( weight.getDate() );
+        w.setWeight( weight.getWeight() );
         service.save( w );
         return new ResponseEntity( successResponse( weight.getDate() + " successfully created" ),
                 HttpStatus.OK );

@@ -29,6 +29,13 @@ public class Weight extends DomainObject {
     private double weight;
 
     /**
+     * Empty default constructor
+     */
+    public Weight() {
+        // default constructor
+    }
+
+    /**
      * Construct a weight object with the current date and the given weight
      * @param weight The weight to set for the object
      */
@@ -56,6 +63,10 @@ public class Weight extends DomainObject {
      * @param weight The weight to set
      */
     public void setWeight(double weight) {
+        // Check if the user's weight is between 0 and 1000, otherwise it is invalid
+        if ( weight < 0.0 || weight > 1000.0 ) {
+            throw new IllegalArgumentException("Weight value outside of expected range.");
+        }
         this.weight = weight;
     }
 
@@ -64,6 +75,12 @@ public class Weight extends DomainObject {
      * @param date Date to set for the weigh-in
      */
     public void setDate(String date) {
+        // check if a null string was passed or if the string is empty
+        // check if the date is the appropriate length
+        if (date == null || date.isBlank() || date.length() != 10 ) {
+            throw new IllegalArgumentException("Date of the weigh-in is not valid.");
+        }
+
         this.date = date;
     }
 
