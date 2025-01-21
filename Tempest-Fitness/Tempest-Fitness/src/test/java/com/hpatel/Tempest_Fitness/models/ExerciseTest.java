@@ -174,6 +174,7 @@ public class ExerciseTest {
         assertEquals( "Weight value outside of expected range.", exc4.getMessage() );
     }
 
+    @SuppressWarnings("AssertBetweenInconvertibleTypes")
     @Test
     @Transactional
     public void testEquals() {
@@ -196,7 +197,7 @@ public class ExerciseTest {
         assertEquals( e10, e12 );
 
         // Check that it is not equal compared to a null
-        assertNotEquals( e12, null );
+        assertNotEquals(null, e12);
     }
 
     @Test
