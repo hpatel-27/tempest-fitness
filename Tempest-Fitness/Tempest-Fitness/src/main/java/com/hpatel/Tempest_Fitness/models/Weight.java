@@ -3,7 +3,6 @@ package com.hpatel.Tempest_Fitness.models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import org.springframework.cglib.core.Local;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -118,6 +117,15 @@ public class Weight extends DomainObject {
     @SuppressWarnings ( "unused" )
     private void setId ( final Long id ) {
         this.id = id;
+    }
+
+    /** Converts a Weight object into a string representation */
+    @Override
+    public String toString() {
+        return "Weight{" +
+                "date='" + date + '\'' +
+                ", weight=" + weight +
+                '}';
     }
 
     /**
