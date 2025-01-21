@@ -63,7 +63,11 @@ public class ExerciseTest {
         assertEquals( 5, e0.getSets() );
         assertEquals( 6, e0.getReps() );
         assertEquals( 155.0, e0.getWeight() );
+    }
 
+    @Test
+    @Transactional
+    public void testInvalidNames() {
         Exception e1 = assertThrows( IllegalArgumentException.class, () -> new Exercise( null, 5, 6, 155.0 ));
         Exception e2 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "", 5, 6, 155.0 ));
         Exception e3 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "      ", 5, 6, 155.0 ));
@@ -90,7 +94,11 @@ public class ExerciseTest {
         assertEquals( 20, e2.getSets() );
         assertEquals( 6, e2.getReps() );
         assertEquals( 155.0, e2.getWeight() );
+    }
 
+    @Test
+    @Transactional
+    public void testInvalidSets() {
         Exception exc1 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "Bench Press", 0, 6, 155.0 ));
         Exception exc2 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "Bench Press", 21, 6, 155.0 ));
         Exception exc3 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "Squat", -1000, 6, 155.0 ));
@@ -117,7 +125,11 @@ public class ExerciseTest {
         assertEquals( 2, e3.getSets() );
         assertEquals( 1, e3.getReps() );
         assertEquals( 145.7, e3.getWeight() );
+    }
 
+    @Test
+    @Transactional
+    public void testInvalidReps() {
         Exception exc1 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "Bench Press", 3, 0, 155.0 ));
         Exception exc2 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "Bench Press", 2, -1000, 115.0 ));
         Exception exc3 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "Squat", 11, 101, 125.0 ));
@@ -146,7 +158,11 @@ public class ExerciseTest {
         assertEquals( 7, e4.getSets() );
         assertEquals( 9, e4.getReps() );
         assertEquals( 0.0, e4.getWeight() );
+    }
 
+    @Test
+    @Transactional
+    public void testInvalidWeight() {
         Exception exc1 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "Bench Press",7, 9, -0.1 ));
         Exception exc2 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "Bench Press", 2, 3, -100.0 ));
         Exception exc3 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "Squat", 11, 3, 500.1 ));
