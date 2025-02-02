@@ -1,13 +1,11 @@
 package com.hpatel.Tempest_Fitness.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 
 @Entity
+@Table(name = "app_user")
 public class User extends DomainObject {
 
     @Id
