@@ -1,15 +1,21 @@
 package com.hpatel.Tempest_Fitness.models;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "app_user")
-public class User extends DomainObject {
+public class User extends DomainObject implements UserDetails {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column( nullable = false, unique = true )
@@ -100,56 +106,56 @@ public class User extends DomainObject {
         this.role = role;
     }
 
-//    /**
-//     * Gets the user's authorities
-//     *
-//     * @returns Collection of user roles
-//     */
-//    @Override
-//    public Collection< ? extends GrantedAuthority> getAuthorities () {
-//        final Set<GrantedAuthority> roles = new HashSet<>();
-//        roles.add( new SimpleGrantedAuthority( "ROLE_" + role ) );
-//        return roles;
-//    }
-//
-//    /**
-//     * Returns whether the account is not expired
-//     *
-//     * @returns true
-//     */
-//    @Override
-//    public boolean isAccountNonExpired () {
-//        return true;
-//    }
-//
-//    /**
-//     * Returns whether the account is not locked
-//     *
-//     * @returns true
-//     */
-//    @Override
-//    public boolean isAccountNonLocked () {
-//        return true;
-//    }
-//
-//    /**
-//     * Returns whether the credentials are not expired
-//     *
-//     * @returns true
-//     */
-//    @Override
-//    public boolean isCredentialsNonExpired () {
-//        return true;
-//    }
-//
-//    /**
-//     * Returns whether the account is enabled
-//     *
-//     * @returns true
-//     */
-//    @Override
-//    public boolean isEnabled () {
-//        return true;
-//    }
+    /**
+     * Gets the user's authorities
+     *
+     * @return Collection of user roles
+     */
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities () {
+        final Set<GrantedAuthority> roles = new HashSet<>();
+        roles.add( new SimpleGrantedAuthority( "ROLE_" + role ) );
+        return roles;
+    }
+
+    /**
+     * Returns whether the account is not expired
+     *
+     * @return true
+     */
+    @Override
+    public boolean isAccountNonExpired () {
+        return true;
+    }
+
+    /**
+     * Returns whether the account is not locked
+     *
+     * @return true
+     */
+    @Override
+    public boolean isAccountNonLocked () {
+        return true;
+    }
+
+    /**
+     * Returns whether the credentials are not expired
+     *
+     * @return true
+     */
+    @Override
+    public boolean isCredentialsNonExpired () {
+        return true;
+    }
+
+    /**
+     * Returns whether the account is enabled
+     *
+     * @return true
+     */
+    @Override
+    public boolean isEnabled () {
+        return true;
+    }
 
 }
