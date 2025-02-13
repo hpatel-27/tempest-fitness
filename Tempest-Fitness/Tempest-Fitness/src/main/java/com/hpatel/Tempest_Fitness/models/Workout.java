@@ -13,7 +13,7 @@ public class Workout extends DomainObject {
 
     /** ID for the Workout in the database */
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     /** List of exercises completed during a workout */

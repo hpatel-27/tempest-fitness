@@ -2,6 +2,7 @@ package com.hpatel.Tempest_Fitness.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import java.io.Serializable;
@@ -18,7 +19,7 @@ public class Weight extends DomainObject {
 
     /** ID for the Exercise in the database */
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     /** Date of the weigh-in */
