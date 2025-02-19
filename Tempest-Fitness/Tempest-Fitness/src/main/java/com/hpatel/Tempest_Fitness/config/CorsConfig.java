@@ -27,7 +27,6 @@ public class CorsConfig {
             public void addCorsMappings(@NonNull CorsRegistry registry) {
                 registry.addMapping("/api/v1/**")
                         .allowedOrigins("http://localhost:3000")
-                        .allowedMethods("GET", "PUT", "POST", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
             }
