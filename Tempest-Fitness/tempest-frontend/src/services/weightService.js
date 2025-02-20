@@ -24,7 +24,7 @@ const getWeights = async () => {
   return await response.json();
 };
 
-// Don't really need this if we list out the weights 
+// Don't really need this if we list out the weights
 // // Gets a specific weight for a given date
 // const getWeight = async (date) => {
 //   const response = await fetch(`${API_URL}/${date}`);
