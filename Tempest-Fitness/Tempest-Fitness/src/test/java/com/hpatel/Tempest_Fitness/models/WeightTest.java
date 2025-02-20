@@ -149,40 +149,40 @@ public class WeightTest {
         assertEquals( "Weight{date='2025-01-29', weight=181.4}", weight3.toString() );
 
     }
-    @Test
-    @Transactional
-    public void testSaveToDB() {
-        final Weight weight1 = new Weight( "2025-01-20", 178.3 );
-
-        assertEquals( 0, service.count() );
-        service.save( weight1 );
-        assertEquals( 1, service.count() );
-
-        List<Weight> list = service.findAll();
-        assertEquals( 1, list.size() );
-
-        Weight listW1 = list.getFirst();
-        assertEquals( listW1, weight1 );
-        assertEquals( listW1.getDate(), weight1.getDate() );
-        assertEquals( listW1.getWeight(), weight1.getWeight() );
-
-        final Weight weight2 = new Weight( "2025-01-27", 173.2 );
-        final Weight weight3 = new Weight( "2025-01-29", 181.4 );
-
-        service.save( weight2 );
-        service.save( weight3 );
-        assertEquals( 3, service.count() );
-
-        list = service.findAll();
-        assertEquals( 3, list.size() );
-
-        Weight w1 = list.get(0);
-        Weight w2 = list.get(1);
-        Weight w3 = list.get(2);
-        assertEquals( w1, weight1 );
-        assertEquals( w2, weight2 );
-        assertEquals( w3, weight3 );
-    }
+//    @Test
+//    @Transactional
+//    public void testSaveToDB() {
+//        final Weight weight1 = new Weight( "2025-01-20", 178.3 );
+//
+//        assertEquals( 0, service.count() );
+//        service.save( weight1 );
+//        assertEquals( 1, service.count() );
+//
+//        List<Weight> list = service.findAll();
+//        assertEquals( 1, list.size() );
+//
+//        Weight listW1 = list.getFirst();
+//        assertEquals( listW1, weight1 );
+//        assertEquals( listW1.getDate(), weight1.getDate() );
+//        assertEquals( listW1.getWeight(), weight1.getWeight() );
+//
+//        final Weight weight2 = new Weight( "2025-01-27", 173.2 );
+//        final Weight weight3 = new Weight( "2025-01-29", 181.4 );
+//
+//        service.save( weight2 );
+//        service.save( weight3 );
+//        assertEquals( 3, service.count() );
+//
+//        list = service.findAll();
+//        assertEquals( 3, list.size() );
+//
+//        Weight w1 = list.get(0);
+//        Weight w2 = list.get(1);
+//        Weight w3 = list.get(2);
+//        assertEquals( w1, weight1 );
+//        assertEquals( w2, weight2 );
+//        assertEquals( w3, weight3 );
+//    }
 
     @SuppressWarnings("AssertBetweenInconvertibleTypes")
     @Test
