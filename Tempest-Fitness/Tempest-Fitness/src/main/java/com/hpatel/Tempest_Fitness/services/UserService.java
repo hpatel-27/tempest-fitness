@@ -4,6 +4,7 @@ import com.hpatel.Tempest_Fitness.models.User;
 import com.hpatel.Tempest_Fitness.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +35,11 @@ public class UserService extends Service<User, Long> {
      * @return The found User or null
      */
     public User findByName ( final String username ) {
-        return userRepository.findByUsername( username );
+        final User user = userRepository.findByUsername( username );
+
+        if ( user == null ) {
+            throw new UsernameNotFoundException( "User not found with username: " + username );
+        }
+        return user;
     }
 }
