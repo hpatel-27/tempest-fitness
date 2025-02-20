@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import weightService from "../services/weightService";
 import "../styles/index.css";
 
