@@ -131,7 +131,7 @@ public class WeightController extends APIController {
         }
         service.delete( weight );
 
-        return new ResponseEntity( successResponse( "Weight with date" + date + " was deleted successfully" ), HttpStatus.OK );
+        return new ResponseEntity( successResponse( "Weight with date " + date + " was deleted successfully" ), HttpStatus.OK );
     }
 
 }
