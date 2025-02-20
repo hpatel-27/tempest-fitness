@@ -7,9 +7,8 @@ const NavBar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container d-flex align-items-center">
-        {/* Wrap Tempest text and logo inside navbar-brand */}
-        <Link className="navbar-brand d-flex align-items-center" to="/">
-          <span className="fw-bold">Tempest</span>
+        <Link className="navbar-brand d-flex align-items-center brand" to="/">
+          <span className="fw-bold brand-text">Tempest</span>
           <img
             src={stormWeather}
             className="img-logo ms-2"

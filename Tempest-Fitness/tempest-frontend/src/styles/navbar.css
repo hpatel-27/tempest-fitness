@@ -8,3 +8,8 @@
   filter: invert(49%) sepia(64%) saturate(747%) hue-rotate(180deg)
     brightness(85%) contrast(90%);
 }
+
+.brand:hover {
+  filter: brightness(0.8);
+  transition: filter 0.2s ease-in-out;
+}
