@@ -1,23 +1,59 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "../styles/navbar.css";
+import stormWeather from "../assets/storm_weather.png";
 
 const NavBar = () => {
   return (
-    <nav>
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/weights">Weights</Link>
-        </li>
-        <li>
-          <Link to="/exercises">Exercises</Link>
-        </li>
-        <li>
-          <Link to="/workouts">Workouts</Link>
-        </li>
-      </ul>
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div className="container d-flex align-items-center">
+        {/* Wrap Tempest text and logo inside navbar-brand */}
+        <Link className="navbar-brand d-flex align-items-center" to="/">
+          <span className="fw-bold">Tempest</span>
+          <img
+            src={stormWeather}
+            className="img-logo ms-2"
+            alt="Tempest logo - Black and white cloud with lightning bolt"
+          />
+        </Link>
+
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav ms-auto">
+            <li className="nav-item">
+              <Link className="nav-link" to="/">
+                Home
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/weights">
+                Weights
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/exercises">
+                Exercises
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/workouts">
+                Workouts
+              </Link>
+            </li>
+          </ul>
+        </div>
+      </div>
     </nav>
   );
 };

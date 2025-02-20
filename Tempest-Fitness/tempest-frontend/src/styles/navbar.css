@@ -1,0 +1,10 @@
+.img-logo {
+  max-width: 50%;
+  height: auto;
+  width: 30px;
+  display: block;
+  padding-top: 5%;
+  padding-left: 2%;
+  filter: invert(49%) sepia(64%) saturate(747%) hue-rotate(180deg)
+    brightness(85%) contrast(90%);
+}
