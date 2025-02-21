@@ -1,9 +1,6 @@
 package com.hpatel.Tempest_Fitness.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -28,6 +25,11 @@ public class Weight extends DomainObject {
     /** Weight of the user */
     private double weight;
 
+    /** User foreign key */
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     /**
      * Empty default constructor
      */
@@ -39,11 +41,12 @@ public class Weight extends DomainObject {
      * Construct a weight object with the current date and the given weight
      * @param weight The weight to set for the object
      */
-    public Weight(final double weight) {
+    public Weight(final double weight, User user) {
         // When the object is created, lets have it use the current date, but allow
         // for the date to be changed and accessed
         setDate(LocalDate.now().toString());
         setWeight(weight);
+        setUser(user);
     }
 
     /**
@@ -51,11 +54,12 @@ public class Weight extends DomainObject {
      * @param date The date to set for the weight
      * @param weight The weight to set for the object
      */
-    public Weight(final String date, final double weight) {
+    public Weight(final String date, final double weight, User user) {
         // When the object is created, lets have it use the current date, but allow
         // for the date to be changed and accessed
         setDate(date);
         setWeight(weight);
+        setUser(user);
     }
 
     /**
@@ -100,6 +104,14 @@ public class Weight extends DomainObject {
         return date;
     }
 
+    private User getUser() {
+        return user;
+    }
+
+
+    private void setUser(User user) {
+        this.user = user;
+    }
     /**
      * Gets the id of the object
      * @return The id of the Weight
