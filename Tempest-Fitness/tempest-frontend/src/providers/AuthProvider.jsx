@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
     // Create Basic Auth header
     const basicAuth = `Basic ${btoa(`${username}:${password}`)}`;
 
-    // Verify credentials with backend (adjust endpoint as needed)
+    // send a POST request to the server matching a LoginRequest DTO
     const response = await fetch(AUTH_API_URL, {
       method: "POST",
       headers: {
@@ -21,8 +21,8 @@ export const AuthProvider = ({ children }) => {
       },
       body: JSON.stringify({ username, password }),
     });
+    // After getting the all-clear from the server, set the auth state
     if (response.ok) {
-      // Store user info; in a real app, you might store a token instead
       setAuth({ username, basicAuth });
       return true;
     } else {
@@ -30,6 +30,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Clear the auth state
   const logout = () => {
     setAuth(null);
   };
@@ -42,7 +43,7 @@ export const AuthProvider = ({ children }) => {
 };
 
 AuthProvider.propTypes = {
-  children: PropTypes.node.isRequired, // Ensures children is a valid React node
+  children: PropTypes.node.isRequired,
 };
 
 export default AuthProvider;
