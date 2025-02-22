@@ -1,0 +1,45 @@
+/* Fullscreen background */
+.home-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  background: radial-gradient(
+    circle,
+    rgba(40, 44, 52, 1) 0%,
+    rgba(26, 29, 35, 1) 100%
+  );
+  color: white;
+}
+
+/* Title styling */
+.title {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Navigation links */
+.nav-links {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* Link styling */
+.nav-link {
+  text-decoration: none;
+  color: white;
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.1); /* Transparent white */
+  transition: background 0.3s ease-in-out;
+}
+
+/* Hover effect */
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
