@@ -1,22 +1,58 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "../../tempest-frontend/src/components/Home";
-import Weights from "../../tempest-frontend/src/components/Weights";
-import Exercises from "../../tempest-frontend/src/components/Exercises";
-import Workouts from "../../tempest-frontend/src/components/Workouts";
-import Navbar from "../../tempest-frontend/src/components/NavBar";
+import Home from "./components/Home";
+import Weights from "./components/Weights";
+import Exercises from "./components/Exercises";
+import Workouts from "./components/Workouts";
+import Navbar from "./components/NavBar";
+import { AuthProvider } from "./providers/AuthProvider"; // Use AuthProvider instead of AuthContext
+import ProtectedRoute from "./components/ProtectedRoute";
+import Login from "./components/Login";
+import Register from "./components/Register";
 
-const App = () => (
-  <Router>
-    <div>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/weights" element={<Weights />} />
-        <Route path="/exercises" element={<Exercises />} />
-        <Route path="/workouts" element={<Workouts />} />
-      </Routes>
-    </div>
-  </Router>
-);
+function App() {
+  return (
+    <AuthProvider>
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/weights"
+            element={
+              <ProtectedRoute>
+                <Weights />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/exercises"
+            element={
+              <ProtectedRoute>
+                <Exercises />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/workouts"
+            element={
+              <ProtectedRoute>
+                <Workouts />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </Router>
+    </AuthProvider>
+  );
+}
 
 export default App;
