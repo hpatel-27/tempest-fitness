@@ -1,10 +1,13 @@
 package com.hpatel.Tempest_Fitness.controllers;
 
+import com.hpatel.Tempest_Fitness.models.User;
 import com.hpatel.Tempest_Fitness.models.Weight;
+import com.hpatel.Tempest_Fitness.services.UserService;
 import com.hpatel.Tempest_Fitness.services.WeightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,8 +27,10 @@ public class WeightController extends APIController {
      * manipulating the Weight model
      */
     @Autowired
-    private WeightService service;
+    private WeightService weightService;
 
+    @Autowired
+    private UserService userService;
     /**
      * REST API method to provide GET access to the Weight model.
      * This is used to get all the Weights by automatically converting the
@@ -33,25 +38,44 @@ public class WeightController extends APIController {
      * @return List of Weights for the user
      */
     @GetMapping( BASE_PATH + "/weights")
-    public List<Weight> getWeights() {
-        return service.findAll();
+    public ResponseEntity<?> getUserWeights() {
+        // Get authenticated user's username
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username;
+
+        if (principal instanceof User) {
+            username = ((User) principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+
+        // Find the user by username
+        User user = userService.findByName(username);
+        if (user == null) {
+            return new ResponseEntity(errorResponse("User not found"), HttpStatus.NOT_FOUND);
+        }
+
+        // Fetch all weights for this user
+        List<Weight> weights = weightService.findByUser(user);
+
+        return new ResponseEntity<>(weights, HttpStatus.OK);
     }
 
-    /**
-     * REST API method to provide GET access to a specific Weight
-     *
-     * @param date
-     *            Date of the exercise to get
-     * @return JSON representation of the specific Weight
-     */
-    @GetMapping( BASE_PATH + "/weights/{date}" )
-    public ResponseEntity getWeight( @PathVariable("date") final String date ) {
-        final Weight w = service.findByDate( date );
-
-        return null == w
-                ? new ResponseEntity( errorResponse( "No weigh-in found with date" + date ), HttpStatus.NOT_FOUND )
-                : new ResponseEntity( w, HttpStatus.OK );
-    }
+//    /**
+//     * REST API method to provide GET access to a specific Weight
+//     *
+//     * @param date
+//     *            Date of the exercise to get
+//     * @return JSON representation of the specific Weight
+//     */
+//    @GetMapping( BASE_PATH + "/weights/{date}" )
+//    public ResponseEntity getWeight( @PathVariable("date") final String date ) {
+//        final Weight w = service.findByDate( date );
+//
+//        return null == w
+//                ? new ResponseEntity( errorResponse( "No weigh-in found with date" + date ), HttpStatus.NOT_FOUND )
+//                : new ResponseEntity( w, HttpStatus.OK );
+//    }
 
     /**
      * REST API method to provide POST access to the Weight model. This is
@@ -64,14 +88,29 @@ public class WeightController extends APIController {
      *         saved to the database, or an error if it could not be
      */
     @PostMapping( BASE_PATH + "/weights" )
-    public ResponseEntity addWeight ( @RequestBody final Weight weight ) {
-        if ( null != service.findByDate( weight.getDate() ) ) {
+    public ResponseEntity addWeight (@RequestBody final Weight weight ) {
+        // Get authenticated user's username
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username;
+
+        if (principal instanceof User) {
+            username = ((User) principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+        User user = userService.findByName(username);
+        if (user == null) {
+            return new ResponseEntity(errorResponse("User not found."), HttpStatus.NOT_FOUND);
+        }
+
+        if (weightService.findByUserAndDate(user, weight.getDate()) != null ) {
             return new ResponseEntity(
                     errorResponse( "Weight with the date " + weight.getDate() + " already exists" ),
                     HttpStatus.CONFLICT );
         }
-        service.save( weight );
-        return new ResponseEntity( successResponse( weight.getDate() + " successfully created" ),
+        weight.setUser(user);
+        weightService.save( weight );
+        return new ResponseEntity( successResponse( weight.getDate() + " successfully created."),
                 HttpStatus.OK );
 
     }
@@ -88,11 +127,15 @@ public class WeightController extends APIController {
      * @return ResponseEntity indicating success if the Weight could be
      *         saved to the database, or an error if it could not be
      */
-    @PutMapping ( BASE_PATH + "/weights/{date}" )
-    public ResponseEntity editWeight ( @PathVariable ( "date" ) final String date,
+    @PutMapping ( BASE_PATH + "/weights/{userId}/{date}" )
+    public ResponseEntity editWeight ( @PathVariable ( "date" ) final String date, @PathVariable Long userId,
                                            @RequestBody final Weight weight ) {
 
-        final Weight w = service.findByDate( date );
+        User user = userService.findById(userId);
+        if (user == null) {
+            return new ResponseEntity(errorResponse("User not found."), HttpStatus.NOT_FOUND);
+        }
+        final Weight w = weightService.findByUserAndDate(user, date );
         if ( w == null ) {
             return new ResponseEntity(
                     errorResponse(
@@ -106,7 +149,7 @@ public class WeightController extends APIController {
         }
         w.setDate( weight.getDate() );
         w.setWeight( weight.getWeight() );
-        service.save( w );
+        weightService.save( w );
         return new ResponseEntity( successResponse( weight.getDate() + " successfully created" ),
                 HttpStatus.OK );
 
@@ -122,16 +165,21 @@ public class WeightController extends APIController {
      * @return Success if the weight could be deleted; an error if the
      *         weight does not exist
      */
-    @DeleteMapping ( BASE_PATH + "/weights/{date}" )
-    public ResponseEntity deleteWeight ( @PathVariable final String date ) {
-
-        final Weight weight = service.findByDate( date );
-        if ( null == weight ) {
-            return new ResponseEntity( errorResponse( "No Weight found for date " + date ), HttpStatus.NOT_FOUND );
-        }
-        service.delete( weight );
-
-        return new ResponseEntity( successResponse( "Weight with date " + date + " was deleted successfully" ), HttpStatus.OK );
-    }
+//    @DeleteMapping ( BASE_PATH + "/weights/{date}" )
+//    public ResponseEntity deleteWeight ( @PathVariable Long userId, @PathVariable final String date ) {
+//
+//        User user = userService.findById(userId);
+//        if (user == null) {
+//            return new ResponseEntity(errorResponse("User not found."), HttpStatus.NOT_FOUND);
+//        }
+//
+//        final Weight weight = weightService.findByUserAndDate(user, date );
+//        if ( null == weight ) {
+//            return new ResponseEntity( errorResponse( "No Weight found for date " + date ), HttpStatus.NOT_FOUND );
+//        }
+//        weightService.delete( weight );
+//
+//        return new ResponseEntity( successResponse( "Weight with date " + date + " was deleted successfully" ), HttpStatus.OK );
+//    }
 
 }

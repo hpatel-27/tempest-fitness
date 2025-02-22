@@ -35,11 +35,7 @@ public class UserService extends Service<User, Long> {
      * @return The found User or null
      */
     public User findByName ( final String username ) {
-        final User user = userRepository.findByUsername( username );
 
-        if ( user == null ) {
-            throw new UsernameNotFoundException( "User not found with username: " + username );
-        }
-        return user;
+        return userRepository.findByUsername( username );
     }
 }

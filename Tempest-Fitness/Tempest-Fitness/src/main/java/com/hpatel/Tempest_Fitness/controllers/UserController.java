@@ -59,34 +59,34 @@ public class UserController extends APIController {
                 : new ResponseEntity( user, HttpStatus.OK );
     }
 
-    /**
-     * REST API method to provide POST access to the User model. This is used to
-     * create a new User by automatically converting the JSON RequestBody
-     * provided to a User object. Invalid JSON will fail.
-     *
-     * @param user
-     *            The valid User to be saved.
-     * @return ResponseEntity indicating success if the User could be saved to
-     *         the db, or an error if it could not be
-     */
-    @PostMapping( BASE_PATH + "/users" )
-    public ResponseEntity createUser ( @RequestBody final User user ) {
-        // make sure the users does not already exist in some capacity
-        if ( null != service.findByName( user.getUsername() ) ) {
-            return new ResponseEntity( errorResponse( "Username already in use" ), HttpStatus.CONFLICT );
-        }
-        else {
-            final User newUser = new User();
-            newUser.setUsername( user.getUsername() );
-            newUser.setPassword( passwordEncoder.encode( user.getPassword() ) );
-            newUser.setRole( user.getRole() );
-
-
-            service.save( newUser );
-
-            return new ResponseEntity( user, HttpStatus.OK );
-        }
-    }
+//    /**
+//     * REST API method to provide POST access to the User model. This is used to
+//     * create a new User by automatically converting the JSON RequestBody
+//     * provided to a User object. Invalid JSON will fail.
+//     *
+//     * @param user
+//     *            The valid User to be saved.
+//     * @return ResponseEntity indicating success if the User could be saved to
+//     *         the db, or an error if it could not be
+//     */
+//    @PostMapping( BASE_PATH + "/users" )
+//    public ResponseEntity createUser ( @RequestBody final User user ) {
+//        // make sure the users does not already exist in some capacity
+//        if ( null != service.findByName( user.getUsername() ) ) {
+//            return new ResponseEntity( errorResponse( "Username already in use" ), HttpStatus.CONFLICT );
+//        }
+//        else {
+//            final User newUser = new User();
+//            newUser.setUsername( user.getUsername() );
+//            newUser.setPassword( passwordEncoder.encode( user.getPassword() ) );
+//            newUser.setRole( user.getRole() );
+//
+//
+//            service.save( newUser );
+//
+//            return new ResponseEntity( user, HttpStatus.OK );
+//        }
+//    }
 
     /**
      * REST API method to provide delete access to a User model. This is used to

@@ -1,6 +1,7 @@
 package com.hpatel.Tempest_Fitness.models;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -109,7 +110,10 @@ public class Weight extends DomainObject {
     }
 
 
-    private void setUser(User user) {
+    public void setUser(User user) {
+        if (user == null || user.getUsername().isBlank() || user.getPassword().isBlank() || user.getRole().isBlank() ) {
+            throw new IllegalArgumentException("User was not provided with the Weight.");
+        }
         this.user = user;
     }
     /**
