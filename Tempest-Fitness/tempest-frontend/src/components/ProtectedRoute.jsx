@@ -5,7 +5,9 @@ import { AuthContext } from "../contexts/AuthContext";
 import PropTypes from "prop-types";
 
 const ProtectedRoute = ({ children }) => {
+  // Use the AuthContext to check if the user is authenticated
   const { auth } = useContext(AuthContext);
+  // Send them to login if they are not authenticated
   if (!auth) {
     return <Navigate to="/login" />;
   }
@@ -13,7 +15,7 @@ const ProtectedRoute = ({ children }) => {
 };
 
 ProtectedRoute.propTypes = {
-  children: PropTypes.node.isRequired, // Ensures children is a valid React node
+  children: PropTypes.node.isRequired,
 };
 
 export default ProtectedRoute;
