@@ -14,7 +14,7 @@ const Weights = () => {
       // Sort dates
       sortWeights(data, "descend"); // Initial sort, user can change it
     });
-  }, [weights, auth]);
+  }, [auth]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString + "T00:00:00");
