@@ -1,16 +1,20 @@
 import { useEffect, useState } from "react";
 import weightService from "../services/weightService";
+import { useContext } from "react";
+import { AuthContext } from "../contexts/AuthContext";
 import "../styles/index.css";
 
 const Weights = () => {
   const [weights, setWeights] = useState([]);
   const [sortOrder, setSortOrder] = useState("descend");
+  const { auth } = useContext(AuthContext);
+
   useEffect(() => {
-    weightService.getWeights().then((data) => {
+    weightService.getWeights(auth).then((data) => {
       // Sort dates
       sortWeights(data, "descend"); // Initial sort, user can change it
     });
-  }, []);
+  }, [weights, auth]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString + "T00:00:00");
