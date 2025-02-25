@@ -3,6 +3,7 @@ import weightService from "../services/weightService";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import "../styles/index.css";
+import "../styles/weight.css";
 
 const Weights = () => {
   const [weights, setWeights] = useState([]);
@@ -44,8 +45,8 @@ const Weights = () => {
 
   return (
     <div className="container mt-4">
-      <h2 className="text-center text-light mb-4">Weight Log</h2>
-      <div className="card shadow-sm bg-dark text-light border-0">
+      <h2 className="text-center text-light mb-4">Hey Queen, {auth.username}</h2>
+      <div className="card shadow-sm bg-dark text-light border-0 weight-card">
         <div className="card-body">
           <div className="d-flex justify-content-between align-items-center mb-3">
             <h5 className="mb-0">Weight History</h5>
@@ -69,7 +70,10 @@ const Weights = () => {
                 className="list-group-item d-flex justify-content-between align-items-center bg-transparent text-light border-secondary"
               >
                 <span className="fw-bold">{formatDate(weight.date)}</span>
-                <span className="badge bg-primary rounded-pill">
+                <span
+                  className="badge bg-primary rounded-pill"
+                  id="weight-badge"
+                >
                   {weight.weight} lbs
                 </span>
               </li>
