@@ -10,6 +10,7 @@
 }
 
 .brand:hover {
-  filter: brightness(0.8);
-  transition: filter 0.2s ease-in-out;
+  filter: brightness(0.9);
+  transition: filter 0.1s ease-in-out;
+  transform: scale(1.05);
 }
