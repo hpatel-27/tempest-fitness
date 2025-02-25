@@ -37,18 +37,4 @@ public class UserInitializer {
         }
     }
 
-    /**
-     * Initializes the guest user
-     */
-    @PostConstruct
-    public void initializeGuestUser () {
-        if ( userRepository.findByUsername( "guest" ) == null ) {
-            final User guestUser = new User();
-            guestUser.setUsername( "guest" );
-            guestUser.setPassword( passwordEncoder.encode( "" ) );
-            guestUser.setRole( "GUEST" );
-            userRepository.save( guestUser );
-        }
-    }
-
 }
