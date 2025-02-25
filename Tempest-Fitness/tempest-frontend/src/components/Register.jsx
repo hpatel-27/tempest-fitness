@@ -2,6 +2,8 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "../styles/register.css";
+const BASE_API_URL = import.meta.env.VITE_API_URL;
+const REGISTER_API_URL = BASE_API_URL + "/auth/register";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -18,10 +20,10 @@ const Register = () => {
     }
 
     // Send registration info to backend
-    fetch("/api/register", {
+    fetch(REGISTER_API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ username, password, role: "USER" }),
     })
       .then((response) => {
         if (response.ok) {
