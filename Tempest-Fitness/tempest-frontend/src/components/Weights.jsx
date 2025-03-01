@@ -45,7 +45,7 @@ const Weights = () => {
 
   return (
     <div className="container mt-4">
-      <h2 className="text-center text-light mb-4">Hey Queen, {auth.username}</h2>
+      <h2 className="text-center text-light mb-4">Welcome, {auth.username}</h2>
       <div className="card shadow-sm bg-dark text-light border-0 weight-card">
         <div className="card-body">
           <div className="d-flex justify-content-between align-items-center mb-3">
