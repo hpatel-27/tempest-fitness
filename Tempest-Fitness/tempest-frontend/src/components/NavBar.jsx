@@ -1,8 +1,30 @@
 import { Link } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
 import "../styles/navbar.css";
 import stormWeather from "../assets/storm_weather.png";
 
 const NavBar = () => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleClickOutside = (e) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+      setIsDropdownOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container d-flex align-items-center">
@@ -49,10 +71,34 @@ const NavBar = () => {
                 Workouts
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/profile">
-                Profile
-              </Link>
+
+            <li
+              className="nav-item dropdown"
+              ref={dropdownRef}
+              style={{ position: "relative" }}
+            >
+              <i
+                className="bi bi-person nav-link"
+                onClick={toggleDropdown}
+                style={{ cursor: "pointer" }}
+              ></i>
+
+              {isDropdownOpen && (
+                <div
+                  className="dropdown-menu show"
+                  style={{ position: "absolute", top: "100%", left: 0 }}
+                >
+                  <Link className="dropdown-item" to="/profile">
+                    Profile
+                  </Link>
+                  <button
+                    className="dropdown-item"
+                    onClick={() => console.log("Logout clicked")}
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
             </li>
           </ul>
         </div>
