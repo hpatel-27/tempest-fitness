@@ -3,6 +3,7 @@ import Home from "./components/Home";
 import Weights from "./components/Weights";
 import Exercises from "./components/Exercises";
 import Workouts from "./components/Workouts";
+import Profile from "./components/Profile";
 import Navbar from "./components/NavBar";
 import { AuthProvider } from "./providers/AuthProvider"; // Use AuthProvider instead of AuthContext
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -46,6 +47,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Workouts />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
               </ProtectedRoute>
             }
           />
