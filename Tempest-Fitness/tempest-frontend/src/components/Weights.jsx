@@ -43,6 +43,9 @@ const Weights = () => {
     sortWeights(weights, newOrder);
   };
 
+  // Add the user's new submitted weight
+  const addNewWeight = () => {};
+
   return (
     <div className="container mt-4">
       <h2 className="text-center text-light mb-4">Welcome, {auth.username}</h2>
@@ -61,6 +64,12 @@ const Weights = () => {
                     : "bi bi-sort-up-alt"
                 }
               ></i>
+            </button>
+            <button
+              className="btn btn-sm btn-outline-light"
+              onClick={addNewWeight}
+            >
+              <i className="bi bi-plus-circle"></i>
             </button>
           </div>
           <ul className="list-group list-group-flush">
