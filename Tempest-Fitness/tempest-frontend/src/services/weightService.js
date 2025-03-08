@@ -30,7 +30,6 @@ const addWeight = async (auth, weight) => {
   if (!auth || !auth.basicAuth) {
     throw new Error("User is not authenticated");
   }
-
   // Encode credentials in Base64 for Basic Authentication
   const response = await fetch(WEIGHT_API_URL, {
     method: "POST",
@@ -38,7 +37,7 @@ const addWeight = async (auth, weight) => {
       Authorization: auth.basicAuth,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({weight}),
+    body: JSON.stringify(weight),
   });
 
   // Throw an error if the response is not OK with the status message
@@ -47,6 +46,6 @@ const addWeight = async (auth, weight) => {
   }
 
   return await response.json();
-}
+};
 
 export default { getWeights, addWeight };
