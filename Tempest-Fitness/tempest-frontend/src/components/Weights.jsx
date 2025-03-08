@@ -44,33 +44,37 @@ const Weights = () => {
   };
 
   // Add the user's new submitted weight
-  const addNewWeight = () => {};
+  const addNewWeight = () => {
+    console.log("Button clicked for add");
+  };
 
   return (
     <div className="container mt-4">
       <h2 className="text-center text-light mb-4">Welcome, {auth.username}</h2>
       <div className="card shadow-sm bg-dark text-light border-0 weight-card">
         <div className="card-body">
-          <div className="d-flex justify-content-between align-items-center mb-3">
+          <div className="d-flex justify-content-between mb-3">
             <h5 className="mb-0">Weight History</h5>
-            <button
-              className="btn btn-sm btn-outline-light"
-              onClick={toggleSortOrder}
-            >
-              <i
-                className={
-                  sortOrder === "descend"
-                    ? "bi bi-sort-down"
-                    : "bi bi-sort-up-alt"
-                }
-              ></i>
-            </button>
-            <button
-              className="btn btn-sm btn-outline-light"
-              onClick={addNewWeight}
-            >
-              <i className="bi bi-plus-circle"></i>
-            </button>
+            <div className="d-flex align-items-center btns-div gap-2">
+              <button
+                className="btn btn-sm btn-outline-light btn-sort"
+                onClick={toggleSortOrder}
+              >
+                <i
+                  className={
+                    sortOrder === "descend"
+                      ? "bi bi-sort-down"
+                      : "bi bi-sort-up-alt"
+                  }
+                ></i>
+              </button>
+              <button
+                className="btn btn-sm btn-outline-light btn-add-weight"
+                onClick={addNewWeight}
+              >
+                <i className="bi bi-plus-circle"></i>
+              </button>
+            </div>
           </div>
           <ul className="list-group list-group-flush">
             {weights.map((weight, index) => (
