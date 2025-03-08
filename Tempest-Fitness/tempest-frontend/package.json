@@ -16,6 +16,7 @@
     "fetch": "^1.1.0",
     "framer-motion": "^12.4.10",
     "react": "^19.0.0",
+    "react-bootstrap": "^2.10.9",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.2.0",
     "react-transition-group": "^4.4.5"
