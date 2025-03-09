@@ -127,16 +127,27 @@ public class WeightController extends APIController {
      * @return ResponseEntity indicating success if the Weight could be
      *         saved to the database, or an error if it could not be
      */
-    @PutMapping ( BASE_PATH + "/weights/{userId}/{date}" )
-    public ResponseEntity editWeight ( @PathVariable ( "date" ) final String date, @PathVariable Long userId,
+    @PutMapping ( BASE_PATH + "/weights/{date}" )
+    public ResponseEntity editWeight ( @PathVariable ( "date" ) final String date,
                                            @RequestBody final Weight weight ) {
 
-        User user = userService.findById(userId);
+        // Get authenticated user's username
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username;
+
+        if (principal instanceof User) {
+            username = ((User) principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+
+        User user = userService.findByName(username);
         if (user == null) {
             return new ResponseEntity(errorResponse("User not found."), HttpStatus.NOT_FOUND);
         }
-        final Weight w = weightService.findByUserAndDate(user, date );
-        if ( w == null ) {
+
+        final Weight existingWeight = weightService.findByUserAndDate(user, date );
+        if ( existingWeight == null ) {
             return new ResponseEntity(
                     errorResponse(
                             "Weight with the date " + weight.getDate() + " does not exist" ),
@@ -147,9 +158,9 @@ public class WeightController extends APIController {
                     errorResponse( "Weight with the date " + date + " does not match object provided" ),
                     HttpStatus.CONFLICT );
         }
-        w.setDate( weight.getDate() );
-        w.setWeight( weight.getWeight() );
-        weightService.save( w );
+        existingWeight.setDate( weight.getDate() );
+        existingWeight.setWeight( weight.getWeight() );
+        weightService.save( existingWeight );
         return new ResponseEntity( successResponse( weight.getDate() + " successfully created" ),
                 HttpStatus.OK );
 
@@ -165,21 +176,30 @@ public class WeightController extends APIController {
      * @return Success if the weight could be deleted; an error if the
      *         weight does not exist
      */
-//    @DeleteMapping ( BASE_PATH + "/weights/{date}" )
-//    public ResponseEntity deleteWeight ( @PathVariable Long userId, @PathVariable final String date ) {
-//
-//        User user = userService.findById(userId);
-//        if (user == null) {
-//            return new ResponseEntity(errorResponse("User not found."), HttpStatus.NOT_FOUND);
-//        }
-//
-//        final Weight weight = weightService.findByUserAndDate(user, date );
-//        if ( null == weight ) {
-//            return new ResponseEntity( errorResponse( "No Weight found for date " + date ), HttpStatus.NOT_FOUND );
-//        }
-//        weightService.delete( weight );
-//
-//        return new ResponseEntity( successResponse( "Weight with date " + date + " was deleted successfully" ), HttpStatus.OK );
-//    }
+    @DeleteMapping ( BASE_PATH + "/weights/{date}" )
+    public ResponseEntity deleteWeight ( @PathVariable final String date ) {
+        // Get authenticated user's username
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username;
+
+        if (principal instanceof User) {
+            username = ((User) principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+
+        User user = userService.findByName(username);
+        if (user == null) {
+            return new ResponseEntity(errorResponse("User not found."), HttpStatus.NOT_FOUND);
+        }
+
+        final Weight weight = weightService.findByUserAndDate(user, date );
+        if ( null == weight ) {
+            return new ResponseEntity( errorResponse( "No Weight found for date " + date ), HttpStatus.NOT_FOUND );
+        }
+        weightService.delete( weight );
+
+        return new ResponseEntity( successResponse( "Weight with date " + date + " was deleted successfully" ), HttpStatus.OK );
+    }
 
 }
