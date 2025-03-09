@@ -5,8 +5,8 @@
   display: block;
   padding-top: 5%;
   padding-left: 2%;
-  filter: invert(49%) sepia(64%) saturate(747%) hue-rotate(180deg)
-    brightness(85%) contrast(90%);
+  filter: invert(33%) sepia(45%) saturate(800%) hue-rotate(225deg)
+    brightness(90%) contrast(95%);
 }
 
 .brand:hover {

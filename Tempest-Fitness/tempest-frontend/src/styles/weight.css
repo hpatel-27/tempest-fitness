@@ -1,8 +1,13 @@
 #weight-badge {
   font-size: medium;
+  background-color: #6b51ab;
 }
 
 .weight-card {
   margin-left: 20%;
   margin-right: 20%;
+}
+
+.btn-save {
+  background-color: #6b51ab;
 }

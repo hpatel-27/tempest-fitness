@@ -150,7 +150,7 @@ const Weights = () => {
               >
                 <span className="fw-bold">{formatDate(weight.date)}</span>
                 <span
-                  className="badge bg-primary rounded-pill"
+                  className="badge rounded-pill weight-badge"
                   id="weight-badge"
                 >
                   {weight.weight} lbs
@@ -203,7 +203,7 @@ const Weights = () => {
             Cancel
           </Button>
           <Button
-            variant="primary"
+            className="btn-save"
             onClick={handleSave}
             disabled={!newWeight || !newDate}
           >
