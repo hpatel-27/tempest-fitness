@@ -48,4 +48,46 @@ const addWeight = async (auth, weight) => {
   return await response.json();
 };
 
-export default { getWeights, addWeight };
+const deleteWeight = async (auth, weightDate) => {
+  // Check if the user is authenticated
+  if (!auth || !auth.basicAuth) {
+    throw new Error("User is not authenticated");
+  }
+
+  const response = await fetch(`${WEIGHT_API_URL}/${weightDate}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: auth.basicAuth,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Error: ${response.status} ${response.statusText}`);
+  }
+
+  return await response.json();
+};
+
+const updateWeight = async (auth, weightDate, weight) => {
+  // Check if the user is authenticated
+  if (!auth || !auth.basicAuth) {
+    throw new Error("User is not authenticated");
+  }
+  
+  const response = await fetch(`${WEIGHT_API_URL}/${weightDate}`, {
+    method: "PUT",
+    headers: {
+      Authorization: auth.basicAuth,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(weight),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Error: ${response.status} ${response.statusText}`);
+  }
+
+  return await response.json();
+};
+
+export default { getWeights, addWeight, updateWeight, deleteWeight };
