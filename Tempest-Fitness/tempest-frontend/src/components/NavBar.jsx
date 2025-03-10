@@ -91,12 +91,9 @@ const NavBar = () => {
                   <Link className="dropdown-item" to="/profile">
                     Profile
                   </Link>
-                  <button
-                    className="dropdown-item"
-                    onClick={() => console.log("Logout clicked")}
-                  >
+                  <Link className="dropdown-item" to="/login">
                     Logout
-                  </button>
+                  </Link>
                 </div>
               )}
             </li>
