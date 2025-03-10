@@ -11,3 +11,39 @@
 .btn-save {
   background-color: #6b51ab;
 }
+
+.weight-entry {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.weight-actions {
+  opacity: 0;
+  transform: translateX(20px);
+  transition: all 0.3s ease;
+}
+
+.weight-entry:hover .weight-actions {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.weight-actions button {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}
+
+.weight-actions button i {
+  font-size: 0.875rem;
+}
+
+/* Smooth transition for buttons */
+.btn-outline-primary,
+.btn-outline-danger {
+  transition: all 0.2s ease;
+}
+
+/* Add a subtle hover effect to the entire weight entry */
+.weight-entry:hover {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}

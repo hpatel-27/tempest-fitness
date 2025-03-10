@@ -3,6 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
+import Swal from "sweetalert2";
 import weightService from "../services/weightService";
 import { AuthContext } from "../contexts/AuthContext";
 import "../styles/index.css";
@@ -17,6 +18,8 @@ const Weights = () => {
   const [newWeight, setNewWeight] = useState("");
   const [newDate, setNewDate] = useState("");
   const [errors, setErrors] = useState({ weight: "", date: "" });
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingWeightId, setEditingWeightId] = useState(null);
 
   useEffect(() => {
     weightService.getWeights(auth).then((data) => {
@@ -59,12 +62,6 @@ const Weights = () => {
     sortWeights(weights, newOrder);
   };
 
-  // Add the user's new submitted weight
-  const addNewWeight = () => {
-    console.log("Button clicked for add");
-    setShowModal(true);
-  };
-
   const validateInputs = () => {
     let errors = { weight: "", date: "" };
     let isValid = true;
@@ -82,35 +79,97 @@ const Weights = () => {
     return isValid;
   };
 
-  // Handle saving a new weight
+  const handleEdit = (weight) => {
+    setIsEditing(true);
+    setEditingWeightId(weight.id);
+    setNewWeight(weight.weight);
+    setNewDate(weight.date);
+    setShowModal(true);
+  };
+
+  const handleDelete = async (weightId) => {
+    const confirmed = await Swal.fire({
+      title: "Delete Weight Entry",
+      text: "Are you sure you want to delete this weight entry?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (confirmed.isConfirmed) {
+      try {
+        await weightService.deleteWeight(auth, weightId);
+        setWeights(weights.filter((w) => w.id !== weightId));
+        Swal.fire("Deleted!", "Your weight entry has been deleted.", "success");
+      } catch (error) {
+        console.error("Failed to delete weight: ", error);
+        Swal.fire(
+          "Error",
+          "Failed to delete the weight. Please try again.",
+          "error"
+        );
+      }
+    }
+  };
+
   const handleSave = async () => {
     if (!validateInputs()) return;
 
     try {
-      // send weight to the backend
-      const savedWeight = await weightService.addWeight(auth, {
-        weight: newWeight,
-        date: newDate,
-      });
+      if (isEditing) {
+        // Update existing weight
+        const updatedWeight = await weightService.updateWeight(
+          auth,
+          editingWeightId,
+          {
+            weight: newWeight,
+            date: newDate,
+          }
+        );
 
-      // make sure the weight was saved successfully
-      if (savedWeight.status != "success") {
-        alert("Failed to add the new weight. Please try again.");
-        return;
+        if (updatedWeight.status !== "success") {
+          alert("Failed to update the weight. Please try again.");
+          return;
+        }
+
+        // Update the weights array with the edited weight
+        const updatedWeights = weights.map((w) =>
+          w.id === editingWeightId
+            ? { ...w, weight: newWeight, date: newDate }
+            : w
+        );
+        sortWeights(updatedWeights, sortOrder);
+      } else {
+        // Add new weight
+        const savedWeight = await weightService.addWeight(auth, {
+          weight: newWeight,
+          date: newDate,
+        });
+
+        if (savedWeight.status !== "success") {
+          alert("Failed to add the new weight. Please try again.");
+          return;
+        }
+
+        const updatedWeights = [
+          ...weights,
+          { weight: newWeight, date: newDate },
+        ];
+        sortWeights(updatedWeights, sortOrder);
       }
-      // update frontend state with the new weight
-      const updatedWeights = [...weights, { weight: newWeight, date: newDate }];
-      sortWeights(updatedWeights, sortOrder);
 
-      // close modal and reset form
+      // Reset form and close modal
       setShowModal(false);
       setNewWeight("");
       setNewDate("");
       setErrors({ weight: "", date: "" });
+      setIsEditing(false);
+      setEditingWeightId(null);
     } catch (error) {
-      // Some issue with adding a new weight
-      console.error("Failed to add the new weight: ", error);
-      alert("Failed to add the new weight. Please try again.");
+      console.error("Failed to save weight: ", error);
+      alert("Failed to save the weight. Please try again.");
     }
   };
 
@@ -136,7 +195,12 @@ const Weights = () => {
               </button>
               <button
                 className="btn btn-sm btn-outline-light btn-add-weight"
-                onClick={addNewWeight}
+                onClick={() => {
+                  setIsEditing(false);
+                  setNewWeight("");
+                  setNewDate("");
+                  setShowModal(true);
+                }}
               >
                 <i className="bi bi-plus-circle"></i>
               </button>
@@ -146,24 +210,51 @@ const Weights = () => {
             {weights.map((weight, index) => (
               <li
                 key={index}
-                className="list-group-item d-flex justify-content-between align-items-center bg-transparent text-light border-secondary"
+                className="list-group-item d-flex justify-content-between align-items-center bg-transparent text-light border-secondary weight-entry"
               >
                 <span className="fw-bold">{formatDate(weight.date)}</span>
-                <span
-                  className="badge rounded-pill weight-badge"
-                  id="weight-badge"
-                >
-                  {weight.weight} lbs
-                </span>
+                <div className="d-flex align-items-center">
+                  <div className="weight-actions me-2">
+                    <button
+                      className="btn btn-sm btn-outline-primary me-1"
+                      onClick={() => handleEdit(weight)}
+                    >
+                      <i className="bi bi-pencil"></i>
+                    </button>
+                    <button
+                      className="btn btn-sm btn-outline-danger"
+                      onClick={() => handleDelete(weight.id)}
+                    >
+                      <i className="bi bi-trash"></i>
+                    </button>
+                  </div>
+                  <span
+                    className="badge rounded-pill weight-badge"
+                    id="weight-badge"
+                  >
+                    {weight.weight} lbs
+                  </span>
+                </div>
               </li>
             ))}
           </ul>
         </div>
       </div>
 
-      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+      <Modal
+        show={showModal}
+        onHide={() => {
+          setShowModal(false);
+          setIsEditing(false);
+          setEditingWeightId(null);
+          setErrors({ weight: "", date: "" });
+        }}
+        centered
+      >
         <Modal.Header closeButton>
-          <Modal.Title>Add New Weight</Modal.Title>
+          <Modal.Title>
+            {isEditing ? "Edit Weight" : "Add New Weight"}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -199,7 +290,15 @@ const Weights = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              setShowModal(false);
+              setIsEditing(false);
+              setEditingWeightId(null);
+              setErrors({ weight: "", date: "" });
+            }}
+          >
             Cancel
           </Button>
           <Button
@@ -207,7 +306,7 @@ const Weights = () => {
             onClick={handleSave}
             disabled={!newWeight || !newDate}
           >
-            Save
+            {isEditing ? "Update" : "Save"}
           </Button>
         </Modal.Footer>
       </Modal>
