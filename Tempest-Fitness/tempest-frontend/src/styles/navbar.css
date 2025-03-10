@@ -17,3 +17,30 @@
   filter: brightness(0.9);
   transform: scale(1.05);
 }
+
+.dropdown-menu {
+  /* background-color: #212529 !important; */
+  background-color: #3c3f42 !important;
+  padding: 0.5rem 0 !important;
+  border-radius: 10px !important;
+  width: fit-content !important;
+  min-width: unset !important;
+  max-width: 200px !important;
+  text-align: left !important;
+}
+
+.custom-item {
+  color: white !important;
+  width: auto !important;
+  border-radius: 4px !important;
+  display: block !important;
+  padding: 6px 12px !important;
+}
+
+.custom-item:hover {
+  background-color: #2e2e2e60 !important;
+}
+
+.custom-item:focus {
+  background-color: #2e2e2e60 !important;
+}
