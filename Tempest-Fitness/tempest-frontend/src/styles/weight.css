@@ -1,5 +1,5 @@
-#weight-badge {
-  font-size: medium;
+.weight-badge {
+  font-size: medium !important;
   background-color: #6b51ab;
 }
 
@@ -8,8 +8,14 @@
   margin-right: 20%;
 }
 
-.btn-save {
-  background-color: #6b51ab;
+.custom-modal .modal-content {
+  background-color: #252627;
+  color: white;
+}
+
+.custom-save-btn {
+  background-color: #6b51ab !important;
+  border: black !important;
 }
 
 .weight-entry {

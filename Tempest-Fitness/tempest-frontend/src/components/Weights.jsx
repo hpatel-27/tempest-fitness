@@ -233,10 +233,7 @@ const Weights = () => {
                       <i className="bi bi-trash"></i>
                     </button>
                   </div>
-                  <span
-                    className="badge rounded-pill weight-badge"
-                    id="weight-badge"
-                  >
+                  <span className="badge rounded-pill weight-badge">
                     {weight.weight} lbs
                   </span>
                 </div>
@@ -247,6 +244,7 @@ const Weights = () => {
       </div>
 
       <Modal
+        className="custom-modal"
         show={showModal}
         onHide={() => {
           setShowModal(false);
@@ -297,7 +295,7 @@ const Weights = () => {
         </Modal.Body>
         <Modal.Footer>
           <Button
-            variant="secondary"
+            variant="danger"
             onClick={() => {
               setShowModal(false);
               setIsEditing(false);
@@ -307,7 +305,7 @@ const Weights = () => {
             Cancel
           </Button>
           <Button
-            className="btn-save"
+            className="custom-save-btn"
             onClick={handleSave}
             disabled={!newWeight || !newDate}
           >
