@@ -87,7 +87,7 @@ const Weights = () => {
     setShowModal(true);
   };
 
-  const handleDelete = async (weightId) => {
+  const handleDelete = async (weightDate) => {
     const confirmed = await Swal.fire({
       title: "Delete Weight Entry",
       text: "Are you sure you want to delete this weight entry?",
@@ -100,8 +100,8 @@ const Weights = () => {
 
     if (confirmed.isConfirmed) {
       try {
-        await weightService.deleteWeight(auth, weightId);
-        setWeights(weights.filter((w) => w.id !== weightId));
+        await weightService.deleteWeight(auth, weightDate);
+        setWeights(weights.filter((w) => w.date !== weightDate));
         Swal.fire("Deleted!", "Your weight entry has been deleted.", "success");
       } catch (error) {
         console.error("Failed to delete weight: ", error);
@@ -223,7 +223,7 @@ const Weights = () => {
                     </button>
                     <button
                       className="btn btn-sm btn-outline-danger"
-                      onClick={() => handleDelete(weight.id)}
+                      onClick={() => handleDelete(weight.date)}
                     >
                       <i className="bi bi-trash"></i>
                     </button>
