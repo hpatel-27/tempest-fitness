@@ -9,8 +9,11 @@
     brightness(90%) contrast(95%);
 }
 
+.brand {
+  transition: all 0.3s ease-in-out;
+}
+
 .brand:hover {
   filter: brightness(0.9);
-  transition: filter 0.1s ease-in-out;
   transform: scale(1.05);
 }
