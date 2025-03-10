@@ -8,7 +8,7 @@ const getWeights = async (auth) => {
     throw new Error("User is not authenticated");
   }
 
-  // Encode credentials in Base64 for Basic Authentication
+  // Encode credentials in Base64 for Basic Authentication and get from the weight api
   const response = await fetch(WEIGHT_API_URL, {
     method: "GET",
     headers: {
@@ -30,7 +30,7 @@ const addWeight = async (auth, weight) => {
   if (!auth || !auth.basicAuth) {
     throw new Error("User is not authenticated");
   }
-  // Encode credentials in Base64 for Basic Authentication
+  // Encode credentials in Base64 for Basic Authentication and post to the weight api
   const response = await fetch(WEIGHT_API_URL, {
     method: "POST",
     headers: {
@@ -54,6 +54,7 @@ const deleteWeight = async (auth, weightDate) => {
     throw new Error("User is not authenticated");
   }
 
+  // fetch from the weight weight api with the date as a path variable
   const response = await fetch(`${WEIGHT_API_URL}/${weightDate}`, {
     method: "DELETE",
     headers: {
@@ -73,7 +74,8 @@ const updateWeight = async (auth, weightDate, weight) => {
   if (!auth || !auth.basicAuth) {
     throw new Error("User is not authenticated");
   }
-  
+
+  // fetch from the weight weight api with the date as a path variable
   const response = await fetch(`${WEIGHT_API_URL}/${weightDate}`, {
     method: "PUT",
     headers: {
