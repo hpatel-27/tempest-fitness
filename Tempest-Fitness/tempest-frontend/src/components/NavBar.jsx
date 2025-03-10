@@ -17,6 +17,13 @@ const NavBar = () => {
     }
   };
 
+  const handleProfileClick = () => {
+    setIsDropdownOpen(false);
+  };
+
+  const handleLogoutClick = () => {
+    setIsDropdownOpen(false);
+  };
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
 
@@ -86,14 +93,29 @@ const NavBar = () => {
               {isDropdownOpen && (
                 <div
                   className="dropdown-menu show"
-                  style={{ position: "absolute", top: "100%", left: 0 }}
+                  style={{
+                    position: "absolute",
+                    top: "100%",
+                    left: 0,
+                    padding: "8px", // Adjust as needed
+                  }}
                 >
-                  <Link className="dropdown-item" to="/profile">
-                    Profile
-                  </Link>
-                  <Link className="dropdown-item" to="/login">
-                    Logout
-                  </Link>
+                  <div style={{ padding: "4px 12px" }}>
+                    <Link
+                      className="dropdown-item custom-item"
+                      to="/profile"
+                      onClick={handleProfileClick}
+                    >
+                      Profile
+                    </Link>
+                    <Link
+                      className="dropdown-item custom-item"
+                      to="/login"
+                      onClick={handleLogoutClick}
+                    >
+                      Logout
+                    </Link>
+                  </div>
                 </div>
               )}
             </li>
