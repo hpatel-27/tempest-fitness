@@ -19,7 +19,6 @@ const Weights = () => {
   const [newDate, setNewDate] = useState("");
   const [errors, setErrors] = useState({ weight: "", date: "" });
   const [isEditing, setIsEditing] = useState(false);
-  const [editingWeightId, setEditingWeightId] = useState(null);
 
   useEffect(() => {
     weightService.getWeights(auth).then((data) => {
@@ -81,7 +80,6 @@ const Weights = () => {
 
   const handleEdit = (weight) => {
     setIsEditing(true);
-    setEditingWeightId(weight.id);
     setNewWeight(weight.weight);
     setNewDate(weight.date);
     setShowModal(true);
@@ -132,14 +130,12 @@ const Weights = () => {
     try {
       if (isEditing) {
         // Update existing weight
-        const updatedWeight = await weightService.updateWeight(
-          auth,
-          editingWeightId,
-          {
-            weight: newWeight,
-            date: newDate,
-          }
-        );
+
+        // Note the date may not be changed!
+        const updatedWeight = await weightService.updateWeight(auth, newDate, {
+          weight: newWeight,
+          date: newDate,
+        });
 
         if (updatedWeight.status !== "success") {
           alert("Failed to update the weight. Please try again.");
@@ -148,9 +144,7 @@ const Weights = () => {
 
         // Update the weights array with the edited weight
         const updatedWeights = weights.map((w) =>
-          w.id === editingWeightId
-            ? { ...w, weight: newWeight, date: newDate }
-            : w
+          w.date === newDate ? { ...w, weight: newWeight, date: newDate } : w
         );
         sortWeights(updatedWeights, sortOrder);
       } else {
@@ -178,7 +172,6 @@ const Weights = () => {
       setNewDate("");
       setErrors({ weight: "", date: "" });
       setIsEditing(false);
-      setEditingWeightId(null);
     } catch (error) {
       console.error("Failed to save weight: ", error);
       alert("Failed to save the weight. Please try again.");
@@ -258,7 +251,6 @@ const Weights = () => {
         onHide={() => {
           setShowModal(false);
           setIsEditing(false);
-          setEditingWeightId(null);
           setErrors({ weight: "", date: "" });
         }}
         centered
@@ -285,20 +277,22 @@ const Weights = () => {
                 </Alert>
               )}
             </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Date</Form.Label>
-              <Form.Control
-                type="date"
-                value={newDate}
-                onChange={(e) => setNewDate(e.target.value)}
-                isInvalid={!!errors.date}
-              />
-              {errors.date && (
-                <Alert variant="danger" className="mt-2">
-                  {errors.date}
-                </Alert>
-              )}
-            </Form.Group>
+            {!isEditing && (
+              <Form.Group className="mb-3">
+                <Form.Label>Date</Form.Label>
+                <Form.Control
+                  type="date"
+                  value={newDate}
+                  onChange={(e) => setNewDate(e.target.value)}
+                  isInvalid={!!errors.date}
+                />
+                {errors.date && (
+                  <Alert variant="danger" className="mt-2">
+                    {errors.date}
+                  </Alert>
+                )}
+              </Form.Group>
+            )}
           </Form>
         </Modal.Body>
         <Modal.Footer>
@@ -307,7 +301,6 @@ const Weights = () => {
             onClick={() => {
               setShowModal(false);
               setIsEditing(false);
-              setEditingWeightId(null);
               setErrors({ weight: "", date: "" });
             }}
           >
