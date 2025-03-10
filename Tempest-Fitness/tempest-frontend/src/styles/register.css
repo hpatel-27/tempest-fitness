@@ -75,7 +75,7 @@
 
 /* Hover effect */
 .btn-primary:hover {
-  background-color: #007bff;
+  background-color: #614a9b !important;
 }
 
 /* Login link */
@@ -85,7 +85,7 @@
 }
 
 .login-link a {
-  color: #00aaff;
+  color: #8868da;
   text-decoration: none;
 }
 

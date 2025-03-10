@@ -66,6 +66,8 @@
 
 /* Submit button */
 .btn-primary {
+  background-color: #6b51ab !important;
+  border: none !important;
   font-size: 1.2rem;
   padding: 10px;
   margin-top: 10px;
@@ -75,7 +77,7 @@
 
 /* Hover effect */
 .btn-primary:hover {
-  background-color: #007bff;
+  background-color: #614a9b !important;
 }
 
 /* Register link */
@@ -85,7 +87,7 @@
 }
 
 .register-link a {
-  color: #00aaff;
+  color: #8868da;
   text-decoration: none;
 }
 
