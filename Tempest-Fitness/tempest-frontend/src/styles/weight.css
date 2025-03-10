@@ -1,13 +1,10 @@
-.weight-badge {
-  font-size: medium !important;
-  background-color: #6b51ab;
-}
-
+/* Weight card width customization */
 .weight-card {
   margin-left: 20%;
   margin-right: 20%;
 }
 
+/** Modal dark theme */
 .custom-modal .modal-content {
   background-color: #252627;
   color: white;
@@ -18,6 +15,7 @@
   border: black !important;
 }
 
+/* Weight Entries */
 .weight-entry {
   position: relative;
   transition: all 0.3s ease;
@@ -52,4 +50,9 @@
 /* Add a subtle hover effect to the entire weight entry */
 .weight-entry:hover {
   background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.weight-badge {
+  font-size: medium !important;
+  background-color: #6b51ab;
 }
