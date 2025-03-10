@@ -92,8 +92,10 @@ const Weights = () => {
       title: "Delete Weight Entry",
       text: "Are you sure you want to delete this weight entry?",
       icon: "warning",
+      background: "#242526",
+      color: "#fff",
       showCancelButton: true,
-      confirmButtonColor: "#d33",
+      confirmButtonColor: "#6b51ab",
       cancelButtonColor: "#3085d6",
       confirmButtonText: "Yes, delete it!",
     });
@@ -102,14 +104,24 @@ const Weights = () => {
       try {
         await weightService.deleteWeight(auth, weightDate);
         setWeights(weights.filter((w) => w.date !== weightDate));
-        Swal.fire("Deleted!", "Your weight entry has been deleted.", "success");
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your weight entry has been deleted.",
+          icon: "success",
+          confirmButtonColor: "#6b51ab",
+          background: "#242526",
+          color: "#fff",
+        });
       } catch (error) {
         console.error("Failed to delete weight: ", error);
-        Swal.fire(
-          "Error",
-          "Failed to delete the weight. Please try again.",
-          "error"
-        );
+        Swal.fire({
+          title: "Error",
+          text: "Failed to delete the weight. Please try again.",
+          icon: "error",
+          confirmButtonColor: "#6b51ab",
+          background: "#242526",
+          color: "#fff",
+        });
       }
     }
   };
