@@ -9,7 +9,6 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -185,8 +184,8 @@ public class ExerciseTest {
 
         // Check that the equals method does not indicate equality
         // for a different type of class
-        final Weight w = new Weight(LocalDate.now().toString(), 150.0 );
-        assertNotEquals( e10, w );
+        User u1 = new User();
+        assertNotEquals( e10, u1 );
 
         // Check that the same object is considered equal
         assertEquals( e10, e10 );
