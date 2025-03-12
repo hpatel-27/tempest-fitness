@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -14,7 +15,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @EnableAutoConfiguration
-@SpringBootTest( classes = TestConfig.class )
+@SpringBootTest(classes = TestConfig.class)
+@ActiveProfiles("test")  // Explicitly activate test profile
 public class ExerciseTest {
 
     /**
@@ -29,7 +31,8 @@ public class ExerciseTest {
      */
     @BeforeEach
     public void setup() {
-
+        // Clean up the database before each test
+        service.deleteAll();
     }
 
     /**
