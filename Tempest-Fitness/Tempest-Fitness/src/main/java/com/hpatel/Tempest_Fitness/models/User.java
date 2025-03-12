@@ -25,6 +25,15 @@ public class User extends DomainObject implements UserDetails {
 
     private String role;
 
+    /** User's first name */
+    private String firstName;
+
+    /** User's last name */
+    private String lastName;
+
+    /** User's height (cm) */
+    private double height;
+
     /**
      * Default constructor
      */
@@ -106,6 +115,48 @@ public class User extends DomainObject implements UserDetails {
         this.role = role;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    private void setFirstName(String firstName) {
+        if (firstName == null || firstName.isBlank()) {
+            throw new IllegalArgumentException("First name should have been provided.");
+        }
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    private void setLastName(String lastName) {
+        if (lastName == null || lastName.isBlank()) {
+            throw new IllegalArgumentException("Last name should have been provided.");
+        }
+        this.lastName = lastName;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    private void setHeight(double height) {
+        if (height <= 0 || height > 245) {
+            throw new IllegalArgumentException("Height is outside of permitted range.");
+        }
+        this.height = height;
+    }
+
+    /**
+     * Updates User with the values from the given User's object.
+     * @param newUser The new user with the updated information
+     */
+    public void updateUser(User newUser) {
+        setFirstName(newUser.getFirstName());
+        setLastName(newUser.getLastName());
+        setHeight(newUser.getHeight());
+    }
     /**
      * Gets the user's authorities
      *
