@@ -1,7 +1,6 @@
 package com.hpatel.Tempest_Fitness.models;
 
 import jakarta.persistence.*;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -105,17 +104,40 @@ public class Weight extends DomainObject {
         return date;
     }
 
-    private User getUser() {
+    public User getUser() {
         return user;
     }
 
 
     public void setUser(User user) {
-        if (user == null || user.getUsername().isBlank() || user.getPassword().isBlank() || user.getRole().isBlank() ) {
+        if (user == null ) {
             throw new IllegalArgumentException("User was not provided with the Weight.");
         }
+
+        if (user.getUsername() == null) {
+            throw new NullPointerException("Username was not provided.");
+        }
+        else if (user.getUsername().isBlank()){
+            throw new IllegalArgumentException("Valid username was not provided with the Weight.");
+        }
+
+        if (user.getPassword() == null) {
+            throw new NullPointerException("Password was not provided.");
+        }
+        else if (user.getPassword().isBlank()){
+            throw new IllegalArgumentException("Valid password was not provided with the Weight.");
+        }
+
+        if (user.getRole() == null) {
+            throw new NullPointerException("Role was not provided.");
+        }
+        else if (user.getRole().isBlank()){
+            throw new IllegalArgumentException("Valid role was not provided with the Weight.");
+        }
+
         this.user = user;
     }
+
     /**
      * Gets the id of the object
      * @return The id of the Weight
@@ -141,7 +163,8 @@ public class Weight extends DomainObject {
     public String toString() {
         return "Weight{" +
                 "date='" + date + '\'' +
-                ", weight=" + weight +
+                ", weight='" + weight + '\'' +
+                ", user='" + user.getUsername() + '\'' +
                 '}';
     }
 
@@ -155,7 +178,8 @@ public class Weight extends DomainObject {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Weight weight1 = (Weight) o;
-        return Double.compare(getWeight(), weight1.getWeight()) == 0 && Objects.equals(getDate(), weight1.getDate());
+        return Double.compare(getWeight(), weight1.getWeight()) == 0 && Objects.equals(getDate(), weight1.getDate())
+                && Objects.equals(getUser(), weight1.getUser());
     }
 
     /**
@@ -164,7 +188,7 @@ public class Weight extends DomainObject {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(getDate(), getWeight());
+        return Objects.hash(getDate(), getWeight(), getUser());
     }
 
 }
