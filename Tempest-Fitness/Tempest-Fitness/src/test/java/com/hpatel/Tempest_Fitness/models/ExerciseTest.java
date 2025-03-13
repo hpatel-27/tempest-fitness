@@ -7,15 +7,16 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @EnableAutoConfiguration
-@SpringBootTest( classes = TestConfig.class )
+@SpringBootTest(classes = TestConfig.class)
+@ActiveProfiles("test")  // Activate the test profile for the H2 database
 public class ExerciseTest {
 
     /**
@@ -30,7 +31,8 @@ public class ExerciseTest {
      */
     @BeforeEach
     public void setup() {
-
+        // Clean up the database before each test
+        service.deleteAll();
     }
 
     /**
@@ -185,8 +187,8 @@ public class ExerciseTest {
 
         // Check that the equals method does not indicate equality
         // for a different type of class
-        final Weight w = new Weight(LocalDate.now().toString(), 150.0 );
-        assertNotEquals( e10, w );
+        User u1 = new User();
+        assertNotEquals( e10, u1 );
 
         // Check that the same object is considered equal
         assertEquals( e10, e10 );
