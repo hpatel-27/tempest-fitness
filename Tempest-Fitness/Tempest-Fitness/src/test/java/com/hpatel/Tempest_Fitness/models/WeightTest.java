@@ -1,6 +1,7 @@
 package com.hpatel.Tempest_Fitness.models;
 
 import com.hpatel.Tempest_Fitness.TestConfig;
+import com.hpatel.Tempest_Fitness.services.UserService;
 import com.hpatel.Tempest_Fitness.services.WeightService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,11 +25,17 @@ public class WeightTest {
      * Service object that lets the Weights be saved to the db
      */
     @Autowired
-    private WeightService service;
+    private WeightService weightService;
+
+    /**
+     * User Service object that lets the Users be saved to the database
+     */
+    @Autowired
+    private UserService userService;
 
     @BeforeEach
     public void setup() {
-        service.deleteAll();
+        weightService.deleteAll();
     }
 
     /**
@@ -283,14 +290,16 @@ public class WeightTest {
         testUser.setPassword("test1");
         testUser.setRole("TEST");
 
+        // To save weights with a user, the associated user must also be saved to the db
+        userService.save(testUser);
 
         final Weight weight1 = new Weight( "2025-01-20", 178.3, testUser );
 
-        assertEquals( 0, service.count() );
-        service.save( weight1 );
-        assertEquals( 1, service.count() );
+        assertEquals( 0, weightService.count() );
+        weightService.save( weight1 );
+        assertEquals( 1, weightService.count() );
 
-        List<Weight> list = service.findAll();
+        List<Weight> list = weightService.findAll();
         assertEquals( 1, list.size() );
 
         Weight listW1 = list.getFirst();
@@ -301,11 +310,11 @@ public class WeightTest {
         final Weight weight2 = new Weight( "2025-01-27", 173.2, testUser );
         final Weight weight3 = new Weight( "2025-01-29", 181.4, testUser );
 
-        service.save( weight2 );
-        service.save( weight3 );
-        assertEquals( 3, service.count() );
+        weightService.save( weight2 );
+        weightService.save( weight3 );
+        assertEquals( 3, weightService.count() );
 
-        list = service.findAll();
+        list = weightService.findAll();
         assertEquals( 3, list.size() );
 
         Weight w1 = list.get(0);
