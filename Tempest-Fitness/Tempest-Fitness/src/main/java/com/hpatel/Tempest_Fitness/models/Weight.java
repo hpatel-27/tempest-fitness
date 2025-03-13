@@ -163,7 +163,8 @@ public class Weight extends DomainObject {
     public String toString() {
         return "Weight{" +
                 "date='" + date + '\'' +
-                ", weight=" + weight +
+                ", weight='" + weight + '\'' +
+                ", user='" + user.getUsername() + '\'' +
                 '}';
     }
 
