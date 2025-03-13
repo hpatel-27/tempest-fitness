@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @EnableAutoConfiguration
 @SpringBootTest(classes = TestConfig.class)
-@ActiveProfiles("test")  // Explicitly activate test profile
+@ActiveProfiles("test")  // Activate the test profile for the H2 database
 public class ExerciseTest {
 
     /**
