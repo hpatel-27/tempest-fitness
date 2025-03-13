@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
@@ -16,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @EnableAutoConfiguration
 @SpringBootTest( classes = TestConfig.class )
+@ActiveProfiles("test")  // Activate the test profile for the H2 database
 public class WeightTest {
 
     /**
@@ -26,7 +28,7 @@ public class WeightTest {
 
     @BeforeEach
     public void setup() {
-
+        service.deleteAll();
     }
 
     /**
@@ -39,6 +41,7 @@ public class WeightTest {
         u1.setUsername("henry");
         u1.setPassword("pw");
         u1.setRole("CUSTOMER");
+
         final Weight w1 = new Weight( "2007-12-03", 175.0, u1 );
         assertEquals( "2007-12-03", w1.getDate() );
         assertEquals( 175.0, w1.getWeight() );
@@ -62,6 +65,9 @@ public class WeightTest {
     public void testSetDates() {
         // Make a default user to use for making Weight objects
         User defaultUser = new User();
+        defaultUser.setUsername("harsh");
+        defaultUser.setPassword("pw");
+        defaultUser.setRole("TESTER");
 
         // check the dates to be sure they were set correctly
         final Weight w1 = new Weight("2025-01-13", 178.2, defaultUser );
@@ -93,6 +99,9 @@ public class WeightTest {
     public void testInvalidDates() {
         // Make a default user to use for making Weight objects
         User defaultUser = new User();
+        defaultUser.setUsername("harsh");
+        defaultUser.setPassword("pw");
+        defaultUser.setRole("TESTER");
 
         Exception exc1 = assertThrows( IllegalArgumentException.class, () -> new Weight( null, -0.1, defaultUser ));
         Exception exc2 = assertThrows( IllegalArgumentException.class, () -> new Weight( "", -1000.0, defaultUser ));
@@ -111,6 +120,9 @@ public class WeightTest {
     public void testWeights() {
         // Make a default user to use for making Weight objects
         User defaultUser = new User();
+        defaultUser.setUsername("harsh");
+        defaultUser.setPassword("pw");
+        defaultUser.setRole("TESTER");
 
         final Weight w1 = new Weight("2025-01-19", 178.2, defaultUser );
         assertEquals( "2025-01-19", w1.getDate() );
@@ -140,6 +152,9 @@ public class WeightTest {
     public void testInvalidWeights() {
         // Make a default user to use for making Weight objects
         User defaultUser = new User();
+        defaultUser.setUsername("harsh");
+        defaultUser.setPassword("pw");
+        defaultUser.setRole("TESTER");
 
         Exception exc1 = assertThrows( IllegalArgumentException.class, () -> new Weight( "2025-01-11", -0.1, defaultUser ));
         Exception exc2 = assertThrows( IllegalArgumentException.class, () -> new Weight( "2025-01-12", -1000.0, defaultUser ));
@@ -155,26 +170,121 @@ public class WeightTest {
 
     @Test
     @Transactional
-    public void testToString() {
+    public void testUsers() {
         // Make a default user to use for making Weight objects
-        User defaultUser = new User();
+        User testUser = new User();
+        testUser.setUsername("harsh");
+        testUser.setPassword("pw");
+        testUser.setRole("TESTER");
 
-        final Weight weight1 = new Weight( "2025-01-20", 178.3, defaultUser );
-        final Weight weight2 = new Weight( "2025-01-27", 173.2, defaultUser );
-        final Weight weight3 = new Weight( "2025-01-29", 181.4, defaultUser );
+        assertEquals("harsh", testUser.getUsername());
+        assertEquals("pw", testUser.getPassword());
+        assertEquals("TESTER", testUser.getRole());
 
-        assertEquals( "Weight{date='2025-01-20', weight=178.3}", weight1.toString() );
-        assertEquals( "Weight{date='2025-01-27', weight=173.2}", weight2.toString() );
-        assertEquals( "Weight{date='2025-01-29', weight=181.4}", weight3.toString() );
+        // Sets user
+        Weight w1 = new Weight("2025-03-12", 173.2, testUser );
+        assertEquals("2025-03-12", w1.getDate());
+        assertEquals(173.2, w1.getWeight());
+
+        // Tests that it's the same user
+        assertEquals(testUser, w1.getUser());
+
+        // Change other weight info and make sure nothing about the user is changed
+        w1.setWeight( 1000.0 );
+        w1.setDate("2025-02-17");
+        assertEquals("2025-02-17", w1.getDate());
+        assertEquals(1000.0, w1.getWeight());
+
+        assertEquals(testUser, w1.getUser());
+        assertEquals(testUser.getUsername(), w1.getUser().getUsername());
+        assertEquals(testUser.getPassword(), w1.getUser().getPassword());
+        assertEquals(testUser.getRole(), w1.getUser().getRole());
+    }
+
+
+    @Test
+    @Transactional
+    public void testInvalidUser() {
+        // Make a default user to use for testing
+        User testUser1 = new User();
+
+        User testUser2 = new User();
+        testUser2.setUsername("");
+
+        User testUser3 = new User();
+        testUser3.setUsername("test");
+
+        User testUser4 = new User();
+        testUser4.setUsername("test");
+        testUser4.setPassword("");
+
+        User testUser5 = new User();
+        testUser5.setUsername("test");
+        testUser5.setPassword("test");
+
+        User testUser6 = new User();
+        testUser6.setUsername("test");
+        testUser6.setPassword("test");
+        testUser6.setRole("");
+
+        Exception exc1 = assertThrows( IllegalArgumentException.class, () -> new Weight( "2025-01-11", 151.4, null ));
+        Exception exc2 = assertThrows( NullPointerException.class, () -> new Weight( "2025-01-12", 178.3, testUser1 ));
+        Exception exc3 = assertThrows( IllegalArgumentException.class, () -> new Weight( "2025-01-13", 223.1, testUser2 ));
+        Exception exc4 = assertThrows( NullPointerException.class, () -> new Weight( "2025-01-14", 126.0, testUser3 ));
+        Exception exc5 = assertThrows( IllegalArgumentException.class, () -> new Weight( "2025-01-13", 223.1, testUser4 ));
+        Exception exc6 = assertThrows( NullPointerException.class, () -> new Weight( "2025-01-14", 126.0, testUser5 ));
+        Exception exc7 = assertThrows( IllegalArgumentException.class, () -> new Weight( "2025-01-13", 223.1, testUser6 ));
+
+        assertEquals( "User was not provided with the Weight.", exc1.getMessage() );
+        assertEquals( "Username was not provided.", exc2.getMessage() );
+        assertEquals( "Valid username was not provided with the Weight.", exc3.getMessage() );
+        assertEquals( "Password was not provided.", exc4.getMessage() );
+        assertEquals( "Valid password was not provided with the Weight.", exc5.getMessage() );
+        assertEquals( "Role was not provided.", exc6.getMessage() );
+        assertEquals( "Valid role was not provided with the Weight.", exc7.getMessage() );
 
     }
+
+
+    @Test
+    @Transactional
+    public void testToString() {
+        // Make a user for each of the test options
+        User testUser1 = new User();
+        testUser1.setUsername("testUser1");
+        testUser1.setPassword("test");
+        testUser1.setRole("TEST");
+
+        User testUser2 = new User();
+        testUser2.setUsername("testUser2");
+        testUser2.setPassword("test");
+        testUser2.setRole("TEST");
+
+        User testUser3 = new User();
+        testUser3.setUsername("testUser3");
+        testUser3.setPassword("test");
+        testUser3.setRole("TEST");
+
+        final Weight weight1 = new Weight( "2025-01-20", 178.3, testUser1 );
+        final Weight weight2 = new Weight( "2025-01-27", 173.2, testUser2 );
+        final Weight weight3 = new Weight( "2025-01-29", 181.4, testUser3 );
+
+        assertEquals( "Weight{date='2025-01-20', weight='178.3', user='testUser1'}", weight1.toString() );
+        assertEquals( "Weight{date='2025-01-27', weight='173.2', user='testUser2'}", weight2.toString() );
+        assertEquals( "Weight{date='2025-01-29', weight='181.4', user='testUser3'}", weight3.toString() );
+    }
+
     @Test
     @Transactional
     public void testSaveToDB() {
         // Make a default user to use for making Weight objects
-        User defaultUser = new User();
+        User testUser = new User();
+        testUser.setUsername("testUser1");
+        testUser.setPassword("test1");
+        testUser.setRole("TEST");
 
-        final Weight weight1 = new Weight( "2025-01-20", 178.3, defaultUser );
+
+        final Weight weight1 = new Weight( "2025-01-20", 178.3, testUser );
 
         assertEquals( 0, service.count() );
         service.save( weight1 );
@@ -188,8 +298,8 @@ public class WeightTest {
         assertEquals( listW1.getDate(), weight1.getDate() );
         assertEquals( listW1.getWeight(), weight1.getWeight() );
 
-        final Weight weight2 = new Weight( "2025-01-27", 173.2, defaultUser );
-        final Weight weight3 = new Weight( "2025-01-29", 181.4, defaultUser );
+        final Weight weight2 = new Weight( "2025-01-27", 173.2, testUser );
+        final Weight weight3 = new Weight( "2025-01-29", 181.4, testUser );
 
         service.save( weight2 );
         service.save( weight3 );
@@ -211,10 +321,13 @@ public class WeightTest {
     @Transactional
     public void testEquals() {
         // Make a default user to use for making Weight objects
-        User defaultUser = new User();
+        User testUser = new User();
+        testUser.setUsername("testUser1");
+        testUser.setPassword("test1");
+        testUser.setRole("TEST");
 
-        final Weight w0 = new Weight( "2025-02-14",167.5, defaultUser );
-        final Weight w1 = new Weight( "2025-05-17",152.1, defaultUser );
+        final Weight w0 = new Weight( "2025-02-14",167.5, testUser );
+        final Weight w1 = new Weight( "2025-05-17",152.1, testUser );
 
         assertNotEquals( w0, w1 );
 
@@ -228,7 +341,7 @@ public class WeightTest {
 
         // If the date and the weight of the Weight is the same
         // they should be equal
-        final Weight w2 = new Weight( "2025-02-14",167.5, defaultUser );
+        final Weight w2 = new Weight( "2025-02-14",167.5, testUser );
         assertEquals( w0, w2 );
 
         // Check that it is not equal compared to a null
@@ -241,14 +354,38 @@ public class WeightTest {
     @Test
     @Transactional
     public void testHashing() {
-        // Make a default user to use for making Weight objects
-        User defaultUser = new User();
+        // Make a user for each of the test options
+        User testUser1 = new User();
+        testUser1.setUsername("testUser1");
+        testUser1.setPassword("test1");
+        testUser1.setRole("TEST");
 
-        final Weight w0 = new Weight( "2025-04-12", 136.1, defaultUser );
-        final Weight w1 = new Weight( "2025-11-31", 156.0, defaultUser );
-        final Weight w2 = new Weight( "2025-04-12", 136.1, defaultUser );
+        User testUser2 = new User();
+        testUser2.setUsername("testUser2");
+        testUser2.setPassword("test2");
+        testUser2.setRole("TEST");
 
+
+        // Making some weights to test the hashcode comparisons
+        final Weight w0 = new Weight("2025-04-12", 136.1, testUser1);
+        final Weight w1 = new Weight("2025-11-31", 156.0, testUser1);
+        final Weight w2 = new Weight("2025-04-12", 136.1, testUser1);
+        final Weight w3 = new Weight("2025-03-11", 136.1, testUser2);
+        final Weight w4 = new Weight("2025-04-12", 156.1, testUser2);
+
+        // Test if two weights with the same date, weight, and user have the same code
         assertEquals( w0.hashCode(), w2.hashCode() );
+
+        // Test if two weights with different date, weight, but same user are going to have
+        // different hashes
         assertNotEquals( w0.hashCode(), w1.hashCode() );
+
+        // Test if two weights with different date, user, but same weight are going to have
+        // different hashes
+        assertNotEquals( w0.hashCode(), w3.hashCode() );
+
+        // Test if two weights with different weight, user, but same date are going to have
+        // different hashes
+        assertNotEquals( w0.hashCode(), w3.hashCode() );
     }
 }
