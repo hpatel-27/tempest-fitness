@@ -1,4 +1,4 @@
-package com.hpatel.Tempest_Fitness.api;
+package com.hpatel.Tempest_Fitness.controllers;
 
 
 import com.hpatel.Tempest_Fitness.TestConfig;
