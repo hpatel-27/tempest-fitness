@@ -6,11 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @SuppressWarnings ( { "unchecked", "rawtypes" } )
 @RestController
@@ -18,29 +16,6 @@ public class UserController extends APIController {
 
     @Autowired
     private UserService service;
-
-    /**
-     * REST API method to provide GET access to all users in the system
-     *
-     * @return JSON representation of all users
-     */
-    @GetMapping ( BASE_PATH + "/users")
-    public List<User> getUsers() {
-        return service.findAll();
-    }
-
-//    /**
-//     * Get the current user from Spring security
-//     *
-//     * @return Currently authenticated UserDetails object
-//     */
-//    @GetMapping ( BASE_PATH + "/currentuser" )
-//    public ResponseEntity getCurrentUser () {
-//        final UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//
-//        return null == user ? new ResponseEntity( errorResponse( "Error finding current user" ), HttpStatus.NOT_FOUND )
-//                : new ResponseEntity( user, HttpStatus.OK );
-//    }
 
     /**
      * REST API method to provide delete access to a User model. This is used to
@@ -54,17 +29,21 @@ public class UserController extends APIController {
      */
     @DeleteMapping( BASE_PATH + "/users/{username}" )
     public ResponseEntity deleteUser ( @PathVariable final String username ) {
-        User user = service.findByName( username );
+        final User user = service.findByName( username );
         if ( null == user ) {
             return new ResponseEntity( errorResponse( "No user found with the name " + username ),
                     HttpStatus.NOT_FOUND );
         }
         service.delete( user );
 
-        user = service.findByName(username);
+        final User checkUser = service.findByName(username);
 
         // If user is not null, return a success, otherwise a not found
-        return null == user ? new ResponseEntity( successResponse( username + " was successfully deleted!" ),
+        return null == checkUser ? new ResponseEntity( successResponse( username + " was successfully deleted!" ),
                 HttpStatus.OK ) : new ResponseEntity( errorResponse( "Error deleting user: " + username ), HttpStatus.BAD_REQUEST );
+    }
+
+    public ResponseEntity editUser(@PathVariable final String username, @RequestBody User user) {
+        return null;
     }
 }
