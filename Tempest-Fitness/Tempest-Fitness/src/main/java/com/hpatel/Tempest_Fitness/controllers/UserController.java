@@ -5,7 +5,6 @@ import com.hpatel.Tempest_Fitness.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,9 +18,6 @@ public class UserController extends APIController {
 
     @Autowired
     private UserService service;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     /**
      * REST API method to provide GET access to all users in the system
@@ -45,22 +41,6 @@ public class UserController extends APIController {
 //        return null == user ? new ResponseEntity( errorResponse( "Error finding current user" ), HttpStatus.NOT_FOUND )
 //                : new ResponseEntity( user, HttpStatus.OK );
 //    }
-
-    /**
-     * REST API method to provide GET access to a specific user, as indicated by
-     * the path variable provided (the name of the user desired)
-     *
-     * @param username
-     *            The name of the User to get
-     * @return response to the request
-     */
-    @GetMapping ( BASE_PATH + "/users/{username}" )
-    public ResponseEntity getUserByUsername ( @PathVariable final String username ) {
-        final User user = service.findByName( username );
-        return null == user
-                ? new ResponseEntity( errorResponse( "No user found with name " + username ), HttpStatus.NOT_FOUND )
-                : new ResponseEntity( user, HttpStatus.OK );
-    }
 
     /**
      * REST API method to provide delete access to a User model. This is used to
