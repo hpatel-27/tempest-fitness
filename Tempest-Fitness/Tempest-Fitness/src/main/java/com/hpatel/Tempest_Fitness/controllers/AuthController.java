@@ -19,12 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping
 public class AuthController extends APIController {
 
-    private final AuthenticationManager authenticationManagerManager;
+    private final AuthenticationManager authenticationManager;
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
-    public AuthController(AuthenticationManager authenticationManagerManager, UserService userService, PasswordEncoder passwordEncoder) {
-        this.authenticationManagerManager = authenticationManagerManager;
+    public AuthController(AuthenticationManager authenticationManager, UserService userService, PasswordEncoder passwordEncoder) {
+        this.authenticationManager = authenticationManager;
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
     }
@@ -32,7 +32,7 @@ public class AuthController extends APIController {
     @PostMapping(BASE_PATH + "/auth/login")
     public ResponseEntity<?> login (@RequestBody LoginRequest request) {
         try {
-            Authentication auth = authenticationManagerManager.authenticate(
+            Authentication auth = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
             );
 
