@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -58,35 +61,6 @@ public class UserController extends APIController {
                 ? new ResponseEntity( errorResponse( "No user found with name " + username ), HttpStatus.NOT_FOUND )
                 : new ResponseEntity( user, HttpStatus.OK );
     }
-
-//    /**
-//     * REST API method to provide POST access to the User model. This is used to
-//     * create a new User by automatically converting the JSON RequestBody
-//     * provided to a User object. Invalid JSON will fail.
-//     *
-//     * @param user
-//     *            The valid User to be saved.
-//     * @return ResponseEntity indicating success if the User could be saved to
-//     *         the db, or an error if it could not be
-//     */
-//    @PostMapping( BASE_PATH + "/users" )
-//    public ResponseEntity createUser ( @RequestBody final User user ) {
-//        // make sure the users does not already exist in some capacity
-//        if ( null != service.findByName( user.getUsername() ) ) {
-//            return new ResponseEntity( errorResponse( "Username already in use" ), HttpStatus.CONFLICT );
-//        }
-//        else {
-//            final User newUser = new User();
-//            newUser.setUsername( user.getUsername() );
-//            newUser.setPassword( passwordEncoder.encode( user.getPassword() ) );
-//            newUser.setRole( user.getRole() );
-//
-//
-//            service.save( newUser );
-//
-//            return new ResponseEntity( user, HttpStatus.OK );
-//        }
-//    }
 
     /**
      * REST API method to provide delete access to a User model. This is used to
