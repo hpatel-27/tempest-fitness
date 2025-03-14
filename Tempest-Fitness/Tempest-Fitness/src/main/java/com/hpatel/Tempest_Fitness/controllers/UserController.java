@@ -54,14 +54,17 @@ public class UserController extends APIController {
      */
     @DeleteMapping( BASE_PATH + "/users/{username}" )
     public ResponseEntity deleteUser ( @PathVariable final String username ) {
-        final User user = service.findByName( username );
+        User user = service.findByName( username );
         if ( null == user ) {
             return new ResponseEntity( errorResponse( "No user found with the name " + username ),
                     HttpStatus.NOT_FOUND );
         }
         service.delete( user );
 
-        return new ResponseEntity( successResponse( user.getUsername() + " was successfully deleted!" ),
-                HttpStatus.OK );
+        user = service.findByName(username);
+
+        // If user is not null, return a success, otherwise a not found
+        return null == user ? new ResponseEntity( successResponse( username + " was successfully deleted!" ),
+                HttpStatus.OK ) : new ResponseEntity( errorResponse( "Error deleting user: " + username ), HttpStatus.BAD_REQUEST );
     }
 }
