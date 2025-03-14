@@ -38,9 +38,9 @@ public class AuthController extends APIController {
 
             if (auth.isAuthenticated()) {
                 return ResponseEntity.ok("Login successful!"); // Replace with a JWT token later when I work on that
-            } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials provided.");
             }
+            // Not supposed to make it here, but just in case
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials provided.");
         } catch (AuthenticationException e ) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password.");
         }
