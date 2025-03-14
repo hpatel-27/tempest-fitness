@@ -43,7 +43,15 @@ public class UserController extends APIController {
                 HttpStatus.OK ) : new ResponseEntity( errorResponse( "Error deleting user: " + username ), HttpStatus.BAD_REQUEST );
     }
 
+    /**
+     * Edits a User's information (username, password, name, height)
+     *
+     * @param username The username of the user currently
+     * @param user The new User object with the updated info
+     * @return ResponseEntity indicating outcome of the operation
+     */
     public ResponseEntity editUser(@PathVariable final String username, @RequestBody User user) {
+        // TODO: Allow users to change their info
         return null;
     }
 }
