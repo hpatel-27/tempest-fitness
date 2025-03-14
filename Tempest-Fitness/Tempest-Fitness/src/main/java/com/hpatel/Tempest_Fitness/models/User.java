@@ -73,6 +73,15 @@ public class User extends DomainObject implements UserDetails {
      *            username to set
      */
     public void setUsername ( final String username ) {
+        if (username == null) {
+            throw new NullPointerException("No username was provided.");
+        }
+        else if (username.isBlank()) {
+            throw new IllegalArgumentException("Empty username was provided.");
+        }
+        else if (username.length() > 25) {
+            throw new IllegalArgumentException("Username cannot be more than 25 characters.");
+        }
         this.username = username;
     }
 
@@ -81,7 +90,6 @@ public class User extends DomainObject implements UserDetails {
      *
      * @return password
      */
-//    @Override
     public String getPassword () {
         return password;
     }
@@ -93,6 +101,15 @@ public class User extends DomainObject implements UserDetails {
      *            password to set
      */
     public void setPassword ( final String password ) {
+        if (password == null) {
+            throw new NullPointerException("No password was provided.");
+        }
+        else if (password.isBlank()) {
+            throw new IllegalArgumentException("Empty password was provided.");
+        }
+        else if (password.length() > 100) {
+            throw new IllegalArgumentException("Password cannot be more than 100 characters.");
+        }
         this.password = password;
     }
 
@@ -112,6 +129,18 @@ public class User extends DomainObject implements UserDetails {
      *            role to set
      */
     public void setRole ( final String role ) {
+        if (role == null) {
+            throw new NullPointerException("No role was provided.");
+        }
+        else if (role.isBlank()) {
+            throw new IllegalArgumentException("Empty role was provided.");
+        }
+        else if (role.length() > 20) {
+            throw new IllegalArgumentException("Role cannot be more than 20 characters.");
+        }
+        if (!role.matches("^[A-Za-z ]+$")) {
+            throw new IllegalArgumentException("Role should only contain characters.");
+        }
         this.role = role;
     }
 
@@ -119,9 +148,15 @@ public class User extends DomainObject implements UserDetails {
         return firstName;
     }
 
-    private void setFirstName(String firstName) {
+    public void setFirstName(String firstName) {
         if (firstName == null || firstName.isBlank()) {
-            throw new IllegalArgumentException("First name should have been provided.");
+            throw new IllegalArgumentException("First name was expected but there was none.");
+        }
+        if (firstName.length() > 20) {
+            throw new IllegalArgumentException("Maximum character limit is 20 for first name.");
+        }
+        if (!firstName.matches("^[A-Za-z ]+$")) {
+            throw new IllegalArgumentException("First name should only contain characters.");
         }
         this.firstName = firstName;
     }
@@ -130,9 +165,15 @@ public class User extends DomainObject implements UserDetails {
         return lastName;
     }
 
-    private void setLastName(String lastName) {
+    public void setLastName(String lastName) {
         if (lastName == null || lastName.isBlank()) {
-            throw new IllegalArgumentException("Last name should have been provided.");
+            throw new IllegalArgumentException("Last name was expected but there was none.");
+        }
+        if (lastName.length() > 20) {
+            throw new IllegalArgumentException("Maximum character limit is 20 for last name.");
+        }
+        if (!lastName.matches("^[A-Za-z ]+$")) {
+            throw new IllegalArgumentException("Last name should only contain characters.");
         }
         this.lastName = lastName;
     }
@@ -141,22 +182,14 @@ public class User extends DomainObject implements UserDetails {
         return height;
     }
 
-    private void setHeight(double height) {
+    public void setHeight(double height) {
+        // Between 0 and 245 centimeters (0 to 8 feet)
         if (height <= 0 || height > 245) {
             throw new IllegalArgumentException("Height is outside of permitted range.");
         }
         this.height = height;
     }
 
-    /**
-     * Updates User with the values from the given User's object.
-     * @param newUser The new user with the updated information
-     */
-    public void updateUser(User newUser) {
-        setFirstName(newUser.getFirstName());
-        setLastName(newUser.getLastName());
-        setHeight(newUser.getHeight());
-    }
     /**
      * Gets the user's authorities
      *
