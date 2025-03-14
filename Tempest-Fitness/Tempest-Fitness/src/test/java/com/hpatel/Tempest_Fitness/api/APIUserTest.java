@@ -69,26 +69,48 @@ public class APIUserTest {
         u2.setRole("TEST");
 
         mvc.perform(post("/api/v1/auth/register").contentType(MediaType.APPLICATION_JSON)
-                .content(TestUtils.asJsonString(u1)))
-                .andExpect(status().isCreated())
-                .andExpect(content().string("User registered successfully!"));
+                        .content(TestUtils.asJsonString(u1)))
+                        .andExpect(status().isCreated())
+                        .andExpect(content().string("User registered successfully!"));
 
         mvc.perform(post("/api/v1/auth/register").contentType(MediaType.APPLICATION_JSON)
                         .content(TestUtils.asJsonString(u2)))
-                .andExpect(status().isConflict())
-                .andExpect(content().string("Username already exists."));
+                        .andExpect(status().isConflict())
+                        .andExpect(content().string("Username already exists."));
 
     }
 
     @Test
     @Transactional
     public void testLoginUser() throws Exception {
+        final User u1 = new User();
+        u1.setUsername("TestUsername");
+        u1.setPassword("TestPassword");
+        u1.setRole("TEST");
+
+        mvc.perform(post("/api/v1/auth/register").contentType(MediaType.APPLICATION_JSON)
+                        .content(TestUtils.asJsonString(u1)))
+                .andExpect(status().isCreated())
+                .andExpect(content().string("User registered successfully!"));
+
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setUsername("TestUsername");
         loginRequest.setPassword("TestPassword");
 
         mvc.perform(post("/api/v1/auth/login").contentType(MediaType.APPLICATION_JSON)
-                .content(TestUtils.asJsonString(loginRequest)))
-                .andExpect(status().isOk());
+                        .content(TestUtils.asJsonString(loginRequest)))
+                        .andExpect(status().isOk())
+                        .andExpect(content().string("Login successful!"));
+
+
+        LoginRequest badRequest = new LoginRequest();
+        badRequest.setUsername("BadUsername");
+        badRequest.setPassword("BadPassword");
+
+        mvc.perform(post("/api/v1/auth/login").contentType(MediaType.APPLICATION_JSON)
+                        .content(TestUtils.asJsonString(badRequest)))
+                .andExpect(status().isUnauthorized())
+                .andExpect(content().string("Invalid username or password."));
+
     }
 }
