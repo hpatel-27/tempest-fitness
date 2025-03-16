@@ -5,10 +5,12 @@ import com.hpatel.Tempest_Fitness.models.User;
 import com.hpatel.Tempest_Fitness.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,7 +32,7 @@ public class AuthController extends APIController {
     }
 
     @PostMapping(BASE_PATH + "/auth/login")
-    public ResponseEntity<?> login (@RequestBody LoginRequest request) {
+    public ResponseEntity<String> login (@RequestBody LoginRequest request) {
         try {
             Authentication auth = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
@@ -41,8 +43,19 @@ public class AuthController extends APIController {
         }
     }
 
+    @PostMapping(BASE_PATH + "/auth/logout")
+    public ResponseEntity<?> logout() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || !auth.isAuthenticated() || auth instanceof AnonymousAuthenticationToken) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No user is currently logged in.");
+        }
+
+        SecurityContextHolder.clearContext();
+        return ResponseEntity.status(HttpStatus.OK).body("Logout successful!");
+    }
+
     @PostMapping(BASE_PATH + "/auth/register")
-    public ResponseEntity<?> register (@RequestBody User user) {
+    public ResponseEntity<String> register (@RequestBody User user) {
         if (userService.findByName(user.getUsername()) != null) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already exists.");
         }
