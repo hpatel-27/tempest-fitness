@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-@SuppressWarnings ( { "unchecked", "rawtypes" } )
 @RestController
 public class UserController extends APIController {
 
@@ -24,11 +23,13 @@ public class UserController extends APIController {
      * @return Currently authenticated User object
      */
     @GetMapping( BASE_PATH + "/currentUser" )
-    public ResponseEntity getCurrentUser() {
-        final User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        return null == user ? new ResponseEntity( errorResponse( "Error finding current user" ), HttpStatus.NOT_FOUND )
-                : new ResponseEntity( user, HttpStatus.OK );
+    public ResponseEntity<User> getCurrentUser() {
+        try {
+            final User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            return ResponseEntity.status(HttpStatus.OK).body(user);
+        } catch (NullPointerException e ) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
 
     /**
@@ -42,19 +43,15 @@ public class UserController extends APIController {
      *
      */
     @DeleteMapping( BASE_PATH + "/users/{username}" )
-    public ResponseEntity deleteUser( @PathVariable final String username ) {
+    public ResponseEntity<String> deleteUser( @PathVariable final String username ) {
         final User user = service.findByName( username );
         if ( null == user ) {
-            return new ResponseEntity( errorResponse( "No user found with the name " + username ),
-                    HttpStatus.NOT_FOUND );
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No user found with the name " + username + ".");
         }
         service.delete( user );
 
-        final User checkUser = service.findByName(username);
-
-        // If user is not null, return a success, otherwise a not found
-        return null == checkUser ? new ResponseEntity( successResponse( username + " was successfully deleted!" ),
-                HttpStatus.OK ) : new ResponseEntity( errorResponse( "Error deleting user: " + username ), HttpStatus.BAD_REQUEST );
+        // Return indicating that the user was deleted
+        return ResponseEntity.status(HttpStatus.OK).body(username + " was successfully deleted!");
     }
 
 //    /**
