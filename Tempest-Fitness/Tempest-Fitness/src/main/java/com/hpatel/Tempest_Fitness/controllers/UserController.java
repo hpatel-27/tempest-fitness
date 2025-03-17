@@ -23,12 +23,12 @@ public class UserController extends APIController {
      * @return Currently authenticated User object
      */
     @GetMapping( BASE_PATH + "/currentUser" )
-    public ResponseEntity<User> getCurrentUser() {
+    public ResponseEntity<?> getCurrentUser() {
         try {
             final User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            return ResponseEntity.status(HttpStatus.OK).body(user);
+            return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (NullPointerException e ) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return new ResponseEntity<>(errorResponse("Error finding current user."), HttpStatus.NOT_FOUND);
         }
     }
 
@@ -46,12 +46,13 @@ public class UserController extends APIController {
     public ResponseEntity<String> deleteUser( @PathVariable final String username ) {
         final User user = service.findByName( username );
         if ( null == user ) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No user found with the name " + username + ".");
+            return new ResponseEntity<>(errorResponse("No user found with the name " + username + "."), HttpStatus.NOT_FOUND);
         }
         service.delete( user );
 
         // Return indicating that the user was deleted
-        return ResponseEntity.status(HttpStatus.OK).body(username + " was successfully deleted!");
+        return new ResponseEntity<>( successResponse( user.getUsername() + " was successfully deleted!" ),
+                HttpStatus.OK );
     }
 
 //    /**
