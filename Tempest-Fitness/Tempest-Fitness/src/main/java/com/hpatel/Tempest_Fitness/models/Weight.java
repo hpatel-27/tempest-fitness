@@ -113,26 +113,14 @@ public class Weight extends DomainObject {
         if (user == null ) {
             throw new IllegalArgumentException("User was not provided with the Weight.");
         }
-
         if (user.getUsername() == null) {
             throw new NullPointerException("Username was not provided.");
         }
-        else if (user.getUsername().isBlank()){
-            throw new IllegalArgumentException("Valid username was not provided with the Weight.");
-        }
-
         if (user.getPassword() == null) {
             throw new NullPointerException("Password was not provided.");
         }
-        else if (user.getPassword().isBlank()){
-            throw new IllegalArgumentException("Valid password was not provided with the Weight.");
-        }
-
         if (user.getRole() == null) {
             throw new NullPointerException("Role was not provided.");
-        }
-        else if (user.getRole().isBlank()){
-            throw new IllegalArgumentException("Valid role was not provided with the Weight.");
         }
 
         this.user = user;
