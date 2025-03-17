@@ -52,13 +52,13 @@ public class WeightController extends APIController {
         // Find the user by username
         User user = userService.findByName(username);
         if (user == null) {
-            return new ResponseEntity(errorResponse("User not found"), HttpStatus.NOT_FOUND);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
         }
 
         // Fetch all weights for this user
         List<Weight> weights = weightService.findByUser(user);
 
-        return new ResponseEntity<>(weights, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(weights);
     }
 
 
@@ -85,19 +85,15 @@ public class WeightController extends APIController {
         }
         User user = userService.findByName(username);
         if (user == null) {
-            return new ResponseEntity(errorResponse("User not found."), HttpStatus.NOT_FOUND);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
         }
 
         if (weightService.findByUserAndDate(user, weight.getDate()) != null ) {
-            return new ResponseEntity(
-                    errorResponse( "Weight with the date " + weight.getDate() + " already exists." ),
-                    HttpStatus.CONFLICT );
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Weight with the date " + weight.getDate() + " already exists.");
         }
         weight.setUser(user);
         weightService.save( weight );
-        return new ResponseEntity( successResponse( "Weight on " + weight.getDate() + " successfully created."),
-                HttpStatus.OK );
-
+        return ResponseEntity.status(HttpStatus.OK).body("Weight on " + weight.getDate() + " successfully created.");
     }
 
     /**
@@ -128,27 +124,20 @@ public class WeightController extends APIController {
 
         User user = userService.findByName(username);
         if (user == null) {
-            return new ResponseEntity(errorResponse("User not found."), HttpStatus.NOT_FOUND);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
         }
 
         final Weight existingWeight = weightService.findByUserAndDate(user, date );
         if ( existingWeight == null ) {
-            return new ResponseEntity(
-                    errorResponse(
-                            "Weight with the date " + weight.getDate() + " does not exist" ),
-                    HttpStatus.CONFLICT );
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Weight with the date " + weight.getDate() + " does not exist");
         }
         if ( !date.equals( weight.getDate() ) ) {
-            return new ResponseEntity(
-                    errorResponse( "Weight with the date " + date + " does not match object provided" ),
-                    HttpStatus.CONFLICT );
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Weight with the date " + date + " does not match object provided");
         }
         existingWeight.setDate( weight.getDate() );
         existingWeight.setWeight( weight.getWeight() );
         weightService.save( existingWeight );
-        return new ResponseEntity( successResponse( weight.getDate() + " successfully created" ),
-                HttpStatus.OK );
-
+        return ResponseEntity.status(HttpStatus.OK).body(weight.getDate() + " successfully created");
     }
 
     /**
@@ -175,16 +164,15 @@ public class WeightController extends APIController {
 
         User user = userService.findByName(username);
         if (user == null) {
-            return new ResponseEntity(errorResponse("User not found."), HttpStatus.NOT_FOUND);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
         }
 
         final Weight weight = weightService.findByUserAndDate(user, date );
         if ( null == weight ) {
-            return new ResponseEntity( errorResponse( "No Weight found for date " + date ), HttpStatus.NOT_FOUND );
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No Weight found for date " + date);
         }
         weightService.delete( weight );
-
-        return new ResponseEntity( successResponse( "Weight with date " + date + " was deleted successfully" ), HttpStatus.OK );
+        return ResponseEntity.status(HttpStatus.OK).body("Weight with date " + date + " was deleted successfully");
     }
 
 }
