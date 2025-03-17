@@ -95,7 +95,7 @@ public class WeightController extends APIController {
         }
         weight.setUser(user);
         weightService.save( weight );
-        return new ResponseEntity( successResponse( weight.getDate() + " successfully created."),
+        return new ResponseEntity( successResponse( "Weight on " + weight.getDate() + " successfully created."),
                 HttpStatus.OK );
 
     }
