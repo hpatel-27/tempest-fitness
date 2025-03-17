@@ -61,21 +61,6 @@ public class WeightController extends APIController {
         return new ResponseEntity<>(weights, HttpStatus.OK);
     }
 
-//    /**
-//     * REST API method to provide GET access to a specific Weight
-//     *
-//     * @param date
-//     *            Date of the exercise to get
-//     * @return JSON representation of the specific Weight
-//     */
-//    @GetMapping( BASE_PATH + "/weights/{date}" )
-//    public ResponseEntity getWeight( @PathVariable("date") final String date ) {
-//        final Weight w = service.findByDate( date );
-//
-//        return null == w
-//                ? new ResponseEntity( errorResponse( "No weigh-in found with date" + date ), HttpStatus.NOT_FOUND )
-//                : new ResponseEntity( w, HttpStatus.OK );
-//    }
 
     /**
      * REST API method to provide POST access to the Weight model. This is
@@ -105,7 +90,7 @@ public class WeightController extends APIController {
 
         if (weightService.findByUserAndDate(user, weight.getDate()) != null ) {
             return new ResponseEntity(
-                    errorResponse( "Weight with the date " + weight.getDate() + " already exists" ),
+                    errorResponse( "Weight with the date " + weight.getDate() + " already exists." ),
                     HttpStatus.CONFLICT );
         }
         weight.setUser(user);
