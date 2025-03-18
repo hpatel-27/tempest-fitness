@@ -51,7 +51,7 @@ public class UserController extends APIController {
         service.delete( user );
 
         // Return indicating that the user was deleted
-        return new ResponseEntity<>(successResponse(user.getUsername() + " was successsfully deleted!"), HttpStatus.OK);
+        return new ResponseEntity<>(successResponse(user.getUsername() + " was successfully deleted!"), HttpStatus.OK);
     }
 
 //    /**
