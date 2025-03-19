@@ -37,10 +37,10 @@ public class AuthController extends APIController {
             Authentication auth = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
             );
-            return ResponseEntity.status(HttpStatus.OK).body("Login successful!");
+            return new ResponseEntity<>(successResponse("Login successful!"), HttpStatus.OK);
             // Replace with a JWT token later when I work on that
         } catch (AuthenticationException e ) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password.");
+            return new ResponseEntity<>(errorResponse("Invalid username or password."), HttpStatus.UNAUTHORIZED);
         }
     }
 
@@ -48,23 +48,23 @@ public class AuthController extends APIController {
     public ResponseEntity<?> logout() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null || !auth.isAuthenticated() || auth instanceof AnonymousAuthenticationToken) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No user is currently logged in.");
+            return new ResponseEntity<>(errorResponse("No user is currently logged in."), HttpStatus.UNAUTHORIZED);
         }
 
         SecurityContextHolder.clearContext();
-        return ResponseEntity.status(HttpStatus.OK).body("Logout successful!");
+        return new ResponseEntity<>(successResponse("Logout successful!"), HttpStatus.OK);
     }
 
     @PostMapping(BASE_PATH + "/auth/register")
     public ResponseEntity<String> register (@RequestBody User user) {
         if (userService.findByName(user.getUsername()) != null) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already exists.");
+            return new ResponseEntity<>(errorResponse("Username already exists."), HttpStatus.CONFLICT);
         }
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.save(user);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully!");
+        return new ResponseEntity<>(successResponse("User registered successfully!"), HttpStatus.CREATED);
     }
 
 }
