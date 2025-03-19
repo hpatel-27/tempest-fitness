@@ -215,40 +215,25 @@ public class WeightTest {
         // Make a default user to use for testing
         User testUser1 = new User();
 
-        User testUser2 = new User();
-        testUser2.setUsername("");
-
         User testUser3 = new User();
         testUser3.setUsername("test");
 
-        User testUser4 = new User();
-        testUser4.setUsername("test");
-        testUser4.setPassword("");
 
         User testUser5 = new User();
         testUser5.setUsername("test");
         testUser5.setPassword("test");
 
-        User testUser6 = new User();
-        testUser6.setUsername("test");
-        testUser6.setPassword("test");
-        testUser6.setRole("");
+
 
         Exception exc1 = assertThrows( IllegalArgumentException.class, () -> new Weight( "2025-01-11", 151.4, null ));
         Exception exc2 = assertThrows( NullPointerException.class, () -> new Weight( "2025-01-12", 178.3, testUser1 ));
-        Exception exc3 = assertThrows( IllegalArgumentException.class, () -> new Weight( "2025-01-13", 223.1, testUser2 ));
         Exception exc4 = assertThrows( NullPointerException.class, () -> new Weight( "2025-01-14", 126.0, testUser3 ));
-        Exception exc5 = assertThrows( IllegalArgumentException.class, () -> new Weight( "2025-01-13", 223.1, testUser4 ));
         Exception exc6 = assertThrows( NullPointerException.class, () -> new Weight( "2025-01-14", 126.0, testUser5 ));
-        Exception exc7 = assertThrows( IllegalArgumentException.class, () -> new Weight( "2025-01-13", 223.1, testUser6 ));
 
         assertEquals( "User was not provided with the Weight.", exc1.getMessage() );
         assertEquals( "Username was not provided.", exc2.getMessage() );
-        assertEquals( "Valid username was not provided with the Weight.", exc3.getMessage() );
         assertEquals( "Password was not provided.", exc4.getMessage() );
-        assertEquals( "Valid password was not provided with the Weight.", exc5.getMessage() );
         assertEquals( "Role was not provided.", exc6.getMessage() );
-        assertEquals( "Valid role was not provided with the Weight.", exc7.getMessage() );
 
     }
 

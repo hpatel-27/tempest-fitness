@@ -18,7 +18,6 @@ import java.util.List;
  * Spring will automatically convert all the ResponseEntity and List results
  * to JSON
  */
-@SuppressWarnings ( { "unchecked", "rawtypes" } )
 @RestController
 public class WeightController extends APIController {
 
@@ -52,30 +51,14 @@ public class WeightController extends APIController {
         // Find the user by username
         User user = userService.findByName(username);
         if (user == null) {
-            return new ResponseEntity(errorResponse("User not found"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(errorResponse("User not found."), HttpStatus.NOT_FOUND);
         }
 
         // Fetch all weights for this user
         List<Weight> weights = weightService.findByUser(user);
-
         return new ResponseEntity<>(weights, HttpStatus.OK);
     }
 
-//    /**
-//     * REST API method to provide GET access to a specific Weight
-//     *
-//     * @param date
-//     *            Date of the exercise to get
-//     * @return JSON representation of the specific Weight
-//     */
-//    @GetMapping( BASE_PATH + "/weights/{date}" )
-//    public ResponseEntity getWeight( @PathVariable("date") final String date ) {
-//        final Weight w = service.findByDate( date );
-//
-//        return null == w
-//                ? new ResponseEntity( errorResponse( "No weigh-in found with date" + date ), HttpStatus.NOT_FOUND )
-//                : new ResponseEntity( w, HttpStatus.OK );
-//    }
 
     /**
      * REST API method to provide POST access to the Weight model. This is
@@ -88,7 +71,7 @@ public class WeightController extends APIController {
      *         saved to the database, or an error if it could not be
      */
     @PostMapping( BASE_PATH + "/weights" )
-    public ResponseEntity addWeight (@RequestBody final Weight weight ) {
+    public ResponseEntity<?> addWeight (@RequestBody final Weight weight ) {
         // Get authenticated user's username
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username;
@@ -100,19 +83,15 @@ public class WeightController extends APIController {
         }
         User user = userService.findByName(username);
         if (user == null) {
-            return new ResponseEntity(errorResponse("User not found."), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(errorResponse("User not found."), HttpStatus.NOT_FOUND);
         }
 
         if (weightService.findByUserAndDate(user, weight.getDate()) != null ) {
-            return new ResponseEntity(
-                    errorResponse( "Weight with the date " + weight.getDate() + " already exists" ),
-                    HttpStatus.CONFLICT );
+            return new ResponseEntity<>(errorResponse("Weight with the date " + weight.getDate() + " already exists."), HttpStatus.CONFLICT);
         }
         weight.setUser(user);
         weightService.save( weight );
-        return new ResponseEntity( successResponse( weight.getDate() + " successfully created."),
-                HttpStatus.OK );
-
+        return new ResponseEntity<>(successResponse("Weight on " + weight.getDate() + " successfully created."), HttpStatus.OK);
     }
 
     /**
@@ -128,7 +107,7 @@ public class WeightController extends APIController {
      *         saved to the database, or an error if it could not be
      */
     @PutMapping ( BASE_PATH + "/weights/{date}" )
-    public ResponseEntity editWeight ( @PathVariable ( "date" ) final String date,
+    public ResponseEntity<?> editWeight ( @PathVariable ( "date" ) final String date,
                                            @RequestBody final Weight weight ) {
 
         // Get authenticated user's username
@@ -143,27 +122,20 @@ public class WeightController extends APIController {
 
         User user = userService.findByName(username);
         if (user == null) {
-            return new ResponseEntity(errorResponse("User not found."), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(errorResponse("User not found."), HttpStatus.NOT_FOUND);
         }
 
         final Weight existingWeight = weightService.findByUserAndDate(user, date );
         if ( existingWeight == null ) {
-            return new ResponseEntity(
-                    errorResponse(
-                            "Weight with the date " + weight.getDate() + " does not exist" ),
-                    HttpStatus.CONFLICT );
+            return new ResponseEntity<>(errorResponse("Weight with the date " + weight.getDate() + " does not exist."), HttpStatus.CONFLICT);
         }
         if ( !date.equals( weight.getDate() ) ) {
-            return new ResponseEntity(
-                    errorResponse( "Weight with the date " + date + " does not match object provided" ),
-                    HttpStatus.CONFLICT );
+            return new ResponseEntity<>(errorResponse("Weight with the date " + date + " does not match object provided."), HttpStatus.CONFLICT);
         }
         existingWeight.setDate( weight.getDate() );
         existingWeight.setWeight( weight.getWeight() );
         weightService.save( existingWeight );
-        return new ResponseEntity( successResponse( weight.getDate() + " successfully created" ),
-                HttpStatus.OK );
-
+        return new ResponseEntity<>( successResponse( weight.getDate() + " successfully created" ), HttpStatus.OK );
     }
 
     /**
@@ -177,7 +149,7 @@ public class WeightController extends APIController {
      *         weight does not exist
      */
     @DeleteMapping ( BASE_PATH + "/weights/{date}" )
-    public ResponseEntity deleteWeight ( @PathVariable final String date ) {
+    public ResponseEntity<?> deleteWeight ( @PathVariable final String date ) {
         // Get authenticated user's username
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username;
@@ -190,16 +162,15 @@ public class WeightController extends APIController {
 
         User user = userService.findByName(username);
         if (user == null) {
-            return new ResponseEntity(errorResponse("User not found."), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(errorResponse("User not found."), HttpStatus.NOT_FOUND);
         }
 
         final Weight weight = weightService.findByUserAndDate(user, date );
         if ( null == weight ) {
-            return new ResponseEntity( errorResponse( "No Weight found for date " + date ), HttpStatus.NOT_FOUND );
+            return new ResponseEntity<>(errorResponse("No Weight found for date " + date), HttpStatus.NOT_FOUND);
         }
         weightService.delete( weight );
-
-        return new ResponseEntity( successResponse( "Weight with date " + date + " was deleted successfully" ), HttpStatus.OK );
+        return new ResponseEntity<>(successResponse("Weight with date " + date + " was deleted successfully!"), HttpStatus.OK);
     }
 
 }

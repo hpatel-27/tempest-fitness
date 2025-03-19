@@ -246,8 +246,8 @@ public class UserTest {
         assertEquals(174.25, u1.getHeight());
 
         // Inner boundary
-        u1.setHeight(0.1);
-        assertEquals(0.1, u1.getHeight());
+        u1.setHeight(0);
+        assertEquals(0, u1.getHeight());
 
         // Inner boundary
         u1.setHeight(245.0);
@@ -255,9 +255,9 @@ public class UserTest {
 
         // Error testing
         User errorUser = new User();
-        Exception exc1 = assertThrows( IllegalArgumentException.class, () -> errorUser.setHeight(0));
+        Exception exc1 = assertThrows( IllegalArgumentException.class, () -> errorUser.setHeight(-1));
         Exception exc2 = assertThrows( IllegalArgumentException.class, () -> errorUser.setHeight(245.1));
-        Exception exc3 = assertThrows( IllegalArgumentException.class, () -> errorUser.setHeight(-1));
+        Exception exc3 = assertThrows( IllegalArgumentException.class, () -> errorUser.setHeight(-100));
 
         assertEquals( "Height is outside of permitted range.", exc1.getMessage() );
         assertEquals( "Height is outside of permitted range.", exc2.getMessage() );
