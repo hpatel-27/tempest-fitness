@@ -184,7 +184,7 @@ public class User extends DomainObject implements UserDetails {
 
     public void setHeight(double height) {
         // Between 0 and 245 centimeters (0 to 8 feet)
-        if (height <= 0 || height > 245) {
+        if (height < 0 || height > 245) {
             throw new IllegalArgumentException("Height is outside of permitted range.");
         }
         this.height = height;
