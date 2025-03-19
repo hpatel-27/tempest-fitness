@@ -24,7 +24,6 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.emptyOrNullString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -79,13 +78,12 @@ public class APIUserTest {
         mvc.perform(post("/api/v1/auth/register").contentType(MediaType.APPLICATION_JSON)
                         .content(TestUtils.asJsonString(u1)))
                         .andExpect(status().isCreated())
-                        .andExpect(content().string("User registered successfully!"));
+                        .andExpect(content().json("{\"status\":\"success\",\"message\":\"User registered successfully!\"}"));
 
         mvc.perform(post("/api/v1/auth/register").contentType(MediaType.APPLICATION_JSON)
                         .content(TestUtils.asJsonString(u2)))
                         .andExpect(status().isConflict())
-                        .andExpect(content().string("Username already exists."));
-
+                        .andExpect(content().json("{\"status\":\"failed\",\"message\":\"Username already exists.\"}"));
     }
 
     @Test
@@ -98,8 +96,8 @@ public class APIUserTest {
 
         mvc.perform(post("/api/v1/auth/register").contentType(MediaType.APPLICATION_JSON)
                         .content(TestUtils.asJsonString(u1)))
-                .andExpect(status().isCreated())
-                .andExpect(content().string("User registered successfully!"));
+                        .andExpect(status().isCreated())
+                        .andExpect(content().json("{\"status\":\"success\",\"message\":\"User registered successfully!\"}"));
 
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setUsername("TestUsername");
@@ -108,7 +106,7 @@ public class APIUserTest {
         mvc.perform(post("/api/v1/auth/login").contentType(MediaType.APPLICATION_JSON)
                         .content(TestUtils.asJsonString(loginRequest)))
                         .andExpect(status().isOk())
-                        .andExpect(content().string("Login successful!"));
+                        .andExpect(content().json("{\"status\":\"success\",\"message\":\"Login successful!\"}"));
 
         LoginRequest badRequest = new LoginRequest();
         badRequest.setUsername("BadUsername");
@@ -116,9 +114,8 @@ public class APIUserTest {
 
         mvc.perform(post("/api/v1/auth/login").contentType(MediaType.APPLICATION_JSON)
                         .content(TestUtils.asJsonString(badRequest)))
-                .andExpect(status().isUnauthorized())
-                .andExpect(content().string("Invalid username or password."));
-
+                        .andExpect(status().isUnauthorized())
+                        .andExpect(content().json("{\"status\":\"failed\",\"message\":\"Invalid username or password.\"}"));
     }
 
     @Test
@@ -134,8 +131,8 @@ public class APIUserTest {
         u1.setRole("TEST");
         mvc.perform(post("/api/v1/auth/register").contentType(MediaType.APPLICATION_JSON)
                         .content(TestUtils.asJsonString(u1)))
-                .andExpect(status().isCreated())
-                .andExpect(content().string("User registered successfully!"));
+                        .andExpect(status().isCreated())
+                        .andExpect(content().json("{\"status\":\"success\",\"message\":\"User registered successfully!\"}"));
 
         // Confirm registration
         assertEquals(1, service.count());
@@ -148,7 +145,7 @@ public class APIUserTest {
         mvc.perform(post("/api/v1/auth/register").contentType(MediaType.APPLICATION_JSON)
                         .content(TestUtils.asJsonString(u2)))
                 .andExpect(status().isCreated())
-                .andExpect(content().string("User registered successfully!"));
+                .andExpect(content().json("{\"status\":\"success\",\"message\":\"User registered successfully!\"}"));
 
         // Confirm registration
         assertEquals(2, service.count());
@@ -157,7 +154,7 @@ public class APIUserTest {
         mvc.perform(delete("/api/v1/users/user").contentType(MediaType.APPLICATION_JSON)
                 .content(TestUtils.asJsonString(u1)))
                 .andExpect(status().isOk())
-                .andExpect(content().string("user was successfully deleted!"));
+                .andExpect(content().json("{\"status\":\"success\",\"message\":\"user was successfully deleted!\"}"));
 
         // Confirm deletion
         assertEquals(1, service.count());
@@ -167,7 +164,7 @@ public class APIUserTest {
         mvc.perform(delete("/api/v1/users/user").contentType(MediaType.APPLICATION_JSON)
                         .content(TestUtils.asJsonString(u1)))
                 .andExpect(status().isNotFound())
-                .andExpect(content().string("No user found with the name user."));
+                .andExpect(content().json("{\"status\":\"failed\",\"message\":\"No user found with the name user.\"}"));
 
         // Confirm Not Found
         assertEquals(1, service.count());
@@ -176,7 +173,7 @@ public class APIUserTest {
         mvc.perform(delete("/api/v1/users/user2").contentType(MediaType.APPLICATION_JSON)
                         .content(TestUtils.asJsonString(u2)))
                 .andExpect(status().isOk())
-                .andExpect(content().string("user2 was successfully deleted!"));
+                .andExpect(content().json("{\"status\":\"success\",\"message\":\"user2 was successfully deleted!\"}"));
 
         // Confirm deletion
         assertEquals(0, service.count());
@@ -194,7 +191,7 @@ public class APIUserTest {
         mvc.perform(post("/api/v1/auth/register").contentType(MediaType.APPLICATION_JSON)
                         .content(TestUtils.asJsonString(u1)))
                 .andExpect(status().isCreated())
-                .andExpect(content().string("User registered successfully!"));
+                .andExpect(content().json("{\"status\":\"success\",\"message\":\"User registered successfully!\"}"));
 
         // Login a user
         LoginRequest loginRequest = new LoginRequest();
@@ -203,7 +200,7 @@ public class APIUserTest {
         mvc.perform(post("/api/v1/auth/login").contentType(MediaType.APPLICATION_JSON)
                         .content(TestUtils.asJsonString(loginRequest)))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Login successful!"));
+                .andExpect(content().json("{\"status\":\"success\",\"message\":\"Login successful!\"}"));
 
         // Manually set authentication in the SecurityContext
         SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
@@ -224,8 +221,7 @@ public class APIUserTest {
         // Attempt to get the current user, even though there isn't one
         mvc.perform(get("/api/v1/currentUser").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
-                .andExpect(content().string(emptyOrNullString()));
-
+                .andExpect(content().json("{\"status\":\"failed\",\"message\":\"Error finding the current user.\"}"));
     }
 
     @Test
@@ -240,7 +236,7 @@ public class APIUserTest {
         // Perform the logout request
         mvc.perform(post("/api/v1/auth/logout"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Logout successful!"));
+                .andExpect(content().json("{\"status\":\"success\",\"message\":\"Logout successful!\"}"));
     }
 
     @Test
