@@ -26,7 +26,7 @@ public class UserController extends APIController {
     public ResponseEntity<?> getCurrentUser() {
         try {
             final User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            return ResponseEntity.status(HttpStatus.OK).body(user);
+            return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (NullPointerException e ) {
             return new ResponseEntity<>(errorResponse("Error finding the current user."), HttpStatus.NOT_FOUND);
         }
