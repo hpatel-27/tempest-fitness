@@ -3,7 +3,9 @@
 Fitness tracking application to store and display user weight information, which can be sorted in ascending or descending order. The user must login to access their information. The exercise and workout components are a work in progress. 
 
 # Application Preview
-TODO: Insert pictures here of the running application
+This will take you to the youtube video that showcases the demo of this application.
+
+[![Demo of Tempest-Fitness](Tempest-Fitness/docs/LoginPage.png)](https://youtu.be/TCfRo5PG9Xg)
 
 # Directory Structure:
 ```
