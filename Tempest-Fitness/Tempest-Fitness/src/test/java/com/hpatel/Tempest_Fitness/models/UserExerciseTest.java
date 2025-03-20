@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @EnableAutoConfiguration
 @SpringBootTest(classes = TestConfig.class)
 @ActiveProfiles("test")  // Activate the test profile for the H2 database
-public class ExerciseTest {
+public class UserExerciseTest {
 
     /**
      * The service object that lets Exercises be saved to the db
@@ -41,7 +41,7 @@ public class ExerciseTest {
     @Test
     @Transactional
     public void testConstructor () {
-        final Exercise e1 = new Exercise( "Bench Press", 1, 10, 135.0 );
+        final UserExercise e1 = new UserExercise( "Bench Press", 1, 10, 135.0 );
 
         assertEquals( "Bench Press", e1.getName() );
         assertEquals( 1, e1.getSets() );
@@ -52,7 +52,7 @@ public class ExerciseTest {
     @Test
     @Transactional
     public void testSetName() {
-        final Exercise e0 = new Exercise( "Bench Press", 5, 6, 155.0 );
+        final UserExercise e0 = new UserExercise( "Bench Press", 5, 6, 155.0 );
 
         assertEquals( "Bench Press", e0.getName() );
         assertEquals( 5, e0.getSets() );
@@ -70,9 +70,9 @@ public class ExerciseTest {
     @Test
     @Transactional
     public void testInvalidNames() {
-        Exception e1 = assertThrows( IllegalArgumentException.class, () -> new Exercise( null, 5, 6, 155.0 ));
-        Exception e2 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "", 5, 6, 155.0 ));
-        Exception e3 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "      ", 5, 6, 155.0 ));
+        Exception e1 = assertThrows( IllegalArgumentException.class, () -> new UserExercise( null, 5, 6, 155.0 ));
+        Exception e2 = assertThrows( IllegalArgumentException.class, () -> new UserExercise( "", 5, 6, 155.0 ));
+        Exception e3 = assertThrows( IllegalArgumentException.class, () -> new UserExercise( "      ", 5, 6, 155.0 ));
 
         assertEquals( "Exercise must have a name.", e1.getMessage() );
         assertEquals( "Exercise must have a name.", e2.getMessage() );
@@ -83,7 +83,7 @@ public class ExerciseTest {
     @Test
     @Transactional
     public void testSetSets() {
-        final Exercise e2 = new Exercise( "Bench Press", 5, 6, 155.0 );
+        final UserExercise e2 = new UserExercise( "Bench Press", 5, 6, 155.0 );
 
         assertEquals( "Bench Press", e2.getName() );
         assertEquals( 5, e2.getSets() );
@@ -101,9 +101,9 @@ public class ExerciseTest {
     @Test
     @Transactional
     public void testInvalidSets() {
-        Exception exc1 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "Bench Press", 0, 6, 155.0 ));
-        Exception exc2 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "Bench Press", 21, 6, 155.0 ));
-        Exception exc3 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "Squat", -1000, 6, 155.0 ));
+        Exception exc1 = assertThrows( IllegalArgumentException.class, () -> new UserExercise( "Bench Press", 0, 6, 155.0 ));
+        Exception exc2 = assertThrows( IllegalArgumentException.class, () -> new UserExercise( "Bench Press", 21, 6, 155.0 ));
+        Exception exc3 = assertThrows( IllegalArgumentException.class, () -> new UserExercise( "Squat", -1000, 6, 155.0 ));
 
         assertEquals( "Sets value outside of expected range.", exc1.getMessage() );
         assertEquals( "Sets value outside of expected range.", exc2.getMessage() );
@@ -114,7 +114,7 @@ public class ExerciseTest {
     @Test
     @Transactional
     public void testSetReps() {
-        final Exercise e3 = new Exercise( "Bench Press",2, 7, 145.7 );
+        final UserExercise e3 = new UserExercise( "Bench Press",2, 7, 145.7 );
 
         assertEquals( "Bench Press", e3.getName() );
         assertEquals( 2, e3.getSets() );
@@ -132,10 +132,10 @@ public class ExerciseTest {
     @Test
     @Transactional
     public void testInvalidReps() {
-        Exception exc1 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "Bench Press", 3, 0, 155.0 ));
-        Exception exc2 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "Bench Press", 2, -1000, 115.0 ));
-        Exception exc3 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "Squat", 11, 101, 125.0 ));
-        Exception exc4 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "Squat", 4, 1000, 135.0 ));
+        Exception exc1 = assertThrows( IllegalArgumentException.class, () -> new UserExercise( "Bench Press", 3, 0, 155.0 ));
+        Exception exc2 = assertThrows( IllegalArgumentException.class, () -> new UserExercise( "Bench Press", 2, -1000, 115.0 ));
+        Exception exc3 = assertThrows( IllegalArgumentException.class, () -> new UserExercise( "Squat", 11, 101, 125.0 ));
+        Exception exc4 = assertThrows( IllegalArgumentException.class, () -> new UserExercise( "Squat", 4, 1000, 135.0 ));
 
         assertEquals( "Reps value outside of expected range.", exc1.getMessage() );
         assertEquals( "Reps value outside of expected range.", exc2.getMessage() );
@@ -147,7 +147,7 @@ public class ExerciseTest {
     @Test
     @Transactional
     public void testSetWeight() {
-        final Exercise e4 = new Exercise( "Bench Press",7, 9, 185.3 );
+        final UserExercise e4 = new UserExercise( "Bench Press",7, 9, 185.3 );
 
         assertEquals( "Bench Press", e4.getName() );
         assertEquals( 7, e4.getSets() );
@@ -165,10 +165,10 @@ public class ExerciseTest {
     @Test
     @Transactional
     public void testInvalidWeight() {
-        Exception exc1 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "Bench Press",7, 9, -0.1 ));
-        Exception exc2 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "Bench Press", 2, 3, -100.0 ));
-        Exception exc3 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "Squat", 11, 3, 500.1 ));
-        Exception exc4 = assertThrows( IllegalArgumentException.class, () -> new Exercise( "Squat", 4, 1, 1000.0 ));
+        Exception exc1 = assertThrows( IllegalArgumentException.class, () -> new UserExercise( "Bench Press",7, 9, -0.1 ));
+        Exception exc2 = assertThrows( IllegalArgumentException.class, () -> new UserExercise( "Bench Press", 2, 3, -100.0 ));
+        Exception exc3 = assertThrows( IllegalArgumentException.class, () -> new UserExercise( "Squat", 11, 3, 500.1 ));
+        Exception exc4 = assertThrows( IllegalArgumentException.class, () -> new UserExercise( "Squat", 4, 1, 1000.0 ));
 
         assertEquals( "Weight value outside of expected range.", exc1.getMessage() );
         assertEquals( "Weight value outside of expected range.", exc2.getMessage() );
@@ -180,8 +180,8 @@ public class ExerciseTest {
     @Test
     @Transactional
     public void testEquals() {
-        final Exercise e10 = new Exercise( "Bench Press",5, 5, 136.0 );
-        final Exercise e11 = new Exercise( "Bench Press",2, 3, 186.4 );
+        final UserExercise e10 = new UserExercise( "Bench Press",5, 5, 136.0 );
+        final UserExercise e11 = new UserExercise( "Bench Press",2, 3, 186.4 );
 
         assertNotEquals( e10, e11 );
 
@@ -195,7 +195,7 @@ public class ExerciseTest {
 
         // If the name and the weight of the exercise is the same
         // they should be equal
-        final Exercise e12 = new Exercise( "Bench Press",7, 1, 136.0 );
+        final UserExercise e12 = new UserExercise( "Bench Press",7, 1, 136.0 );
         assertEquals( e10, e12 );
 
         // Check that it is not equal compared to a null
@@ -205,10 +205,10 @@ public class ExerciseTest {
     @Test
     @Transactional
     public void testToString() {
-        final Exercise e10 = new Exercise( "Bench Press",5, 5, 136.0 );
+        final UserExercise e10 = new UserExercise( "Bench Press",5, 5, 136.0 );
         assertEquals( "Exercise{name=Bench Press, sets=5, reps=5, weight=136.0}", e10.toString() );
 
-        final Exercise e11 = new Exercise( "Deadlift",2, 3, 186.4 );
+        final UserExercise e11 = new UserExercise( "Deadlift",2, 3, 186.4 );
         assertEquals( "Exercise{name=Deadlift, sets=2, reps=3, weight=186.4}", e11.toString() );
 
     }
@@ -216,22 +216,22 @@ public class ExerciseTest {
     @Test
     @Transactional
     public void testSaveToDB() {
-        final Exercise exercise1 = new Exercise("Deadlift", 1, 1, 315.0 );
+        final UserExercise userExercise1 = new UserExercise("Deadlift", 1, 1, 315.0 );
 
         assertEquals( 0, service.count() );
-        service.save( exercise1 );
+        service.save(userExercise1);
         assertEquals( 1, service.count());
 
-        List<Exercise> list = service.findAll();
+        List<UserExercise> list = service.findAll();
 
         assertEquals( 1, list.size());
 
-        Exercise listE1 = list.getFirst();
-        assertEquals( listE1, exercise1 );
-        assertEquals( listE1.getName(), exercise1.getName() );
-        assertEquals( listE1.getSets(), exercise1.getSets() );
-        assertEquals( listE1.getReps(), exercise1.getReps() );
-        assertEquals( listE1.getWeight(), exercise1.getWeight() );
+        UserExercise listE1 = list.getFirst();
+        assertEquals( listE1, userExercise1);
+        assertEquals( listE1.getName(), userExercise1.getName() );
+        assertEquals( listE1.getSets(), userExercise1.getSets() );
+        assertEquals( listE1.getReps(), userExercise1.getReps() );
+        assertEquals( listE1.getWeight(), userExercise1.getWeight() );
 
     }
 
@@ -241,9 +241,9 @@ public class ExerciseTest {
     @Test
     @Transactional
     public void testHashing() {
-        final Exercise e0 = new Exercise( "Bench Press",5, 5, 136.0 );
-        final Exercise e1 = new Exercise( "Bench Press",2, 3, 186.4 );
-        final Exercise e2 = new Exercise( "Bench Press",5, 5, 136.0 );
+        final UserExercise e0 = new UserExercise( "Bench Press",5, 5, 136.0 );
+        final UserExercise e1 = new UserExercise( "Bench Press",2, 3, 186.4 );
+        final UserExercise e2 = new UserExercise( "Bench Press",5, 5, 136.0 );
 
         assertEquals( e0.hashCode(), e2.hashCode() );
         assertNotEquals( e0.hashCode(), e1.hashCode() );

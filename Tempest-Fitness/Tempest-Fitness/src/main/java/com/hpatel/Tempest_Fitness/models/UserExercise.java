@@ -9,13 +9,14 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * Exercise object that is intended to be added to a workout.
+ * Exercise object that is intended to be added to a workout and holds
+ * the user's activity for the exercise.
  * An Exercise is tied to the database using Hibernate libraries.
  * See ExerciseRepository and ExerciseService for the other pieces
  * used for database support.
  */
 @Entity
-public class Exercise extends DomainObject {
+public class UserExercise extends DomainObject {
     /** ID for the Exercise in the database */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +37,7 @@ public class Exercise extends DomainObject {
     /**
      * Default constructor
      */
-    public Exercise () {
+    public UserExercise() {
         // empty default constructor
     }
 
@@ -47,7 +48,7 @@ public class Exercise extends DomainObject {
      * @param reps Reps completed per set
      * @param weight Weight used for the exercise
      */
-    public Exercise(final String name, final int sets, final int reps, final double weight) {
+    public UserExercise(final String name, final int sets, final int reps, final double weight) {
         setName(name);
         setSets(sets);
         setReps(reps);
@@ -163,8 +164,8 @@ public class Exercise extends DomainObject {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Exercise exercise = (Exercise) o;
-        return getName().equals(exercise.getName()) && Double.compare(getWeight(), exercise.getWeight()) == 0;
+        UserExercise userExercise = (UserExercise) o;
+        return getName().equals(userExercise.getName()) && Double.compare(getWeight(), userExercise.getWeight()) == 0;
     }
 
     /** Hashcode method override */
