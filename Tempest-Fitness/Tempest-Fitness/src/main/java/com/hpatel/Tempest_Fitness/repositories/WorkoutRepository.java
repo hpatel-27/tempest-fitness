@@ -2,11 +2,13 @@ package com.hpatel.Tempest_Fitness.repositories;
 
 import com.hpatel.Tempest_Fitness.models.Workout;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  * Repository is used to find the specific Workout models from the database.
  * Spring will generate appropriate code with JPA.
  */
+@Repository
 public interface WorkoutRepository extends JpaRepository<Workout, Long> {
 
     /**
