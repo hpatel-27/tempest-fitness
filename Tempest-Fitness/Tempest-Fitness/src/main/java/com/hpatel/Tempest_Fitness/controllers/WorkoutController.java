@@ -15,7 +15,6 @@ import java.util.List;
  * Spring will automatically convert all the ResponseEntity and List results
  * to JSON
  */
-@SuppressWarnings ( { "unchecked", "rawtypes" } )
 @RestController
 public class WorkoutController extends APIController {
 
@@ -45,11 +44,11 @@ public class WorkoutController extends APIController {
      * @return response to the request
      */
     @GetMapping( BASE_PATH + "/workouts/{date}")
-    public ResponseEntity getWorkout (@PathVariable ( "date" ) final String date ) {
+    public ResponseEntity<?> getWorkout (@PathVariable ( "date" ) final String date ) {
         final Workout workout = service.findByDate( date );
         return null == workout
-                ? new ResponseEntity( errorResponse( "No workout found with date " + date ), HttpStatus.NOT_FOUND )
-                : new ResponseEntity( workout, HttpStatus.OK );
+                ? new ResponseEntity<>( errorResponse( "No workout found with date " + date ), HttpStatus.NOT_FOUND )
+                : new ResponseEntity<>( workout, HttpStatus.OK );
     }
 
     /**
@@ -63,14 +62,14 @@ public class WorkoutController extends APIController {
      *         the database, or an error if it could not be
      */
     @PostMapping( BASE_PATH + "/workouts" )
-    public ResponseEntity createWorkout ( @RequestBody final Workout workout ) {
+    public ResponseEntity<?> createWorkout ( @RequestBody final Workout workout ) {
         if ( null != service.findByDate( workout.getDate() ) ) {
-            return new ResponseEntity( errorResponse( "Workout with the name " + workout.getDate() + " already exists" ),
+            return new ResponseEntity<>( errorResponse( "Workout with the name " + workout.getDate() + " already exists" ),
                     HttpStatus.CONFLICT );
         }
         else {
             service.save( workout );
-            return new ResponseEntity( successResponse( "Workout on " + workout.getDate() + " successfully created" ), HttpStatus.OK );
+            return new ResponseEntity<>( successResponse( "Workout on " + workout.getDate() + " successfully created" ), HttpStatus.CREATED );
         }
 
     }
@@ -86,14 +85,14 @@ public class WorkoutController extends APIController {
      *         does not exist
      */
     @DeleteMapping ( BASE_PATH + "/workouts/{date}" )
-    public ResponseEntity deleteWorkout ( @PathVariable final String date ) {
+    public ResponseEntity<?> deleteWorkout ( @PathVariable final String date ) {
         final Workout workout = service.findByDate( date );
         if ( null == workout ) {
-            return new ResponseEntity( errorResponse( "No workout found for name " + date ), HttpStatus.NOT_FOUND );
+            return new ResponseEntity<>( errorResponse( "No workout found for name " + date ), HttpStatus.NOT_FOUND );
         }
         service.delete( workout );
 
-        return new ResponseEntity( successResponse( "Workout on " + date + " was deleted successfully" ), HttpStatus.OK );
+        return new ResponseEntity<>( successResponse( "Workout on " + date + " was deleted successfully" ), HttpStatus.OK );
     }
 
     /**
@@ -109,13 +108,13 @@ public class WorkoutController extends APIController {
      *
      */
     @PutMapping ( BASE_PATH + "/workouts/{date}" )
-    public ResponseEntity editWorkout (@PathVariable final String date, @RequestBody final Workout newWorkout ) {
+    public ResponseEntity<?> editWorkout (@PathVariable final String date, @RequestBody final Workout newWorkout ) {
         // Get the current workout matching date
         final Workout currWorkout = service.findByDate( date );
 
         // Return not found if the workout with the given date doesn't exist
         if ( null == currWorkout ) {
-            return new ResponseEntity( errorResponse( "No workout found for date " + date ), HttpStatus.NOT_FOUND );
+            return new ResponseEntity<>( errorResponse( "No workout found for date " + date ), HttpStatus.NOT_FOUND );
         }
 
         // Update the current workout to match the new one
@@ -123,6 +122,6 @@ public class WorkoutController extends APIController {
         service.save( currWorkout );
 
         // Return a success response
-        return new ResponseEntity( successResponse( "Workout on " + currWorkout.getDate() + " successfully updated" ), HttpStatus.OK );
+        return new ResponseEntity<>( successResponse( "Workout on " + currWorkout.getDate() + " successfully updated" ), HttpStatus.OK );
     }
 }
