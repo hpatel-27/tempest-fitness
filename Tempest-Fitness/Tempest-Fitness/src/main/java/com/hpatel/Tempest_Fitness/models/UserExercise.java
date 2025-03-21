@@ -1,15 +1,12 @@
 package com.hpatel.Tempest_Fitness.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * Exercise object that is intended to be added to a workout and holds
+ * UserExercise object that is intended to be added to a workout and holds
  * the user's activity for the exercise.
  * An Exercise is tied to the database using Hibernate libraries.
  * See ExerciseRepository and ExerciseService for the other pieces
@@ -17,13 +14,15 @@ import java.util.Objects;
  */
 @Entity
 public class UserExercise extends DomainObject {
-    /** ID for the Exercise in the database */
+
+    /** ID for the UserExercise in the database */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    /** Name of the exercise */
-    private String name;
+    @ManyToOne
+    @JoinColumn(name = "exercise_id", nullable = false)
+    private Exercise exercise;
 
     /** The number of sets completed for the exercise */
     private int sets;
@@ -34,6 +33,10 @@ public class UserExercise extends DomainObject {
     /** The weight at which the exercise was completed */
     private double weight;
 
+    @ManyToOne
+    @JoinColumn(name = "workout_id", nullable = false)
+    private Workout workout;
+
     /**
      * Default constructor
      */
@@ -43,20 +46,21 @@ public class UserExercise extends DomainObject {
 
     /**
      * Constructor with all the specified fields (name, sets, reps, weight)
-     * @param name Name of the exercise
+     * @param exercise  Exercise associated with the object
      * @param sets Sets completed for the exercise
      * @param reps Reps completed per set
      * @param weight Weight used for the exercise
      */
-    public UserExercise(final String name, final int sets, final int reps, final double weight) {
-        setName(name);
+    public UserExercise(final Exercise exercise, final int sets, final int reps, final double weight, Workout workout) {
+        setExercise(exercise);
         setSets(sets);
         setReps(reps);
         setWeight(weight);
+        setWorkout(workout);
     }
 
     /**
-     * Returns the id for the Exercise
+     * Returns the id for the UserExercise
      *
      * @return the id
      */
@@ -66,7 +70,7 @@ public class UserExercise extends DomainObject {
     }
 
     /**
-     * Set the ID of the Exercise (Used by Hibernate)
+     * Set the ID of the UserExercise (Used by Hibernate)
      *
      * @param id
      *            the ID
@@ -74,26 +78,6 @@ public class UserExercise extends DomainObject {
     @SuppressWarnings ( "unused" )
     private void setId(final Long id) {
         this.id = id;
-    }
-
-    /**
-     * Sets the name of the exercise
-     * @param name Name of the
-     */
-    public void setName(String name) {
-        // check if a null string was passed or if the string is empty
-        if (name == null || name.isBlank() ) {
-            throw new IllegalArgumentException("Exercise must have a name.");
-        }
-        this.name = name;
-    }
-
-    /**
-     * Gets the name of the exercise
-     * @return Name of the exercise
-     */
-    public String getName() {
-        return name;
     }
 
     /**
@@ -153,25 +137,56 @@ public class UserExercise extends DomainObject {
         return weight;
     }
 
+    public Exercise getExercise() {
+        return exercise;
+    }
+
+    public void setExercise(Exercise exercise) {
+        this.exercise = exercise;
+    }
+
+    public Workout getWorkout() {
+        return workout;
+    }
+
+    public void setWorkout(Workout workout) {
+        this.workout = workout;
+    }
+
     /**
-     * Compare the name and weight to consider equality, this way if the user
-     * tries to add two of the same exercise (same name and weight they might as
-     * well update one of them so there isn't a duplicate
+     * Convenient method to update all the user's performance metrics for the exercise
+     * @param sets Sets completed for the exercise
+     * @param reps Reps completed for the exercise
+     * @param weight Weight used for the exercise
+     */
+    public void updatePerformance(int sets, int reps, double weight) {
+        setSets(sets);
+        setReps(reps);
+        setWeight(weight);
+    }
+
+    /** Summarizes the object as a string */
+    public String getSummary() {
+        return String.format("%s - %d sets x %d reps @ %.2f lbs",
+                exercise.getName(), sets, reps, weight);
+    }
+
+    /**
+     * Compare two UserExercises for equality
      * @param o The object to compare against
-     * @return True if the other object has the same name and weight values
+     * @return True if the other object has the same sets, reps, weights, and Exercise
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UserExercise userExercise = (UserExercise) o;
-        return getName().equals(userExercise.getName()) && Double.compare(getWeight(), userExercise.getWeight()) == 0;
+        UserExercise that = (UserExercise) o;
+        return getSets() == that.getSets() && getReps() == that.getReps() && Double.compare(getWeight(), that.getWeight()) == 0 && Objects.equals(getExercise(), that.getExercise());
     }
 
     /** Hashcode method override */
     @Override
     public int hashCode() {
-        return Objects.hash(getSets(), getReps(), getWeight());
+        return Objects.hash(getExercise(), getSets(), getReps(), getWeight());
     }
 
     /**
@@ -180,8 +195,8 @@ public class UserExercise extends DomainObject {
      */
     @Override
     public String toString() {
-        return "Exercise{" +
-                "name=" + name +
+        return "UserExercise{" +
+                "exercise=" + exercise.getName() +
                 ", sets=" + sets +
                 ", reps=" + reps +
                 ", weight=" + weight +
