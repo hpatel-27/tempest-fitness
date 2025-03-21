@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Component
 @Transactional
-public class WeightService extends Service<Weight, Long> {
+public class WeightService extends CustomService<Weight, Long> {
 
     /** The instance of the repository */
     @Autowired
