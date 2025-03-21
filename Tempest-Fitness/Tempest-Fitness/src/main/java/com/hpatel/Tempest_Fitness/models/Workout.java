@@ -21,18 +21,53 @@ public class Workout extends DomainObject {
     /** List of exercises completed during a workout */
     @OneToMany(mappedBy = "workout", cascade = CascadeType.ALL, fetch = FetchType.EAGER )
     @JsonManagedReference
-    private final List<UserExercise> userExercises;
+    private List<UserExercise> userExercises;
 
     /** Date that the workout was completed */
     private String date;
 
+    /** User foreign key */
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     /**
-     * Default Constructor that requires a date with "2025-01-25" format. It
-     * will use the current date to start, which can be updated.
+     * Default constructor
      */
-    public Workout () {
+    public Workout() {
+        // default constructor
+    }
+
+    /**
+     * Constructor that will use the current date to start, which can be updated.
+     * Makes an empty list of userExercises. Sets the associated user.
+     */
+    public Workout(User user) {
         setDate(LocalDate.now().toString());
         userExercises = new ArrayList<>();
+        setUser(user);
+    }
+
+    /**
+     * Constructor that requires a date with "2025-01-25" format. It
+     * will use the current date to start, which can be updated. Makes
+     * an empty list of userExercises.
+     */
+    public Workout(String date, User user) {
+        setDate(date);
+        userExercises = new ArrayList<>();
+        setUser(user);
+    }
+
+    /**
+     * Constructor that requires a date with "2025-01-25" format. It
+     * will use the current date to start, which can be updated. Makes
+     * an empty list of userExercises.
+     */
+    public Workout(String date, List<UserExercise> userExercises, User user) {
+        setDate(date);
+        this.userExercises = userExercises;
+        setUser(user);
     }
 
     @Override
@@ -67,7 +102,41 @@ public class Workout extends DomainObject {
      * @param date The new date of the workout
      */
     public void setDate (String date) {
+        // check if a null string was passed or if the string is empty
+        // check if the date is the appropriate length
+        if (date == null || date.isBlank() || date.length() != 10 ) {
+            throw new IllegalArgumentException("Date of the weigh-in is not valid.");
+        }
         this.date = date;
+    }
+
+    /**
+     * Get the user associated with this workout
+     * @return User the user with this workout
+     */
+    public User getUser() {
+        return user;
+    }
+
+    /**
+     * Sets the user for the workout
+     * @param user The user for this workout
+     */
+    public void setUser(User user) {
+        if (user == null ) {
+            throw new IllegalArgumentException("User was not provided with the Weight.");
+        }
+        if (user.getUsername() == null) {
+            throw new NullPointerException("Username was not provided.");
+        }
+        if (user.getPassword() == null) {
+            throw new NullPointerException("Password was not provided.");
+        }
+        if (user.getRole() == null) {
+            throw new NullPointerException("Role was not provided.");
+        }
+
+        this.user = user;
     }
 
     /**
@@ -115,6 +184,9 @@ public class Workout extends DomainObject {
      * @return True if removed successfully, false if not
      */
     public boolean removeExercise ( final UserExercise userExercise) {
+        if (userExercise == null) {
+            throw new IllegalArgumentException("UserExercise must be provided to delete.");
+        }
         return userExercises.remove(userExercise);
     }
 
