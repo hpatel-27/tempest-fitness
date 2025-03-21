@@ -1,10 +1,13 @@
 package com.hpatel.Tempest_Fitness.controllers;
 
+import com.hpatel.Tempest_Fitness.models.User;
 import com.hpatel.Tempest_Fitness.models.Workout;
+import com.hpatel.Tempest_Fitness.services.UserService;
 import com.hpatel.Tempest_Fitness.services.WorkoutService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +27,9 @@ public class WorkoutController extends APIController {
      */
     @Autowired
     private WorkoutService service;
+
+    @Autowired
+    private UserService userService;
 
     /**
      * REST API method to provide GET access to all workouts in the system
@@ -45,7 +51,11 @@ public class WorkoutController extends APIController {
      */
     @GetMapping( BASE_PATH + "/workouts/{date}")
     public ResponseEntity<?> getWorkout (@PathVariable ( "date" ) final String date ) {
-        final Workout workout = service.findByDate( date );
+        User user = getAuth();
+        if (user == null) {
+            return new ResponseEntity<>(errorResponse("User not found."), HttpStatus.NOT_FOUND);
+        }
+        final Workout workout = service.findByUserAndDate(user, date);
         return null == workout
                 ? new ResponseEntity<>( errorResponse( "No workout found with date " + date ), HttpStatus.NOT_FOUND )
                 : new ResponseEntity<>( workout, HttpStatus.OK );
@@ -63,7 +73,11 @@ public class WorkoutController extends APIController {
      */
     @PostMapping( BASE_PATH + "/workouts" )
     public ResponseEntity<?> createWorkout ( @RequestBody final Workout workout ) {
-        if ( null != service.findByDate( workout.getDate() ) ) {
+        User user = getAuth();
+        if (user == null) {
+            return new ResponseEntity<>(errorResponse("User not found."), HttpStatus.NOT_FOUND);
+        }
+        if ( null != service.findByUserAndDate(user, workout.getDate() ) ) {
             return new ResponseEntity<>( errorResponse( "Workout with the name " + workout.getDate() + " already exists" ),
                     HttpStatus.CONFLICT );
         }
@@ -86,7 +100,11 @@ public class WorkoutController extends APIController {
      */
     @DeleteMapping ( BASE_PATH + "/workouts/{date}" )
     public ResponseEntity<?> deleteWorkout ( @PathVariable final String date ) {
-        final Workout workout = service.findByDate( date );
+        User user = getAuth();
+        if (user == null) {
+            return new ResponseEntity<>(errorResponse("User not found."), HttpStatus.NOT_FOUND);
+        }
+        final Workout workout = service.findByUserAndDate(user, date);
         if ( null == workout ) {
             return new ResponseEntity<>( errorResponse( "No workout found for name " + date ), HttpStatus.NOT_FOUND );
         }
@@ -109,8 +127,13 @@ public class WorkoutController extends APIController {
      */
     @PutMapping ( BASE_PATH + "/workouts/{date}" )
     public ResponseEntity<?> editWorkout (@PathVariable final String date, @RequestBody final Workout newWorkout ) {
+        User user = getAuth();
+        if (user == null) {
+            return new ResponseEntity<>(errorResponse("User not found."), HttpStatus.NOT_FOUND);
+        }
+
         // Get the current workout matching date
-        final Workout currWorkout = service.findByDate( date );
+        final Workout currWorkout = service.findByUserAndDate(user, date);
 
         // Return not found if the workout with the given date doesn't exist
         if ( null == currWorkout ) {
@@ -123,5 +146,25 @@ public class WorkoutController extends APIController {
 
         // Return a success response
         return new ResponseEntity<>( successResponse( "Workout on " + currWorkout.getDate() + " successfully updated" ), HttpStatus.OK );
+    }
+
+    /**
+     * Helper method to get the authenticated user, since you must be authenticated to make
+     * api requests
+     * @return currently authenticated user
+     */
+    private User getAuth() {
+        // Get authenticated user's username
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username;
+
+        if (principal instanceof User) {
+            username = ((User) principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+
+        // Find the user by username and send it back
+        return userService.findByName(username);
     }
 }
