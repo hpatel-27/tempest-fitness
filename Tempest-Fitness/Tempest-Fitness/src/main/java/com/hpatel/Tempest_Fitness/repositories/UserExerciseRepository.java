@@ -20,5 +20,4 @@ public interface UserExerciseRepository extends JpaRepository<UserExercise, Long
      * @return The list of UserExercises associated with the Workout
      */
     List<UserExercise> findByWorkout(Workout workout);
-
 }
