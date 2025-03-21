@@ -4,16 +4,15 @@ import com.hpatel.Tempest_Fitness.models.Workout;
 import com.hpatel.Tempest_Fitness.repositories.WorkoutRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 /**
  * Provides access to the repository and getting Workout models
  * from the database.
  */
-@Component
+@Service
 @Transactional
-public class WorkoutService extends Service<Workout, Long> {
+public class WorkoutService extends CustomService<Workout, Long> {
 
     /** The instance of the repository */
     @Autowired
