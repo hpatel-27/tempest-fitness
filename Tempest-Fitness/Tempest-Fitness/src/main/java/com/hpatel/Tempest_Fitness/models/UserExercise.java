@@ -1,5 +1,6 @@
 package com.hpatel.Tempest_Fitness.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -35,6 +36,7 @@ public class UserExercise extends DomainObject {
 
     @ManyToOne
     @JoinColumn(name = "workout_id", nullable = false)
+    @JsonBackReference
     private Workout workout;
 
     /**
