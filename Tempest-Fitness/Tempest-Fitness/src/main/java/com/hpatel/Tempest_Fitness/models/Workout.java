@@ -1,10 +1,12 @@
 package com.hpatel.Tempest_Fitness.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,7 +19,8 @@ public class Workout extends DomainObject {
     private long id;
 
     /** List of exercises completed during a workout */
-    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER )
+    @OneToMany(mappedBy = "workout", cascade = CascadeType.ALL, fetch = FetchType.EAGER )
+    @JsonManagedReference
     private final List<UserExercise> userExercises;
 
     /** Date that the workout was completed */
@@ -32,28 +35,23 @@ public class Workout extends DomainObject {
         userExercises = new ArrayList<>();
     }
 
+    @Override
+    public Serializable getId() {
+        return id;
+    }
+
+    @SuppressWarnings( "unused")
+    private void setId ( final Long id ) {
+        this.id = id;
+    }
+
+
     /**
      * Get the list of exercises for the workout
      * @return The list of exercises for the workout
      */
     public List<UserExercise> getExercises () {
-        return userExercises;
-    }
-
-    /**
-     * Gets the exercise matching the one passed
-     *
-     * @param userExercise
-     *            Exercise to retrieve
-     * @return Null if exercise isn't in the workout, or the exercise
-     * doesn't exist
-     */
-    public UserExercise getExercise(final UserExercise userExercise) {
-        if ( !userExercises.contains(userExercise) ) {
-            return null;
-        }
-        final int index = userExercises.indexOf(userExercise);
-        return userExercises.get( index );
+        return Collections.unmodifiableList(userExercises);
     }
 
     /**
@@ -73,13 +71,16 @@ public class Workout extends DomainObject {
     }
 
     /**
-     * Adds an exercise to the list of exercises. Replaces an existing
+     * Adds an exercise to the list of exercise. Replaces an existing
      * exercise or adds a new one.
      *
      * @param userExercise
      *            Exercise to add
      */
-    public void addExercise ( final UserExercise userExercise) {
+    public void addOrUpdateExercise ( final UserExercise userExercise) {
+        if (userExercise == null) {
+            throw new IllegalArgumentException("User did not provided an exercise.");
+        }
         // Check the passed Exercise
         if ( userExercise.getSets() < 0 ) {
             throw new IllegalArgumentException( "Amount of sets must be a positive integer." );
@@ -90,29 +91,8 @@ public class Workout extends DomainObject {
         if ( userExercise.getWeight() < 0.0 ) {
             throw new IllegalArgumentException( "Weight value must be a positive integer." );
         }
-        if ( userExercise.getName() == null || userExercise.getName().isEmpty() ) {
-            throw new IllegalArgumentException( "Amount of sets must be a positive integer." );
-        }
-
-
-        if ( userExercises.contains(userExercise) ) {
-            throw new IllegalArgumentException( "Exercise already exists. Update the existing exercise.");
-        }
-        else {
-            userExercises.add(userExercise);
-        }
-    }
-
-    /**
-     * Adds an exercise to the list of exercise. Replaces an existing
-     * exercise or adds a new one.
-     *
-     * @param userExercise
-     *            Exercise to add
-     */
-    public void setExercise ( final UserExercise userExercise) {
-        if ( userExercise.getSets() < 0 ) {
-            throw new IllegalArgumentException( "Set value must be a positive integer" );
+        if ( userExercise.getExercise() == null ) {
+            throw new IllegalArgumentException( "Must have an associated Exercise object." );
         }
 
         if ( userExercises.contains(userExercise) ) {
@@ -121,7 +101,8 @@ public class Workout extends DomainObject {
             updatingUserExercise.setSets( userExercise.getSets() );
             updatingUserExercise.setReps( userExercise.getReps() );
             updatingUserExercise.setWeight( userExercise.getWeight() );
-            updatingUserExercise.setName( userExercise.getName() );
+            updatingUserExercise.setExercise( userExercise.getExercise() );
+            updatingUserExercise.setWorkout(this);
         }
         else {
             userExercises.add(userExercise);
@@ -162,20 +143,8 @@ public class Workout extends DomainObject {
             }
         }
 
-        // Set each ingredient
-        for ( final UserExercise e : workout.getExercises() ) {
-            this.setExercise( e );
-        }
-    }
-
-    @Override
-    public Serializable getId() {
-        return id;
-    }
-
-    @SuppressWarnings( "unused")
-    private void setId ( final Long id ) {
-        this.id = id;
+        // Set each exercise
+        workout.getExercises().forEach(this::addOrUpdateExercise);
     }
 
     @Override
