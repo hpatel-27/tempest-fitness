@@ -39,7 +39,7 @@ public class ExerciseController extends APIController {
      * REST API method to provide GET access to a specific Exercise
      *
      * @param id
-     *            Id of the exercise to get
+     *            id of the exercise to get
      * @return JSON representation of the specific Exercise
      */
     @GetMapping( BASE_PATH + "/exercises/{id}")
