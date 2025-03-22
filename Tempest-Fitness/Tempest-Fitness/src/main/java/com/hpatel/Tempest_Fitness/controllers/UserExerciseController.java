@@ -35,17 +35,17 @@ public class UserExerciseController {
 
     /**
      * Get all the Exercises for a workout
-     * @param date The date of the workout we want the exercises for
+     * @param id The id of the workout we want the exercises for
      * @return ResponseEntity with the UserExercises in the Workout
      */
-    @GetMapping(BASE_PATH + "/user-exercises/workout/{date}")
-    public ResponseEntity<?> getExercisesForWorkout(@PathVariable String date) {
+    @GetMapping(BASE_PATH + "/user-exercises/workout/{id}")
+    public ResponseEntity<?> getExercisesForWorkout(@PathVariable Long id) {
         User user = getAuth();
         if (user == null) {
             return new ResponseEntity<>(errorResponse("User not found."), HttpStatus.NOT_FOUND);
         }
 
-        Workout workout = workoutService.findByUserAndDate(user, date);
+        Workout workout = workoutService.findById(id);
         if (workout ==  null) {
             return new ResponseEntity<>(errorResponse("Workout not found."), HttpStatus.NOT_FOUND);
         }
