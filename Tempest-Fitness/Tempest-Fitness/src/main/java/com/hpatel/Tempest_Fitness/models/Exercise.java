@@ -2,7 +2,6 @@ package com.hpatel.Tempest_Fitness.models;
 
 import jakarta.persistence.*;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
@@ -102,7 +101,7 @@ public class Exercise extends DomainObject {
      * @return the id
      */
     @Override
-    public Serializable getId() {
+    public Long getId() {
         return id;
     }
 

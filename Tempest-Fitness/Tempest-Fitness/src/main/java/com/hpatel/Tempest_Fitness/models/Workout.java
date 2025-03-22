@@ -3,7 +3,6 @@ package com.hpatel.Tempest_Fitness.models;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -71,7 +70,7 @@ public class Workout extends DomainObject {
     }
 
     @Override
-    public Serializable getId() {
+    public Long getId() {
         return id;
     }
 

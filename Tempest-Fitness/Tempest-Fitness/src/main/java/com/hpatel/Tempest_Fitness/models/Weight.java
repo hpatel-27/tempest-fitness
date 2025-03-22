@@ -2,7 +2,6 @@ package com.hpatel.Tempest_Fitness.models;
 
 import jakarta.persistence.*;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -131,7 +130,7 @@ public class Weight extends DomainObject {
      * @return The id of the Weight
      */
     @Override
-    public Serializable getId() {
+    public Long getId() {
         return id;
     }
 
