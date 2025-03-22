@@ -4,10 +4,10 @@ import com.hpatel.Tempest_Fitness.models.Exercise;
 import com.hpatel.Tempest_Fitness.repositories.ExerciseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
+@Component
 @Transactional
 public class ExerciseService extends CustomService<Exercise, Long> {
 
@@ -21,7 +21,7 @@ public class ExerciseService extends CustomService<Exercise, Long> {
      */
     @Override
     protected JpaRepository<Exercise, Long> getRepository() {
-        return null;
+        return exerciseRepository;
     }
 
     /**
