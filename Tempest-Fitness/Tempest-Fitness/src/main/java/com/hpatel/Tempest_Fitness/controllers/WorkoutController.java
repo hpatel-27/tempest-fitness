@@ -32,13 +32,18 @@ public class WorkoutController extends APIController {
     private UserService userService;
 
     /**
-     * REST API method to provide GET access to all workouts in the system
+     * REST API method to provide GET access to all workouts for a user
      *
      * @return JSON representation of all workouts
      */
     @GetMapping( BASE_PATH + "/workouts" )
-    public List<Workout> getWorkouts() {
-        return service.findAll();
+    public ResponseEntity<?> getWorkouts() {
+        User user = getAuth();
+        if (user == null) {
+            return new ResponseEntity<>(errorResponse("User not found."), HttpStatus.NOT_FOUND);
+        }
+        List<Workout> workouts = service.findByUser(user);
+        return new ResponseEntity<>(workouts, HttpStatus.OK);
     }
 
     /**
