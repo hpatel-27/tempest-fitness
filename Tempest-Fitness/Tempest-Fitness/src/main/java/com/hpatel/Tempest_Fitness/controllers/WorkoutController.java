@@ -1,6 +1,7 @@
 package com.hpatel.Tempest_Fitness.controllers;
 
 import com.hpatel.Tempest_Fitness.models.User;
+import com.hpatel.Tempest_Fitness.models.UserExercise;
 import com.hpatel.Tempest_Fitness.models.Workout;
 import com.hpatel.Tempest_Fitness.services.UserService;
 import com.hpatel.Tempest_Fitness.services.WorkoutService;
@@ -71,25 +72,35 @@ public class WorkoutController extends APIController {
      * to create a new Workout by automatically converting the JSON RequestBody
      * provided to a Workout object. Invalid JSON will fail.
      *
-     * @param workout
+     * @param workoutRequest
      *            The valid Workout to be saved.
      * @return ResponseEntity indicating success if the Workout could be saved to
      *         the database, or an error if it could not be
      */
     @PostMapping( BASE_PATH + "/workouts" )
-    public ResponseEntity<?> createWorkout ( @RequestBody final Workout workout ) {
+    public ResponseEntity<?> createWorkout ( @RequestBody final Workout workoutRequest ) {
         User user = getAuth();
         if (user == null) {
             return new ResponseEntity<>(errorResponse("User not found."), HttpStatus.NOT_FOUND);
         }
-        if ( null != service.findByUserAndDate(user, workout.getDate() ) ) {
-            return new ResponseEntity<>( errorResponse( "Workout with the name " + workout.getDate() + " already exists" ),
+        if ( null != service.findByUserAndDate(user, workoutRequest.getDate() ) ) {
+            return new ResponseEntity<>( errorResponse( "Workout with the name " + workoutRequest.getDate() + " already exists" ),
                     HttpStatus.CONFLICT );
         }
-        else {
-            service.save( workout );
-            return new ResponseEntity<>( successResponse( "Workout on " + workout.getDate() + " successfully created" ), HttpStatus.CREATED );
+
+        // Create workout instance
+        Workout saveWorkout = new Workout(workoutRequest.getDate(), user);
+
+        // Link each UserExercise to this workout
+        for (UserExercise ue : workoutRequest.getUserExercises()) {
+            ue.setWorkout(saveWorkout);
+            saveWorkout.addOrUpdateExercise(ue);
         }
+
+        service.save(saveWorkout);
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body("Workout created successfully for date: " + saveWorkout.getDate());
 
     }
 
