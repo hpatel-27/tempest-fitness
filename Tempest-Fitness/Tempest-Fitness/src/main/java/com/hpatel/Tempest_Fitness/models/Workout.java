@@ -201,25 +201,35 @@ public class Workout extends DomainObject {
         // Set the Date
         this.setDate( workout.getDate() );
 
-        // Get the list of new exercises
-        final List<UserExercise> newUserExercises = workout.getUserExercises();
-
-        // Delete any exercises which didn't make it over to the updated workout
-        for ( int i = 0; i < this.userExercises.size(); ) {
-            if ( !newUserExercises.contains( userExercises.get( i ) ) ) {
-                userExercises.remove( i );
-                // Do NOT increment i here since the new Exercise at index i has not
-                // been changed
+        // Create a new list to store exercises we want to keep
+        List<UserExercise> exercisesToKeep = new ArrayList<>();
+        
+        // For each exercise in the new workout
+        for (UserExercise newExercise : workout.getUserExercises()) {
+            // Try to find existing exercise with same Exercise
+            boolean found = false;
+            for (UserExercise existingExercise : this.userExercises) {
+                if (existingExercise.getExercise().getId().equals(newExercise.getExercise().getId())) {
+                    // Update existing exercise
+                    existingExercise.setSets(newExercise.getSets());
+                    existingExercise.setReps(newExercise.getReps());
+                    existingExercise.setWeight(newExercise.getWeight());
+                    exercisesToKeep.add(existingExercise);
+                    found = true;
+                    break;
+                }
             }
-            else {
-                i++;
+            
+            // If no existing exercise found, add the new one
+            if (!found) {
+                newExercise.setWorkout(this);
+                exercisesToKeep.add(newExercise);
             }
         }
-
-        for (final UserExercise e : newUserExercises) {
-            e.setWorkout(this);
-            this.addOrUpdateExercise(e);
-        }
+        
+        // Clear and update the exercises list
+        this.userExercises.clear();
+        this.userExercises.addAll(exercisesToKeep);
     }
 
     @Override
