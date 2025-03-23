@@ -43,7 +43,7 @@ public class ExerciseController extends APIController {
      * @return JSON representation of the specific Exercise
      */
     @GetMapping( BASE_PATH + "/exercises/{id}")
-    public ResponseEntity<?> getExercise( @PathVariable Long id ) {
+    public ResponseEntity<?> getExercise( @PathVariable("id") Long id ) {
 
         final Exercise exercise = service.findById(id);
 
@@ -88,7 +88,7 @@ public class ExerciseController extends APIController {
      *         updated, or an error if it could not be
      */
     @PutMapping ( BASE_PATH + "/exercises/{id}" )
-    public ResponseEntity<?> editExercise ( @PathVariable Long id,
+    public ResponseEntity<?> editExercise ( @PathVariable("id") Long id,
                                        @RequestBody final Exercise updatedExercise) {
 
         Exercise existing = service.findById(id);
@@ -120,7 +120,7 @@ public class ExerciseController extends APIController {
      *         Exercise does not exist
      */
     @DeleteMapping ( BASE_PATH + "/exercises/{id}" )
-    public ResponseEntity<?> deleteExercise ( @PathVariable final Long id ) {
+    public ResponseEntity<?> deleteExercise ( @PathVariable("id") final Long id ) {
 
         final Exercise exercise = service.findById(id);
         if ( null == exercise) {
