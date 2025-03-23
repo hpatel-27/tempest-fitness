@@ -175,19 +175,19 @@ public class UserExercise extends DomainObject {
     /**
      * Compare two UserExercises for equality
      * @param o The object to compare against
-     * @return True if the other object has the same sets, reps, weights, and Exercise
+     * @return True if the other object has the same Exercise
      */
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         UserExercise that = (UserExercise) o;
-        return getSets() == that.getSets() && getReps() == that.getReps() && Double.compare(getWeight(), that.getWeight()) == 0 && Objects.equals(getExercise(), that.getExercise());
+        return Objects.equals(getExercise(), that.getExercise());
     }
 
     /** Hashcode method override */
     @Override
     public int hashCode() {
-        return Objects.hash(getExercise(), getSets(), getReps(), getWeight());
+        return Objects.hash(getExercise());
     }
 
     /**
