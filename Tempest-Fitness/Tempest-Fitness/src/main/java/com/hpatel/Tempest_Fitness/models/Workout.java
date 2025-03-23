@@ -201,8 +201,8 @@ public class Workout extends DomainObject {
         // Set the Date
         this.setDate( workout.getDate() );
 
-        // Create a new list to store exercises we want to keep
-        List<UserExercise> exercisesToKeep = new ArrayList<>();
+        // Create a list to track which existing exercises were updated
+        List<UserExercise> exercisesToRemove = new ArrayList<>(this.userExercises);
         
         // For each exercise in the new workout
         for (UserExercise newExercise : workout.getUserExercises()) {
@@ -214,7 +214,8 @@ public class Workout extends DomainObject {
                     existingExercise.setSets(newExercise.getSets());
                     existingExercise.setReps(newExercise.getReps());
                     existingExercise.setWeight(newExercise.getWeight());
-                    exercisesToKeep.add(existingExercise);
+                    // Remove from the to-remove list since we want to keep it
+                    exercisesToRemove.remove(existingExercise);
                     found = true;
                     break;
                 }
@@ -223,13 +224,14 @@ public class Workout extends DomainObject {
             // If no existing exercise found, add the new one
             if (!found) {
                 newExercise.setWorkout(this);
-                exercisesToKeep.add(newExercise);
+                this.userExercises.add(newExercise);
             }
         }
         
-        // Clear and update the exercises list
-        this.userExercises.clear();
-        this.userExercises.addAll(exercisesToKeep);
+        // Remove all exercises that weren't in the new workout
+        for (UserExercise exerciseToRemove : exercisesToRemove) {
+            this.userExercises.remove(exerciseToRemove);
+        }
     }
 
     @Override
