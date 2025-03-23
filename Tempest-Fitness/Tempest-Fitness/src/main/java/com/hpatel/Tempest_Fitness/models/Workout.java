@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+@Table(name = "workout", uniqueConstraints = @UniqueConstraint(columnNames = {"date", "user_id"}))
 @Entity
 public class Workout extends DomainObject {
 
@@ -84,7 +85,7 @@ public class Workout extends DomainObject {
      * Get the list of exercises for the workout
      * @return The list of exercises for the workout
      */
-    public List<UserExercise> getExercises () {
+    public List<UserExercise> getUserExercises () {
         return Collections.unmodifiableList(userExercises);
     }
 
@@ -200,7 +201,7 @@ public class Workout extends DomainObject {
         this.setDate( workout.getDate() );
 
         // Get the list of new exercises
-        final List<UserExercise> newUserExercises = workout.getExercises();
+        final List<UserExercise> newUserExercises = workout.getUserExercises();
 
         // Delete any exercises which didn't make it over to the updated workout
         for ( int i = 0; i < this.userExercises.size(); ) {
@@ -215,7 +216,7 @@ public class Workout extends DomainObject {
         }
 
         // Set each exercise
-        workout.getExercises().forEach(this::addOrUpdateExercise);
+        workout.getUserExercises().forEach(this::addOrUpdateExercise);
     }
 
     @Override
@@ -223,12 +224,12 @@ public class Workout extends DomainObject {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Workout workout = (Workout) o;
-        return Objects.equals(getExercises(), workout.getExercises()) && Objects.equals(getDate(), workout.getDate());
+        return Objects.equals(getUserExercises(), workout.getUserExercises()) && Objects.equals(getDate(), workout.getDate());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getExercises(), getDate());
+        return Objects.hash(getUserExercises(), getDate());
     }
 
 
