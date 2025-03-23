@@ -56,7 +56,7 @@ public class WorkoutController extends APIController {
      * @return response to the request
      */
     @GetMapping( BASE_PATH + "/workouts/{date}")
-    public ResponseEntity<?> getWorkout (@PathVariable ( "date" ) final String date ) {
+    public ResponseEntity<?> getWorkout (@PathVariable("date") final String date ) {
         User user = getAuth();
         if (user == null) {
             return new ResponseEntity<>(errorResponse("User not found."), HttpStatus.NOT_FOUND);
@@ -115,7 +115,7 @@ public class WorkoutController extends APIController {
      *         does not exist
      */
     @DeleteMapping ( BASE_PATH + "/workouts/{date}" )
-    public ResponseEntity<?> deleteWorkout ( @PathVariable final String date ) {
+    public ResponseEntity<?> deleteWorkout ( @PathVariable("date") final String date ) {
         User user = getAuth();
         if (user == null) {
             return new ResponseEntity<>(errorResponse("User not found."), HttpStatus.NOT_FOUND);
@@ -142,7 +142,7 @@ public class WorkoutController extends APIController {
      *
      */
     @PutMapping ( BASE_PATH + "/workouts/{date}" )
-    public ResponseEntity<?> editWorkout (@PathVariable final String date, @RequestBody final Workout newWorkout ) {
+    public ResponseEntity<?> editWorkout (@PathVariable("date") final String date, @RequestBody final Workout newWorkout ) {
         User user = getAuth();
         if (user == null) {
             return new ResponseEntity<>(errorResponse("User not found."), HttpStatus.NOT_FOUND);
