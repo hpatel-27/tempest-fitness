@@ -174,6 +174,7 @@ public class Workout extends DomainObject {
             updatingUserExercise.setWorkout(this);
         }
         else {
+            userExercise.setWorkout(this);
             userExercises.add(userExercise);
         }
     }
@@ -215,8 +216,10 @@ public class Workout extends DomainObject {
             }
         }
 
-        // Set each exercise
-        workout.getUserExercises().forEach(this::addOrUpdateExercise);
+        for (final UserExercise e : newUserExercises) {
+            e.setWorkout(this);
+            this.addOrUpdateExercise(e);
+        }
     }
 
     @Override
