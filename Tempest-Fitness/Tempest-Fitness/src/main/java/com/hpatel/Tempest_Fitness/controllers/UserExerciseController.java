@@ -18,6 +18,8 @@ import java.util.List;
 
 import static com.hpatel.Tempest_Fitness.controllers.APIController.*;
 
+// TODO: Delete? UserExercise{Controller, Service, Repository} seem not needed with my system design so I didn't need them
+// UserExercises are managed as part of the Workout class and don't need to be manipulated outside that
 @RestController
 public class UserExerciseController {
 
