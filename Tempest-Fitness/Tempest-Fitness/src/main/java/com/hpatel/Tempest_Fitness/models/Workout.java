@@ -19,7 +19,7 @@ public class Workout extends DomainObject {
     private long id;
 
     /** List of exercises completed during a workout */
-    @OneToMany(mappedBy = "workout", cascade = CascadeType.ALL, fetch = FetchType.EAGER )
+    @OneToMany(mappedBy = "workout", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonManagedReference
     private List<UserExercise> userExercises;
 
@@ -197,41 +197,43 @@ public class Workout extends DomainObject {
      * @param workout
      *            Workout to update this one to
      */
-    public void updateWorkout ( final Workout workout ) {
+    public void updateWorkout(final Workout workout) {
         // Set the Date
-        this.setDate( workout.getDate() );
+        this.setDate(workout.getDate());
 
-        // Create a list to track which existing exercises were updated
-        List<UserExercise> exercisesToRemove = new ArrayList<>(this.userExercises);
+        // Create a new list for the updated exercises
+        List<UserExercise> updatedExercises = new ArrayList<>();
         
-        // For each exercise in the new workout
+        // Process all exercises from the new workout
         for (UserExercise newExercise : workout.getUserExercises()) {
-            // Try to find existing exercise with same Exercise
             boolean found = false;
+            // Try to find and update existing exercise
             for (UserExercise existingExercise : this.userExercises) {
                 if (existingExercise.getExercise().getId().equals(newExercise.getExercise().getId())) {
-                    // Update existing exercise
                     existingExercise.setSets(newExercise.getSets());
                     existingExercise.setReps(newExercise.getReps());
                     existingExercise.setWeight(newExercise.getWeight());
-                    // Remove from the to-remove list since we want to keep it
-                    exercisesToRemove.remove(existingExercise);
+                    updatedExercises.add(existingExercise);
                     found = true;
                     break;
                 }
             }
             
-            // If no existing exercise found, add the new one
+            // If not found, add the new exercise
             if (!found) {
-                newExercise.setWorkout(this);
-                this.userExercises.add(newExercise);
+                UserExercise brandNewExercise = new UserExercise();
+                brandNewExercise.setExercise(newExercise.getExercise());
+                brandNewExercise.setSets(newExercise.getSets());
+                brandNewExercise.setReps(newExercise.getReps());
+                brandNewExercise.setWeight(newExercise.getWeight());
+                brandNewExercise.setWorkout(this);
+                updatedExercises.add(brandNewExercise);
             }
         }
-        
-        // Remove all exercises that weren't in the new workout
-        for (UserExercise exerciseToRemove : exercisesToRemove) {
-            this.userExercises.remove(exerciseToRemove);
-        }
+
+        // Replace all exercises - orphanRemoval will handle cleanup
+        this.userExercises.clear();
+        this.userExercises.addAll(updatedExercises);
     }
 
     @Override
