@@ -4,17 +4,16 @@ import com.hpatel.Tempest_Fitness.models.User;
 import com.hpatel.Tempest_Fitness.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Provides access to the repository and getting User models
  * from the database.
  */
-@Component
+@Service
 @Transactional
-public class UserService extends Service<User, Long> {
+public class UserService extends CustomService<User, Long> {
 
     /** Instance of the repository */
     @Autowired

@@ -1,22 +1,13 @@
 package com.hpatel.Tempest_Fitness.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-/**
- * Exercise object that is intended to be added to a workout.
- * An Exercise is tied to the database using Hibernate libraries.
- * See ExerciseRepository and ExerciseService for the other pieces
- * used for database support.
- */
 @Entity
 public class Exercise extends DomainObject {
-    /** ID for the Exercise in the database */
+
+    /** ID for the UserExercise in the database */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -24,48 +15,98 @@ public class Exercise extends DomainObject {
     /** Name of the exercise */
     private String name;
 
-    /** The number of sets completed for the exercise */
-    private int sets;
+    /** Type of exercise (Olympic, Strength, Plyometric, etc.) */
+    private String type;
 
-    /** The number of reps completed for the exercise per set */
-    private int reps;
+    /** Muscle(s) that are used in the exercise */
+    private String muscle;
 
-    /** The weight at which the exercise was completed */
-    private double weight;
+    /** Equipment necessary to complete exercise (Barbell, dumbbell, none, etc.) */
+    private String equipment;
+
+    /** Difficulty of the exercise (Beginner, Intermediate, Advanced */
+    private String difficulty;
+
+    /** Instructions to complete the exercise */
+    @Column(length = 1000)
+    private String instructions;
 
     /**
      * Default constructor
      */
-    public Exercise () {
+    public Exercise() {
         // empty default constructor
     }
 
-    /**
-     * Constructor with all the specified fields (name, sets, reps, weight)
-     * @param name Name of the exercise
-     * @param sets Sets completed for the exercise
-     * @param reps Reps completed per set
-     * @param weight Weight used for the exercise
-     */
-    public Exercise(final String name, final int sets, final int reps, final double weight) {
+    public Exercise(String name, String type, String muscle, String equipment, String difficulty, String instructions) {
         setName(name);
-        setSets(sets);
-        setReps(reps);
-        setWeight(weight);
+        setType(type);
+        setMuscle(muscle);
+        setEquipment(equipment);
+        setDifficulty(difficulty);
+        setInstructions(instructions);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getMuscle() {
+        return muscle;
+    }
+
+    public void setMuscle(String muscle) {
+        this.muscle = muscle;
+    }
+
+    public String getEquipment() {
+        return equipment;
+    }
+
+    public void setEquipment(String equipment) {
+        this.equipment = equipment;
+    }
+
+    public String getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(String difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public String getInstructions() {
+        return instructions;
+    }
+
+    public void setInstructions(String instructions) {
+        this.instructions = instructions;
     }
 
     /**
-     * Returns the id for the Exercise
+     * Returns the id for the UserExercise
      *
      * @return the id
      */
     @Override
-    public Serializable getId() {
+    public Long getId() {
         return id;
     }
 
     /**
-     * Set the ID of the Exercise (Used by Hibernate)
+     * Set the ID of the UserExercise (Used by Hibernate)
      *
      * @param id
      *            the ID
@@ -75,115 +116,27 @@ public class Exercise extends DomainObject {
         this.id = id;
     }
 
-    /**
-     * Sets the name of the exercise
-     * @param name Name of the
-     */
-    public void setName(String name) {
-        // check if a null string was passed or if the string is empty
-        if (name == null || name.isBlank() ) {
-            throw new IllegalArgumentException("Exercise must have a name.");
-        }
-        this.name = name;
-    }
-
-    /**
-     * Gets the name of the exercise
-     * @return Name of the exercise
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Sets the number of sets completed for the exercise
-     * @param sets The sets to set
-     */
-    public void setSets(int sets) {
-        if ( sets < 1 || sets > 20 ) {
-            throw new IllegalArgumentException("Sets value outside of expected range.");
-        }
-        this.sets = sets;
-    }
-
-    /**
-     * Gets the sets value for the Exercise object
-     * @return The number of sets completed for the exercise
-     */
-    public int getSets() {
-        return sets;
-    }
-
-    /**
-     * Sets the reps value for the Exercise
-     * @param reps Reps completed for the exercise per set
-     */
-    public void setReps(int reps) {
-        if ( reps < 1 || reps > 100 ) {
-            throw new IllegalArgumentException("Reps value outside of expected range.");
-        }
-        this.reps = reps;
-    }
-
-    /**
-     * Gets the reps completed for the exercise per set
-     * @return Reps completed
-     */
-    public int getReps() {
-        return reps;
-    }
-
-    /**
-     * Sets the weight for the exercise
-     * @param weight The weight to set
-     */
-    public void setWeight(double weight) {
-        if ( weight < 0.0 || weight > 500.0 ) {
-            throw new IllegalArgumentException("Weight value outside of expected range.");
-        }
-        this.weight = weight;
-    }
-
-    /**
-     * Gets the weight used for the exercise
-     * @return The weight used for the exercise
-     */
-    public double getWeight() {
-        return weight;
-    }
-
-    /**
-     * Compare the name and weight to consider equality, this way if the user
-     * tries to add two of the same exercise (same name and weight they might as
-     * well update one of them so there isn't a duplicate
-     * @param o The object to compare against
-     * @return True if the other object has the same name and weight values
-     */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Exercise exercise = (Exercise) o;
-        return getName().equals(exercise.getName()) && Double.compare(getWeight(), exercise.getWeight()) == 0;
+        return Objects.equals(getName(), exercise.getName()) && Objects.equals(getType(), exercise.getType()) && Objects.equals(getMuscle(), exercise.getMuscle()) && Objects.equals(getEquipment(), exercise.getEquipment()) && Objects.equals(getDifficulty(), exercise.getDifficulty()) && Objects.equals(getInstructions(), exercise.getInstructions());
     }
 
-    /** Hashcode method override */
     @Override
     public int hashCode() {
-        return Objects.hash(getSets(), getReps(), getWeight());
+        return Objects.hash(getName(), getType(), getMuscle(), getEquipment(), getDifficulty(), getInstructions());
     }
 
-    /**
-     * Converts the object to a String
-     * @return The string representation of an Exercise
-     */
     @Override
     public String toString() {
         return "Exercise{" +
-                "name=" + name +
-                ", sets=" + sets +
-                ", reps=" + reps +
-                ", weight=" + weight +
+                "name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", muscle='" + muscle + '\'' +
+                ", equipment='" + equipment + '\'' +
+                ", difficulty='" + difficulty + '\'' +
+                ", instructions='" + instructions + '\'' +
                 '}';
     }
 }

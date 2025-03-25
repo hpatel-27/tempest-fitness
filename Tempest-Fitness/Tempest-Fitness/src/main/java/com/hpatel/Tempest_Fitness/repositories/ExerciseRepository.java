@@ -2,19 +2,15 @@ package com.hpatel.Tempest_Fitness.repositories;
 
 import com.hpatel.Tempest_Fitness.models.Exercise;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-/**
- * Repository is used to find the specific Exercise models from the database.
- * Spring will generate appropriate code with JPA.
- */
+@Repository
 public interface ExerciseRepository extends JpaRepository<Exercise, Long> {
 
     /**
-     * Finds an Exercise object with the provided name.
-     *
-     * @param name
-     *            Name of the exercise
-     * @return Found exercise, null if none.
+     * Finds an Exercise based on its name
+     * @param name The name of the exercise
+     * @return The Exercise object
      */
-    Exercise findByName ( String name );
+    Exercise findByName(String name);
 }

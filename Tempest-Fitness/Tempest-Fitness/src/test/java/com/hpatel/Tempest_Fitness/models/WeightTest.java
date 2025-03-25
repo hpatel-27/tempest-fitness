@@ -327,7 +327,7 @@ public class WeightTest {
 
         // Check that the equals method does not indicate equality
         // for a different type of class
-        final Exercise e1 = new Exercise( "Bench Press",5, 5, 136.0 );
+        final UserExercise e1 = new UserExercise( "Bench Press",5, 5, 136.0 );
         assertNotEquals( w0, e1 );
 
         // Check that the same object is considered equal

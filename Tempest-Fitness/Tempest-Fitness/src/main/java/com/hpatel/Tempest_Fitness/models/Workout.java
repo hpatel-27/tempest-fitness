@@ -1,13 +1,15 @@
 package com.hpatel.Tempest_Fitness.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+@Table(name = "workout", uniqueConstraints = @UniqueConstraint(columnNames = {"date", "user_id"}))
 @Entity
 public class Workout extends DomainObject {
 
@@ -17,43 +19,74 @@ public class Workout extends DomainObject {
     private long id;
 
     /** List of exercises completed during a workout */
-    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER )
-    private final List<Exercise> exercises;
+    @OneToMany(mappedBy = "workout", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JsonManagedReference
+    private List<UserExercise> userExercises;
 
     /** Date that the workout was completed */
     private String date;
 
+    /** User foreign key */
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     /**
-     * Default Constructor that requires a date with "2025-01-25" format. It
-     * will use the current date to start, which can be updated.
+     * Default constructor
      */
-    public Workout () {
-        setDate(LocalDate.now().toString());
-        exercises = new ArrayList<>();
+    public Workout() {
+        // default constructor
     }
+
+    /**
+     * Constructor that will use the current date to start, which can be updated.
+     * Makes an empty list of userExercises. Sets the associated user.
+     */
+    public Workout(User user) {
+        setDate(LocalDate.now().toString());
+        userExercises = new ArrayList<>();
+        setUser(user);
+    }
+
+    /**
+     * Constructor that requires a date with "2025-01-25" format. It
+     * will use the current date to start, which can be updated. Makes
+     * an empty list of userExercises.
+     */
+    public Workout(String date, User user) {
+        setDate(date);
+        userExercises = new ArrayList<>();
+        setUser(user);
+    }
+
+    /**
+     * Constructor that requires a date with "2025-01-25" format. It
+     * will use the current date to start, which can be updated. Makes
+     * an empty list of userExercises.
+     */
+    public Workout(String date, List<UserExercise> userExercises, User user) {
+        setDate(date);
+        this.userExercises = userExercises;
+        setUser(user);
+    }
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @SuppressWarnings( "unused")
+    private void setId ( final Long id ) {
+        this.id = id;
+    }
+
 
     /**
      * Get the list of exercises for the workout
      * @return The list of exercises for the workout
      */
-    public List<Exercise> getExercises () {
-        return exercises;
-    }
-
-    /**
-     * Gets the exercise matching the one passed
-     *
-     * @param exercise
-     *            Exercise to retrieve
-     * @return Null if exercise isn't in the workout, or the exercise
-     * doesn't exist
-     */
-    public Exercise getExercise( final Exercise exercise ) {
-        if ( !exercises.contains( exercise ) ) {
-            return null;
-        }
-        final int index = exercises.indexOf( exercise );
-        return exercises.get( index );
+    public List<UserExercise> getUserExercises () {
+        return Collections.unmodifiableList(userExercises);
     }
 
     /**
@@ -69,72 +102,93 @@ public class Workout extends DomainObject {
      * @param date The new date of the workout
      */
     public void setDate (String date) {
+        // check if a null string was passed or if the string is empty
+        // check if the date is the appropriate length
+        if (date == null || date.isBlank() || date.length() != 10 ) {
+            throw new IllegalArgumentException("Date of the weigh-in is not valid.");
+        }
         this.date = date;
     }
 
     /**
-     * Adds an exercise to the list of exercises. Replaces an existing
-     * exercise or adds a new one.
-     *
-     * @param exercise
-     *            Exercise to add
+     * Get the user associated with this workout
+     * @return User the user with this workout
      */
-    public void addExercise ( final Exercise exercise ) {
-        // Check the passed Exercise
-        if ( exercise.getSets() < 0 ) {
-            throw new IllegalArgumentException( "Amount of sets must be a positive integer." );
+    public User getUser() {
+        return user;
+    }
+
+    /**
+     * Sets the user for the workout
+     * @param user The user for this workout
+     */
+    public void setUser(User user) {
+        if (user == null ) {
+            throw new IllegalArgumentException("User was not provided with the Weight.");
         }
-        if ( exercise.getReps() < 0 ) {
-            throw new IllegalArgumentException( "Amount of reps must be a positive integer." );
+        if (user.getUsername() == null) {
+            throw new NullPointerException("Username was not provided.");
         }
-        if ( exercise.getWeight() < 0.0 ) {
-            throw new IllegalArgumentException( "Weight value must be a positive integer." );
+        if (user.getPassword() == null) {
+            throw new NullPointerException("Password was not provided.");
         }
-        if ( exercise.getName() == null || exercise.getName().isEmpty() ) {
-            throw new IllegalArgumentException( "Amount of sets must be a positive integer." );
+        if (user.getRole() == null) {
+            throw new NullPointerException("Role was not provided.");
         }
 
-
-        if ( exercises.contains( exercise ) ) {
-            throw new IllegalArgumentException( "Exercise already exists. Update the existing exercise.");
-        }
-        else {
-            exercises.add( exercise );
-        }
+        this.user = user;
     }
 
     /**
      * Adds an exercise to the list of exercise. Replaces an existing
      * exercise or adds a new one.
      *
-     * @param exercise
+     * @param userExercise
      *            Exercise to add
      */
-    public void setExercise ( final Exercise exercise ) {
-        if ( exercise.getSets() < 0 ) {
-            throw new IllegalArgumentException( "Set value must be a positive integer" );
+    public void addOrUpdateExercise ( final UserExercise userExercise) {
+        if (userExercise == null) {
+            throw new IllegalArgumentException("User did not provided an exercise.");
+        }
+        // Check the passed Exercise
+        if ( userExercise.getSets() < 0 ) {
+            throw new IllegalArgumentException( "Amount of sets must be a positive integer." );
+        }
+        if ( userExercise.getReps() < 0 ) {
+            throw new IllegalArgumentException( "Amount of reps must be a positive integer." );
+        }
+        if ( userExercise.getWeight() < 0.0 ) {
+            throw new IllegalArgumentException( "Weight value must be a positive integer." );
+        }
+        if ( userExercise.getExercise() == null ) {
+            throw new IllegalArgumentException( "Must have an associated Exercise object." );
         }
 
-        if ( exercises.contains( exercise ) ) {
-            Exercise updatingExercise = exercises.get( exercises.indexOf( exercise ) );
+        if ( userExercises.contains(userExercise) ) {
+            UserExercise updatingUserExercise = userExercises.get( userExercises.indexOf(userExercise) );
 
-            updatingExercise.setSets( exercise.getSets() );
-            updatingExercise.setReps( exercise.getReps() );
-            updatingExercise.setWeight( exercise.getWeight() );
-            updatingExercise.setName( exercise.getName() );
+            updatingUserExercise.setSets( userExercise.getSets() );
+            updatingUserExercise.setReps( userExercise.getReps() );
+            updatingUserExercise.setWeight( userExercise.getWeight() );
+            updatingUserExercise.setExercise( userExercise.getExercise() );
+            updatingUserExercise.setWorkout(this);
         }
         else {
-            exercises.add( exercise );
+            userExercise.setWorkout(this);
+            userExercises.add(userExercise);
         }
     }
 
     /**
      * Removes the exercise matching the one that was passed
-     * @param exercise The exercise to retrieve
+     * @param userExercise The exercise to retrieve
      * @return True if removed successfully, false if not
      */
-    public boolean removeExercise ( final Exercise exercise ) {
-        return exercises.remove( exercise );
+    public boolean removeExercise ( final UserExercise userExercise) {
+        if (userExercise == null) {
+            throw new IllegalArgumentException("UserExercise must be provided to delete.");
+        }
+        return userExercises.remove(userExercise);
     }
 
     /**
@@ -143,39 +197,43 @@ public class Workout extends DomainObject {
      * @param workout
      *            Workout to update this one to
      */
-    public void updateWorkout ( final Workout workout ) {
+    public void updateWorkout(final Workout workout) {
         // Set the Date
-        this.setDate( workout.getDate() );
+        this.setDate(workout.getDate());
 
-        // Get the list of new exercises
-        final List<Exercise> newExercises = workout.getExercises();
-
-        // Delete any exercises which didn't make it over to the updated workout
-        for ( int i = 0; i < this.exercises.size(); ) {
-            if ( !newExercises.contains( exercises.get( i ) ) ) {
-                exercises.remove( i );
-                // Do NOT increment i here since the new Exercise at index i has not
-                // been changed
+        // Create a new list for the updated exercises
+        List<UserExercise> updatedExercises = new ArrayList<>();
+        
+        // Process all exercises from the new workout
+        for (UserExercise newExercise : workout.getUserExercises()) {
+            boolean found = false;
+            // Try to find and update existing exercise
+            for (UserExercise existingExercise : this.userExercises) {
+                if (existingExercise.getExercise().getId().equals(newExercise.getExercise().getId())) {
+                    existingExercise.setSets(newExercise.getSets());
+                    existingExercise.setReps(newExercise.getReps());
+                    existingExercise.setWeight(newExercise.getWeight());
+                    updatedExercises.add(existingExercise);
+                    found = true;
+                    break;
+                }
             }
-            else {
-                i++;
+            
+            // If not found, add the new exercise
+            if (!found) {
+                UserExercise brandNewExercise = new UserExercise();
+                brandNewExercise.setExercise(newExercise.getExercise());
+                brandNewExercise.setSets(newExercise.getSets());
+                brandNewExercise.setReps(newExercise.getReps());
+                brandNewExercise.setWeight(newExercise.getWeight());
+                brandNewExercise.setWorkout(this);
+                updatedExercises.add(brandNewExercise);
             }
         }
 
-        // Set each ingredient
-        for ( final Exercise e : workout.getExercises() ) {
-            this.setExercise( e );
-        }
-    }
-
-    @Override
-    public Serializable getId() {
-        return id;
-    }
-
-    @SuppressWarnings( "unused")
-    private void setId ( final Long id ) {
-        this.id = id;
+        // Replace all exercises - orphanRemoval will handle cleanup
+        this.userExercises.clear();
+        this.userExercises.addAll(updatedExercises);
     }
 
     @Override
@@ -183,12 +241,12 @@ public class Workout extends DomainObject {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Workout workout = (Workout) o;
-        return Objects.equals(getExercises(), workout.getExercises()) && Objects.equals(getDate(), workout.getDate());
+        return Objects.equals(getUserExercises(), workout.getUserExercises()) && Objects.equals(getDate(), workout.getDate());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getExercises(), getDate());
+        return Objects.hash(getUserExercises(), getDate());
     }
 
 

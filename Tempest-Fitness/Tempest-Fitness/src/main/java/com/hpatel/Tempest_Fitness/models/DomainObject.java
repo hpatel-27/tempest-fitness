@@ -1,7 +1,5 @@
 package com.hpatel.Tempest_Fitness.models;
 
-import java.io.Serializable;
-
 /**
  * The root class for all of our persistent entities. Defines no fields or
  * methods, but is used to provide a common superclass that the `Service`
@@ -18,5 +16,5 @@ abstract public class DomainObject {
      *
      * @return ID of the object
      */
-    public abstract Serializable getId ();
+    public abstract Long getId ();
 }

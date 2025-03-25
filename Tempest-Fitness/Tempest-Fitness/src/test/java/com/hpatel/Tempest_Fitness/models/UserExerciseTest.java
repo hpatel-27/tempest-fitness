@@ -1,7 +1,7 @@
 package com.hpatel.Tempest_Fitness.models;
 
 import com.hpatel.Tempest_Fitness.TestConfig;
-import com.hpatel.Tempest_Fitness.services.ExerciseService;
+import com.hpatel.Tempest_Fitness.services.UserExerciseService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 @EnableAutoConfiguration
 @SpringBootTest(classes = TestConfig.class)
 @ActiveProfiles("test")  // Activate the test profile for the H2 database
-public class ExerciseTest {
+public class UserExerciseTest {
 
     /**
      * The service object that lets Exercises be saved to the db
      */
     @Autowired
-    private ExerciseService service;
+    private UserExerciseService service;
 
     /**
      * Before each test delete everything from the service
@@ -37,7 +37,7 @@ public class ExerciseTest {
     @Test
     @Transactional
     public void testConstructor () {
-//        final Exercise e1 = new Exercise( "Bench Press", 1, 10, 135.0 );
+//        final UserExercise e1 = new UserExercise( "Bench Press", 1, 10, 135.0 );
 //
 //        assertEquals( "Bench Press", e1.getName() );
 //        assertEquals( 1, e1.getSets() );

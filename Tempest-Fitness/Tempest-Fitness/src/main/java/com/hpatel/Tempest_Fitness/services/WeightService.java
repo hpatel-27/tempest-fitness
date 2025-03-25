@@ -2,11 +2,10 @@ package com.hpatel.Tempest_Fitness.services;
 
 import com.hpatel.Tempest_Fitness.models.User;
 import com.hpatel.Tempest_Fitness.models.Weight;
-import com.hpatel.Tempest_Fitness.repositories.UserRepository;
 import com.hpatel.Tempest_Fitness.repositories.WeightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -15,16 +14,13 @@ import java.util.List;
  * Provides access to the repository and getting Weight models
  * from the database.
  */
-@Component
+@Service
 @Transactional
-public class WeightService extends Service<Weight, Long> {
+public class WeightService extends CustomService<Weight, Long> {
 
     /** The instance of the repository */
     @Autowired
     private WeightRepository weightRepository;
-
-    @Autowired
-    private UserRepository userRepository;
 
     /**
      * Provides access to the repository
