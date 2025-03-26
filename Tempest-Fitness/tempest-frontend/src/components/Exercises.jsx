@@ -13,14 +13,35 @@ const Exercises = () => {
     });
   }, [auth]);
 
+  const addExercise = () => {
+    console.log("Add exercise");
+  };
+
   return (
-    <div>
-      <h2>Exercises</h2>
-      <ul>
-        {exercises.map((exercise, index) => (
-          <li key={index}>{exercise.name}</li>
-        ))}
-      </ul>
+    <div className="container mt-4">
+      <h2 className="text-center text-light mb-4">Exercises</h2>
+      <div className="card shadow-sm bg-dark text-light border-0 exercise-card">
+        <div className="card-body">
+          <div className="d-flex float-end mb-3">
+            <button
+              className="btn btn-sm btn-outline-light btn-add-exercise"
+              onClick={addExercise}
+            >
+              <i className="bi bi-plus-circle"></i>
+            </button>
+          </div>
+          <ul className="list-group list-group-flush">
+            {exercises.map((exercise, index) => (
+              <li
+                key={index}
+                className="list-group-item d-flex justify-content-between align-items-center bg-transparent text-light border-secondary exercise-entry"
+              >
+                <span></span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
   );
 };
