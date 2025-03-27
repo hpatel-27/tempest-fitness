@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import "../styles/navbar.css";
 import stormWeather from "../assets/storm_weather.png";
+import { AuthContext } from "../contexts/AuthContext";
 
 const NavBar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const { logout } = useContext(AuthContext);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -22,8 +24,10 @@ const NavBar = () => {
   };
 
   const handleLogoutClick = () => {
+    logout();
     setIsDropdownOpen(false);
   };
+
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
 
