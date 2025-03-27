@@ -45,10 +45,6 @@ const validateExercise = (exercise) => {
     throw new Error("Exercise difficulty is required and must be a string");
   }
 
-  if (!exercise.instructions || typeof exercise.instructions !== "string") {
-    throw new Error("Exercise instructions are required and must be a string");
-  }
-
   // Validate exercise type
   if (!VALID_EXERCISE_TYPES.includes(exercise.type)) {
     throw new Error(
@@ -87,10 +83,6 @@ const validateExercise = (exercise) => {
   if (exercise.difficulty.length > 20) {
     throw new Error("Exercise difficulty must be less than 20 characters");
   }
-
-  if (exercise.instructions.length > 1000) {
-    throw new Error("Exercise instructions must be less than 1000 characters");
-  }
 };
 
 // Helper function to sanitize exercise data
@@ -102,7 +94,6 @@ const sanitizeExercise = (exercise) => {
     muscle: exercise.muscle.trim(),
     equipment: exercise.equipment.trim(),
     difficulty: exercise.difficulty.trim(),
-    instructions: exercise.instructions.trim(),
   };
 };
 
