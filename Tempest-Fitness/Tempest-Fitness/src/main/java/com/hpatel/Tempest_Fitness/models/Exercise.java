@@ -27,10 +27,6 @@ public class Exercise extends DomainObject {
     /** Difficulty of the exercise (Beginner, Intermediate, Advanced */
     private String difficulty;
 
-    /** Instructions to complete the exercise */
-    @Column(length = 1000)
-    private String instructions;
-
     /**
      * Default constructor
      */
@@ -44,7 +40,6 @@ public class Exercise extends DomainObject {
         setMuscle(muscle);
         setEquipment(equipment);
         setDifficulty(difficulty);
-        setInstructions(instructions);
     }
 
     public String getName() {
@@ -87,14 +82,6 @@ public class Exercise extends DomainObject {
         this.difficulty = difficulty;
     }
 
-    public String getInstructions() {
-        return instructions;
-    }
-
-    public void setInstructions(String instructions) {
-        this.instructions = instructions;
-    }
-
     /**
      * Returns the id for the UserExercise
      *
@@ -120,12 +107,12 @@ public class Exercise extends DomainObject {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Exercise exercise = (Exercise) o;
-        return Objects.equals(getName(), exercise.getName()) && Objects.equals(getType(), exercise.getType()) && Objects.equals(getMuscle(), exercise.getMuscle()) && Objects.equals(getEquipment(), exercise.getEquipment()) && Objects.equals(getDifficulty(), exercise.getDifficulty()) && Objects.equals(getInstructions(), exercise.getInstructions());
+        return Objects.equals(getName(), exercise.getName()) && Objects.equals(getType(), exercise.getType()) && Objects.equals(getMuscle(), exercise.getMuscle()) && Objects.equals(getEquipment(), exercise.getEquipment()) && Objects.equals(getDifficulty(), exercise.getDifficulty());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getType(), getMuscle(), getEquipment(), getDifficulty(), getInstructions());
+        return Objects.hash(getName(), getType(), getMuscle(), getEquipment(), getDifficulty());
     }
 
     @Override
@@ -136,7 +123,6 @@ public class Exercise extends DomainObject {
                 ", muscle='" + muscle + '\'' +
                 ", equipment='" + equipment + '\'' +
                 ", difficulty='" + difficulty + '\'' +
-                ", instructions='" + instructions + '\'' +
                 '}';
     }
 }

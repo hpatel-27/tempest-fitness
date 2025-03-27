@@ -102,7 +102,6 @@ public class ExerciseController extends APIController {
         existing.setMuscle(updatedExercise.getMuscle());
         existing.setEquipment(updatedExercise.getEquipment());
         existing.setDifficulty(updatedExercise.getDifficulty());
-        existing.setInstructions(updatedExercise.getInstructions());
         service.save( existing );
         return new ResponseEntity<>( successResponse( existing.getName() + " successfully updated!" ),
                 HttpStatus.OK );

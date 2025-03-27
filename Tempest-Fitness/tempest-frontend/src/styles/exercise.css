@@ -1,0 +1,104 @@
+.exercise-accordion {
+  --bs-accordion-bg: #242526;
+  --bs-accordion-border-color: #2d2e2f;
+  --bs-accordion-active-bg: #2d2e2f;
+  --bs-accordion-active-color: #fff;
+  --bs-accordion-btn-bg: #242526;
+  --bs-accordion-btn-color: #fff;
+  --bs-accordion-btn-focus-border-color: #2d2e2f;
+  --bs-accordion-btn-focus-box-shadow: none;
+}
+
+.exercise-accordion * {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+}
+
+.exercise-accordion .accordion-button {
+  background-color: #242526;
+  color: #fff;
+  border: 1px solid #2d2e2f;
+  cursor: pointer;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.exercise-accordion .accordion-button:not(.collapsed) {
+  background-color: #2d2e2f;
+  color: #fff;
+  box-shadow: none;
+}
+
+.exercise-accordion .accordion-button::after {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+.exercise-accordion .accordion-item {
+  background-color: #242526;
+  border: 1px solid #2d2e2f;
+  margin-bottom: 0.5rem;
+}
+
+.exercise-accordion .accordion-body {
+  background-color: #242526;
+  color: #fff;
+  border-top: 1px solid #2d2e2f;
+}
+
+.exercise-actions {
+  pointer-events: auto;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+}
+
+.exercise-actions button {
+  pointer-events: auto;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+}
+
+.exercise-details {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+}
+
+.exercise-details p {
+  margin-bottom: 0.5rem;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+}
+
+.exercise-details p:last-child {
+  margin-bottom: 0;
+}
+
+.exercise-name {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Override Bootstrap's default selection styles */
+.exercise-accordion .accordion-button:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.exercise-accordion .accordion-button:active {
+  background-color: #2d2e2f;
+}
