@@ -22,7 +22,6 @@ const Weights = () => {
 
   useEffect(() => {
     weightService.getWeights(auth).then((data) => {
-      console.log("Fetched weights: ", data);
       // Sort dates
       sortWeights(data, "descend"); // Initial sort, user can change it
     });
