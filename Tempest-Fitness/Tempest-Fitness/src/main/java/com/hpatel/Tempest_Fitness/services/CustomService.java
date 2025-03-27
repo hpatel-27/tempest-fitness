@@ -1,12 +1,12 @@
 package com.hpatel.Tempest_Fitness.services;
 
 
-import java.util.List;
-import java.util.Optional;
-
+import com.hpatel.Tempest_Fitness.models.DomainObject;
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.hpatel.Tempest_Fitness.models.DomainObject;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * The Service class is responsible for providing CRUD operations against the
@@ -29,7 +29,7 @@ import com.hpatel.Tempest_Fitness.models.DomainObject;
  * @author Bruno Volpato da Cunha
  *
  */
-abstract public class Service <T extends DomainObject, K> {
+abstract public class CustomService<T extends DomainObject, K> {
 
     /**
      * Returns the Repository that Spring uses for interacting with the

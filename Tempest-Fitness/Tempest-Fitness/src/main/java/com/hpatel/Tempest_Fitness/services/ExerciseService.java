@@ -4,24 +4,20 @@ import com.hpatel.Tempest_Fitness.models.Exercise;
 import com.hpatel.Tempest_Fitness.repositories.ExerciseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * Provides access to the repository and getting Exercise models
- * from the database.
- */
-@Component
+@Service
 @Transactional
-public class ExerciseService extends Service<Exercise, Long> {
+public class ExerciseService extends CustomService<Exercise, Long> {
 
-    /** The instance of the repository */
+    /** Instance of the repository */
     @Autowired
     private ExerciseRepository exerciseRepository;
 
     /**
-     * Returns the repository for the ingredients
-     * @return the repository
+     * Provides access to the repository
+     * @return The UserRepository
      */
     @Override
     protected JpaRepository<Exercise, Long> getRepository() {
@@ -29,13 +25,11 @@ public class ExerciseService extends Service<Exercise, Long> {
     }
 
     /**
-     * Find an exercise with the provided name
-     *
-     * @param name
-     *            Name of the exercise to find
-     * @return found exercise, null if none
+     * Finds an Exercise based on its name
+     * @param name The name of the exercise
+     * @return The Exercise object
      */
-    public Exercise findByName ( final String name ) {
-        return exerciseRepository.findByName( name );
+    public Exercise findByName(String name) {
+        return exerciseRepository.findByName(name);
     }
 }

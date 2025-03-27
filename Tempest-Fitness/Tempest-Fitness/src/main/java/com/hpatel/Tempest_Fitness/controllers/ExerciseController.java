@@ -12,11 +12,9 @@ import java.util.List;
 /**
  * This is the controller that holds the REST endpoints that handle getting,
  * creating, updating, and deleting Exercises.
- *
  * Spring will automatically convert all the ResponseEntity and List results
  * to JSON
  */
-@SuppressWarnings ( { "unchecked", "rawtypes" } )
 @RestController
 public class ExerciseController extends APIController {
 
@@ -40,18 +38,18 @@ public class ExerciseController extends APIController {
     /**
      * REST API method to provide GET access to a specific Exercise
      *
-     * @param name
-     *            Name of the exercise to get
+     * @param id
+     *            id of the exercise to get
      * @return JSON representation of the specific Exercise
      */
-    @GetMapping( BASE_PATH + "/exercises/{name}")
-    public ResponseEntity getExercise( @PathVariable("name") final String name ) {
+    @GetMapping( BASE_PATH + "/exercises/{id}")
+    public ResponseEntity<?> getExercise( @PathVariable("id") Long id ) {
 
-        final Exercise e = service.findByName( name );
+        final Exercise exercise = service.findById(id);
 
-        return null == e
-                ? new ResponseEntity( errorResponse( "No exercise found with name" + name ), HttpStatus.NOT_FOUND )
-                : new ResponseEntity( e, HttpStatus.OK );
+        return null == exercise
+                ? new ResponseEntity<>( errorResponse( "No exercise found." ), HttpStatus.NOT_FOUND )
+                : new ResponseEntity<>( exercise, HttpStatus.OK );
     }
 
     /**
@@ -65,14 +63,14 @@ public class ExerciseController extends APIController {
      *         saved to the database, or an error if it could not be
      */
     @PostMapping( BASE_PATH + "/exercises" )
-    public ResponseEntity addExercise ( @RequestBody final Exercise exercise ) {
+    public ResponseEntity<?> addExercise ( @RequestBody final Exercise exercise) {
         if ( null != service.findByName( exercise.getName() ) ) {
-            return new ResponseEntity(
+            return new ResponseEntity<>(
                     errorResponse( "Exercise with the name " + exercise.getName() + " already exists" ),
                     HttpStatus.CONFLICT );
         }
-        service.save( exercise );
-        return new ResponseEntity( successResponse( exercise.getName() + " successfully created" ),
+        service.save(exercise);
+        return new ResponseEntity<>( successResponse( exercise.getName() + " successfully created" ),
                 HttpStatus.OK );
 
     }
@@ -82,33 +80,30 @@ public class ExerciseController extends APIController {
      * used to edit an existing Exercise by automatically converting the JSON
      * RequestBody provided to an Exercise object. Invalid JSON will fail.
      *
-     * @param name
-     *            the name of the exercise
-     * @param exercise
+     * @param id
+     *            the id of the exercise
+     * @param updatedExercise
      *            the exercise to be saved
      * @return ResponseEntity indicating success if the Exercise could be
-     *         saved to the database, or an error if it could not be
+     *         updated, or an error if it could not be
      */
-    @PutMapping ( BASE_PATH + "/exercises/{name}" )
-    public ResponseEntity editExercise ( @PathVariable ( "name" ) final String name,
-                                       @RequestBody final Exercise exercise ) {
+    @PutMapping ( BASE_PATH + "/exercises/{id}" )
+    public ResponseEntity<?> editExercise ( @PathVariable("id") Long id,
+                                       @RequestBody final Exercise updatedExercise) {
 
-        if ( null == service.findByName( name ) ) {
-            return new ResponseEntity(
-                    errorResponse(
-                            "Exercise with the name " + exercise.getName() + " does not exist" ),
-                    HttpStatus.CONFLICT );
+        Exercise existing = service.findById(id);
+        if ( existing == null ) {
+            return new ResponseEntity<>(
+                    errorResponse("Exercise does not exist." ), HttpStatus.CONFLICT );
         }
-        if ( !name.equals( exercise.getName() ) ) {
-            return new ResponseEntity(
-                    errorResponse( "Exercise with the name " + name + " does not match object provided" ),
-                    HttpStatus.CONFLICT );
-        }
-        final Exercise e = service.findByName( name );
-        e.setName( exercise.getName() );
-        service.save( e );
 
-        return new ResponseEntity( successResponse( exercise.getName() + " successfully created" ),
+        existing.setName(updatedExercise.getName());
+        existing.setType(updatedExercise.getType());
+        existing.setMuscle(updatedExercise.getMuscle());
+        existing.setEquipment(updatedExercise.getEquipment());
+        existing.setDifficulty(updatedExercise.getDifficulty());
+        service.save( existing );
+        return new ResponseEntity<>( successResponse( existing.getName() + " successfully updated!" ),
                 HttpStatus.OK );
 
     }
@@ -118,21 +113,20 @@ public class ExerciseController extends APIController {
      * by making a DELETE request to the API endpoint and indicating
      * the exercise to delete (as a path variable)
      *
-     * @param name
-     *            The name of the Exercise to delete
+     * @param id
+     *            The id of the Exercise to delete
      * @return Success if the Exercise could be deleted; an error if the
      *         Exercise does not exist
      */
-    @DeleteMapping ( BASE_PATH + "/exercises/{name}" )
-    public ResponseEntity deleteExercise ( @PathVariable final String name ) {
+    @DeleteMapping ( BASE_PATH + "/exercises/{id}" )
+    public ResponseEntity<?> deleteExercise ( @PathVariable("id") final Long id ) {
 
-        final Exercise exercise = service.findByName( name );
-        if ( null == exercise ) {
-            return new ResponseEntity( errorResponse( "No Exercise found for name " + name ), HttpStatus.NOT_FOUND );
+        final Exercise exercise = service.findById(id);
+        if ( null == exercise) {
+            return new ResponseEntity<>( errorResponse( "No Exercise found."), HttpStatus.NOT_FOUND );
         }
-        service.delete( exercise );
-
-        return new ResponseEntity( successResponse( "Exercise with name" + name + " was deleted successfully" ), HttpStatus.OK );
+        service.delete(exercise);
+        return new ResponseEntity<>( successResponse( "Exercise was deleted successfully" ), HttpStatus.OK );
     }
 
 }
