@@ -179,7 +179,6 @@ const Weights = () => {
 
   return (
     <div className="container mt-4">
-      <h2 className="text-center text-light mb-4">Welcome, {auth.username}</h2>
       <div className="card shadow-lg bg-dark text-light border-0 weight-card">
         <div className="card-body">
           <div className="d-flex justify-content-between mb-3">
@@ -210,7 +209,7 @@ const Weights = () => {
               </button>
             </div>
           </div>
-          <ul className="list-group list-group-flush">
+          <ul className="list-group list-group-flush mb-0">
             {weights.map((weight, index) => (
               <li
                 key={index}
