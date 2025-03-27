@@ -150,7 +150,6 @@ const Exercises = () => {
 
   return (
     <div className="container mt-4">
-      <h2 className="text-center text-light mb-4">Exercises</h2>
       <div className="card shadow-sm bg-dark text-light border-0 exercise-card">
         <div className="card-body">
           <div className="d-flex justify-content-between mb-3">
