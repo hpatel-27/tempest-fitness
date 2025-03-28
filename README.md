@@ -132,7 +132,6 @@ Follow these steps to set up the Tempest-Fitness application locally:
 |   |       |   |               `-- utility
 |   |       |   `-- resources
 |   |       |       |-- application.properties
-|   |       |       |-- keystore.p12
 |   |       |       |-- static
 |   |       |       `-- templates
 |   |       `-- test
@@ -164,10 +163,8 @@ Follow these steps to set up the Tempest-Fitness application locally:
 |   |   `-- RegisterPage.png
 |   `-- tempest-frontend
 |       |-- README.md
-|       |-- cert.pem
 |       |-- eslint.config.js
 |       |-- index.html
-|       |-- key.pem
 |       |-- package-lock.json
 |       |-- package.json
 |       |-- public
