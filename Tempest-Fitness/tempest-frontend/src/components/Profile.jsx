@@ -107,7 +107,7 @@ const Profile = () => {
             {renderField("Role", "role")}
             {renderField("First Name", "firstName")}
             {renderField("Last Name", "lastName")}
-            {renderField("Height", "height", "number")}
+            {renderField("Height (cm)", "height", "number")}
 
             {isEditing && (
               <div className="mt-3 text-end">
