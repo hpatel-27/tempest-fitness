@@ -5,7 +5,7 @@ const WEIGHT_API_URL = BASE_API_URL + "/weights";
 const getWeights = async (auth) => {
   // Check if the user is authenticated
   if (!auth || !auth.basicAuth) {
-    throw new Error("User is not authenticated");
+    throw new Error("User is not authenticated.");
   }
 
   // Encode credentials in Base64 for Basic Authentication and get from the weight api
