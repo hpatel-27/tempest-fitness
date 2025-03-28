@@ -49,9 +49,9 @@ Follow these steps to set up the Tempest-Fitness application locally:
    ./mvnw clean install
    ```
 4. **Run the Application:**
-  ```bash
-  ./mvnw spring-boot:run
-  ```
+   ```bash
+   ./mvnw spring-boot:run
+   ```
    The backend server will start at `http://localhost:8080`.
 
 ### Frontend Setup
