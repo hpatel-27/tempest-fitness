@@ -148,13 +148,13 @@ public class User extends DomainObject implements UserDetails {
     }
 
     public void setFirstName(String firstName) {
-        if (firstName == null || firstName.isBlank()) {
+        if (firstName == null) {
             throw new IllegalArgumentException("First name was expected but there was none.");
         }
         if (firstName.length() > 20) {
             throw new IllegalArgumentException("Maximum character limit is 20 for first name.");
         }
-        if (!firstName.matches("^[A-Za-z ]+$")) {
+        if (!firstName.matches("^[A-Za-z ]*$")) {
             throw new IllegalArgumentException("First name should only contain characters.");
         }
         this.firstName = firstName;
@@ -165,13 +165,13 @@ public class User extends DomainObject implements UserDetails {
     }
 
     public void setLastName(String lastName) {
-        if (lastName == null || lastName.isBlank()) {
+        if (lastName == null) {
             throw new IllegalArgumentException("Last name was expected but there was none.");
         }
         if (lastName.length() > 20) {
             throw new IllegalArgumentException("Maximum character limit is 20 for last name.");
         }
-        if (!lastName.matches("^[A-Za-z ]+$")) {
+        if (!lastName.matches("^[A-Za-z ]*$")) {
             throw new IllegalArgumentException("Last name should only contain characters.");
         }
         this.lastName = lastName;
