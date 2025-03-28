@@ -37,18 +37,22 @@ Follow these steps to set up the Tempest-Fitness application locally:
 ### Backend Setup
 
 1. **Clone the Repository:**
+
    ```bash
    git clone https://github.com/hpatel-27/Tempest-Fitness.git
    ```
 2. **Navigate to the Backend Directory:**
+
    ```bash
    cd Tempest-Fitness/tempest-backend
    ```
 3. **Build the Project:**
+
    ```bash
    ./mvnw clean install
    ```
 4. **Run the Application:**
+
    ```bash
    ./mvnw spring-boot:run
    ```
@@ -57,14 +61,17 @@ Follow these steps to set up the Tempest-Fitness application locally:
 ### Frontend Setup
 
 1. **Navigate to the Frontend Directory:**
+
    ```bash
    cd ../tempest-frontend
    ```
 2. **Install Dependencies:**
+
    ```bash
    npm install
    ```
 3. **Start the Development Server:**
+
    ```bash
    npm run dev
    ```
