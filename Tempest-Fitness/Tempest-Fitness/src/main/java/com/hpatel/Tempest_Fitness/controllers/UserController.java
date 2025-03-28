@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserController extends APIController {
@@ -43,7 +40,7 @@ public class UserController extends APIController {
      *
      */
     @DeleteMapping( BASE_PATH + "/users/{username}" )
-    public ResponseEntity<String> deleteUser( @PathVariable final String username ) {
+    public ResponseEntity<String> deleteUser( @PathVariable("username") final String username ) {
         final User user = service.findByName( username );
         if ( user == null ) {
             return new ResponseEntity<>(errorResponse("No user found with the name " + username + "."), HttpStatus.NOT_FOUND);
@@ -54,15 +51,44 @@ public class UserController extends APIController {
         return new ResponseEntity<>(successResponse(user.getUsername() + " was successfully deleted!"), HttpStatus.OK);
     }
 
-//    /**
-//     * Edits a User's information (username, password, name, height)
-//     *
-//     * @param username The username of the user currently
-//     * @param user The new User object with the updated info
-//     * @return ResponseEntity indicating outcome of the operation
-//     */
-//    public ResponseEntity editUser(@PathVariable final String username, @RequestBody User user) {
-//        // TODO: Allow users to change their info
-//        return null;
-//    }
+    /**
+     * Edits a User's information (username, role, first name, last name, height)
+     *
+     * @param username The username of the user currently
+     * @param updatedUser The new User object with the updated info
+     * @return ResponseEntity indicating outcome of the operation
+     */
+    @PutMapping(BASE_PATH + "/users/{username}")
+    public ResponseEntity<?> editUser(@PathVariable("username") final String username, @RequestBody User updatedUser) {
+
+        // Get authenticated user's username
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String authUsername;
+
+        if (principal instanceof User) {
+            authUsername = ((User) principal).getUsername();
+        } else {
+            authUsername = principal.toString();
+        }
+
+        if (!authUsername.equals(username)) {
+            return new ResponseEntity<>(errorResponse("Username's do not match."), HttpStatus.UNAUTHORIZED);
+        }
+        if (updatedUser.getHeight() < 0 ) {
+            return new ResponseEntity<>(errorResponse("Height must not be negative."), HttpStatus.BAD_REQUEST);
+        }
+        // Find the user by username
+        User existingUser = service.findByName(authUsername);
+        if (existingUser == null) {
+            return new ResponseEntity<>(errorResponse("User not found."), HttpStatus.NOT_FOUND);
+        }
+        existingUser.setRole(updatedUser.getRole());
+        existingUser.setFirstName(updatedUser.getFirstName());
+        existingUser.setLastName(updatedUser.getLastName());
+        existingUser.setHeight(updatedUser.getHeight());
+
+        service.save(existingUser);
+
+        return new ResponseEntity<>(successResponse("User successfully updated!"), HttpStatus.OK);
+    }
 }
