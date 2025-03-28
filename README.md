@@ -52,9 +52,23 @@ Follow these steps to set up the Tempest-Fitness application locally:
   ```bash
   ./mvnw spring-boot:run
   ```
-   The backend server will start at `http://localhost:8080`. This is port 8080 on your local machine.
+   The backend server will start at `http://localhost:8080`.
 
+### Frontend Setup
 
+1. **Navigate to the Frontend Directory:**
+   ```bash
+   cd ../tempest-frontend
+   ```
+2. **Install Dependencies:**
+   ```bash
+   npm install
+   ```
+3. **Start the Development Server:**
+   ```bash
+   npm run dev
+   ```
+   Access the frontend application at `http://localhost:3000`.
 
 # Application Preview
 This will take you to the youtube video that showcases the demo of this application.
