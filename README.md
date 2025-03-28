@@ -2,6 +2,11 @@
 
 **Tempest-Fitness** is a comprehensive fitness tracking application designed to help users monitor and manage their weight, exercises, and workouts. The application provides a user-friendly interface to store, display, and analyze fitness data, empowering users to achieve their health goals effectively. I personally have interest in fitness activities, such as weightlifting and long-distance running. I made this application to help me with my own fitness goals and I hope I can continue to work on this to introduce new features with data visualization and calorie tracking.
 
+# Application Preview
+This will take you to the youtube video that showcases the demo of this application.
+
+[![Demo of Tempest-Fitness](Tempest-Fitness/docs/LoginPage.png)](https://youtu.be/TCfRo5PG9Xg)
+
 ## Features
 
 - **User Authentication:** Secure login and registration system to protect user data.
@@ -76,12 +81,7 @@ Follow these steps to set up the Tempest-Fitness application locally:
    npm run dev
    ```
    Access the frontend application at `http://localhost:3000`.
-
-# Application Preview
-This will take you to the youtube video that showcases the demo of this application.
-
-[![Demo of Tempest-Fitness](Tempest-Fitness/docs/LoginPage.png)](https://youtu.be/TCfRo5PG9Xg)
-
+   
 # Directory Structure:
 ```
 |-- Tempest-Fitness
