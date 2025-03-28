@@ -31,7 +31,7 @@ Follow these steps to set up the Tempest-Fitness application locally:
 ### Prerequisites
 
 - **Node.js:** Download and install from [Node.js official website](https://nodejs.org/).
-- **Java Development Kit (JDK):** Ensure JDK 11 or higher is installed. Download from [Oracle's official website](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html).
+- **Java Development Kit (JDK):** Ensure JDK 21. Download from [Oracle's official website](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html).
 - **Maven:** Install Maven for project build automation. Instructions are available on the [Maven website](https://maven.apache.org/install.html).
 
 ### Backend Setup
