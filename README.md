@@ -1,6 +1,10 @@
 # Tempest-Fitness
 
-**Tempest-Fitness** is a comprehensive fitness tracking application designed to help users monitor and manage their weight, exercises, and workouts. The application provides a user-friendly interface to store, display, and analyze fitness data, empowering users to achieve their health goals effectively.
+**Tempest-Fitness** is a comprehensive fitness tracking application designed to help users monitor and manage their weight, exercises, and workouts. The application provides a user-friendly interface to store, display, and analyze fitness data, empowering users to achieve their health goals effectively. I personally have interest in fitness activities, such as weightlifting and long-distance running. I made this application to help me with my own fitness goals and I hope I can continue to work on this to introduce new features with data visualization and calorie tracking.
+
+# Application Preview
+Click on the thumbnail to be redirected to the demo.
+[![Demo of Tempest-Fitness](Tempest-Fitness/docs/LoginPage.png)](https://youtu.be/TCfRo5PG9Xg)
 
 ## Features
 
@@ -31,36 +35,52 @@ Follow these steps to set up the Tempest-Fitness application locally:
 ### Prerequisites
 
 - **Node.js:** Download and install from [Node.js official website](https://nodejs.org/).
-- **Java Development Kit (JDK):** Ensure JDK 21. Download from [Oracle's official website](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html).
+- **Java Development Kit (JDK):** Ensure JDK 21. Download from [Oracle's official website](https://www.oracle.com/java/technologies/javase-jdk21-downloads.html).
 - **Maven:** Install Maven for project build automation. Instructions are available on the [Maven website](https://maven.apache.org/install.html).
 
 ### Backend Setup
 
 1. **Clone the Repository:**
+
    ```bash
    git clone https://github.com/hpatel-27/Tempest-Fitness.git
    ```
 2. **Navigate to the Backend Directory:**
+
    ```bash
    cd Tempest-Fitness/tempest-backend
    ```
 3. **Build the Project:**
+
    ```bash
    ./mvnw clean install
    ```
 4. **Run the Application:**
-  ```bash
-  ./mvnw spring-boot:run
-  ```
-   The backend server will start at `http://localhost:8080`. This is port 8080 on your local machine.
 
+   ```bash
+   ./mvnw spring-boot:run
+   ```
+   The backend server will start at `http://localhost:8080`.
 
+### Frontend Setup
 
-# Application Preview
-This will take you to the youtube video that showcases the demo of this application.
+1. **Navigate to the Frontend Directory:**
 
-[![Demo of Tempest-Fitness](Tempest-Fitness/docs/LoginPage.png)](https://youtu.be/TCfRo5PG9Xg)
+   ```bash
+   cd ../tempest-frontend
+   ```
+2. **Install Dependencies:**
 
+   ```bash
+   npm install
+   ```
+3. **Start the Development Server:**
+
+   ```bash
+   npm run dev
+   ```
+   Access the frontend application at `http://localhost:3000`.
+   
 # Directory Structure:
 ```
 |-- Tempest-Fitness
@@ -112,7 +132,6 @@ This will take you to the youtube video that showcases the demo of this applicat
 |   |       |   |               `-- utility
 |   |       |   `-- resources
 |   |       |       |-- application.properties
-|   |       |       |-- keystore.p12
 |   |       |       |-- static
 |   |       |       `-- templates
 |   |       `-- test
@@ -144,10 +163,8 @@ This will take you to the youtube video that showcases the demo of this applicat
 |   |   `-- RegisterPage.png
 |   `-- tempest-frontend
 |       |-- README.md
-|       |-- cert.pem
 |       |-- eslint.config.js
 |       |-- index.html
-|       |-- key.pem
 |       |-- package-lock.json
 |       |-- package.json
 |       |-- public
