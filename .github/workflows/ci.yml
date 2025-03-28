@@ -1,0 +1,83 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "tempest-backend/**"
+      - "tempest-frontend/**"
+      - ".github/workflows/**"
+
+jobs:
+  backend:
+    name: Backend - Tests, Coverage, Static Analysis
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: "21"
+          distribution: "temurin"
+
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven
+
+      - name: Run Tests with Coverage
+        working-directory: tempest-backend
+        run: ./mvnw clean verify
+
+      - name: Upload Code Coverage Report (JaCoCo)
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: jacoco-report
+          path: tempest-backend/target/site/jacoco/index.html
+
+      - name: Run Static Analysis (SpotBugs)
+        working-directory: tempest-backend
+        run: ./mvnw com.github.spotbugs:spotbugs-maven-plugin:spotbugs
+
+      - name: Upload SpotBugs Report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: spotbugs-report
+          path: tempest-backend/target/spotbugsXml.xml
+
+  frontend:
+    name: Frontend - Build Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Cache Node modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm
+
+      - name: Install dependencies
+        working-directory: tempest-frontend
+        run: npm ci
+
+      - name: Run build
+        working-directory: tempest-frontend
+        run: npm run build
