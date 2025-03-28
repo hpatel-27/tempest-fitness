@@ -1,6 +1,60 @@
 # Tempest-Fitness
 
-Fitness tracking application to store and display user weight information, which can be sorted in ascending or descending order. The user must login to access their information. The exercise and workout components are a work in progress. 
+**Tempest-Fitness** is a comprehensive fitness tracking application designed to help users monitor and manage their weight, exercises, and workouts. The application provides a user-friendly interface to store, display, and analyze fitness data, empowering users to achieve their health goals effectively.
+
+## Features
+
+- **User Authentication:** Secure login and registration system to protect user data.
+- **Weight Tracking:** Record and view weight entries, sortable in ascending or descending order.
+- **Exercise Management:** Create, update, and categorize exercises tailored to individual routines.
+- **Workout Planning:** Develop and track workouts by combining various exercises.
+- **User Profile:** Visually appealing representation of the user's personal information.
+
+## Technologies Used
+
+**Backend:**
+- **Java Spring Boot:** Framework for building the RESTful API and handling business logic.
+- **Spring Security:** Manages authentication and authorization processes.
+- **Maven:** Dependency management and project build automation.
+- **H2 Database:** In-memory database for development and testing purposes.
+
+**Frontend:**
+- **React:** JavaScript library for building dynamic user interfaces.
+- **Vite:** Next-generation frontend tooling for fast development and build processes.
+- **Fetch:** Promise-based HTTP client for making asynchronous requests to the backend API.
+- **React Router:** Declarative routing for React applications.
+
+## Installation
+
+Follow these steps to set up the Tempest-Fitness application locally:
+
+### Prerequisites
+
+- **Node.js:** Download and install from [Node.js official website](https://nodejs.org/).
+- **Java Development Kit (JDK):** Ensure JDK 11 or higher is installed. Download from [Oracle's official website](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html).
+- **Maven:** Install Maven for project build automation. Instructions are available on the [Maven website](https://maven.apache.org/install.html).
+
+### Backend Setup
+
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/hpatel-27/Tempest-Fitness.git
+   ```
+2. **Navigate to the Backend Directory:**
+   ```bash
+   cd Tempest-Fitness/tempest-backend
+   ```
+3. **Build the Project:**
+   ```bash
+   ./mvnw clean install
+   ```
+4. **Run the Application:**
+  ```bash
+  ./mvnw spring-boot:run
+  ```
+   The backend server will start at `http://localhost:8080`. This is port 8080 on your local machine.
+
+
 
 # Application Preview
 This will take you to the youtube video that showcases the demo of this application.
