@@ -47,6 +47,10 @@ const Workouts = () => {
     console.log("Clicked add workout");
   };
 
+  const handleDeleteWorkout = () => {
+    console.log("Clicked delete workout");
+  };
+
   const formatDate = (dateString) => {
     if (!dateString) return "Invalid Date";
 
@@ -82,41 +86,51 @@ const Workouts = () => {
               <Accordion.Item
                 key={date}
                 eventKey={formatDate(date)}
-                className="bg-dark"
+                className="bg-dark text-light"
               >
                 <div className="d-flex justify-content-between align-items-center p-3">
-                  <Accordion.Header>
+                  <Accordion.Header className="text-light flex-grow-1">
                     <div className="w-100 d-flex align-items-center">
-                      <span className="workout-name">{workout.date}</span>
+                      <span className="workout-name">{workout.date} </span>
                     </div>
                   </Accordion.Header>
+                  <div className="workout-actions ms-3">
+                    <button
+                      className="btn btn-sm btn-outline-primary me-1"
+                      onClick={() => handleSave()}
+                    >
+                      <i className="bi bi-pencil"></i>
+                    </button>
+                    <button
+                      className="btn btn-sm btn-outline-danger me-1"
+                      onClick={() => handleDeleteWorkout()}
+                    >
+                      <i className="bi bi-trash"></i>
+                    </button>
+                  </div>
                 </div>
                 <Accordion.Body className="bg-dark text-light">
-                  <div className="workout-details">
+                  <div className="workout-details table-responsive">
                     <ul className="list-group list-group-flush mb-0">
                       {workout.userExercises.map((userExercise, index) => (
                         <li
                           key={index}
-                          className="list-group-item d-flex justify-content-between align-items-center bg-transparent text-light border-secondary workout-entry"
+                          className="list-group-item text-light border-secondary workout-entry"
                         >
-                          <span className="fw-bold">
-                            Exercise: {userExercise.exercise.name}
-                          </span>
-                          <span className="fw-bold">
-                            Sets: {userExercise.sets}
-                          </span>
-                          <span className="fw-bold">
-                            Reps: {userExercise.reps}
-                          </span>
-                          <span className="fw-bold">
-                            Weight: {userExercise.weight} lbs
-                          </span>
-                          <button className="btn btn-sm btn-outline-primary me-1">
-                            <i className="bi bi-pencil"></i>
-                          </button>
-                          <button className="btn btn-sm btn-outline-primary me-1">
-                            <i className="bi bi-trash"></i>
-                          </button>
+                          <div className="d-flex flex-grow-1 justify-content-between me-3">
+                            <span className="entry-col exercise-name fw-bold">
+                              {userExercise.exercise.name}
+                            </span>
+                            <span className="entry-col fw-bold">
+                              Sets: {userExercise.sets}
+                            </span>
+                            <span className="entry-col fw-bold">
+                              Reps: {userExercise.reps}
+                            </span>
+                            <span className="entry-col fw-bold">
+                              Weight: {userExercise.weight} lbs
+                            </span>
+                          </div>
                         </li>
                       ))}
                     </ul>
@@ -144,9 +158,7 @@ const Workouts = () => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
-            
-          </Form>
+          <Form></Form>
         </Modal.Body>
         <Modal.Footer>
           <Button
