@@ -210,9 +210,9 @@ const Weights = () => {
             </div>
           </div>
           <ul className="list-group list-group-flush mb-0">
-            {weights.map((weight, index) => (
+            {weights.map((weight, date) => (
               <li
-                key={index}
+                key={date}
                 className="list-group-item d-flex justify-content-between align-items-center bg-transparent text-light border-secondary weight-entry"
               >
                 <span className="fw-bold">{formatDate(weight.date)}</span>
