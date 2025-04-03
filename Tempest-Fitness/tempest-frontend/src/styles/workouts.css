@@ -104,3 +104,28 @@
 .custom-modal *:not(input):not(textarea):not(button) {
   user-select: none !important;
 }
+
+.workout-add-edit-card {
+  margin-left: 30%;
+  margin-right: 30%;
+}
+
+.remove-workout-exercise {
+  margin-left: auto;
+}
+.cancel-add-workout {
+  margin-top: 9px;
+}
+
+.workout-add-exercise {
+  margin-left: auto;
+}
+
+.form-select,
+.form-control {
+  background-color: #2d2e2f !important;
+}
+
+.form-control::placeholder {
+  color: grey !important;
+}
