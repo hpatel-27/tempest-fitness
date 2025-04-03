@@ -191,6 +191,14 @@ public class Workout extends DomainObject {
         return userExercises.remove(userExercise);
     }
 
+    @Override
+    public String toString() {
+        return "Workout{" +
+                "userExercises=" + userExercises +
+                ", date='" + date + '\'' +
+                '}';
+    }
+
     /**
      * Updates a Workout to match a given Workout.
      *
