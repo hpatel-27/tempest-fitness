@@ -183,7 +183,7 @@ const Weights = () => {
         <div className="card-body">
           <div className="d-flex justify-content-between mb-3">
             <h5 className="mb-0">Weight History</h5>
-            <div className="d-flex align-items-center btns-div gap-2">
+            <div className="d-flex align-items-center btns-div gap-1">
               <button
                 className="btn btn-sm btn-outline-light btn-sort"
                 onClick={toggleSortOrder}
