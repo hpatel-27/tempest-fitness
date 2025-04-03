@@ -16,35 +16,40 @@ const WorkoutEditor = ({ editMode }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const loadExercises = async () => {
+      try {
+        const data = await exerciseService.getExercises(auth);
+        setExerciseOptions(data);
+      } catch (err) {
+        console.error("Failed to fetch exercises:", err);
+      }
+    };
+
+    const loadWorkout = async (date) => {
+      try {
+        const workout = await workoutService.getWorkoutByDate(date, auth);
+        setDate(workout.date);
+        setUserExercises(workout.userExercises);
+      } catch (err) {
+        console.error("Failed to load workout:", err);
+      }
+    };
+
     loadExercises();
     if (editMode && workoutDateParam) {
       loadWorkout(workoutDateParam);
     }
-  });
-
-  const loadExercises = async () => {
-    try {
-      const data = await exerciseService.getExercises(auth);
-      setExerciseOptions(data);
-    } catch (err) {
-      console.error("Failed to fetch exercises:", err);
-    }
-  };
-
-  const loadWorkout = async (date) => {
-    try {
-      const workout = await workoutService.getWorkoutByDate(date, auth);
-      setDate(workout.date);
-      setUserExercises(workout.userExercises);
-    } catch (err) {
-      console.error("Failed to load workout:", err);
-    }
-  };
+  }, [editMode, workoutDateParam, auth]);
 
   const handleAddExercise = () => {
-    setUserExercises([
-      ...userExercises,
-      { exercise: { name: "" }, sets: "", reps: "", weight: "" },
+    setUserExercises((prev) => [
+      ...prev,
+      {
+        exercise: { id: null },
+        sets: "",
+        reps: "",
+        weight: "",
+      },
     ]);
   };
 
@@ -55,19 +60,26 @@ const WorkoutEditor = ({ editMode }) => {
   };
 
   const handleExerciseChange = (index, field, value) => {
-    const updated = [...userExercises];
+    setUserExercises((prev) => {
+      const updated = [...prev];
 
-    if (field === "exerciseId") {
-      // Find the selected exercise object from the list
-      const selectedExercise = exerciseOptions.find(
-        (ex) => ex.id === parseInt(value)
-      );
-      updated[index].exercise = { id: selectedExercise.id }; // Only include id!
-    } else {
-      updated[index][field] = value;
-    }
+      if (field === "exerciseId") {
+        const selectedExercise = exerciseOptions.find(
+          (ex) => ex.id === parseInt(value)
+        );
+        updated[index] = {
+          ...updated[index],
+          exercise: { id: selectedExercise.id },
+        };
+      } else {
+        updated[index] = {
+          ...updated[index],
+          [field]: value,
+        };
+      }
 
-    setUserExercises(updated);
+      return updated;
+    });
   };
 
   const handleSubmit = async () => {
@@ -78,6 +90,11 @@ const WorkoutEditor = ({ editMode }) => {
 
     try {
       if (editMode) {
+        console.log(
+          "Workout being submitted:",
+          JSON.stringify(workout, null, 2)
+        );
+
         await workoutService.updateWorkout(workoutDateParam, workout, auth);
         Swal.fire({
           title: "Updated!",
@@ -88,6 +105,10 @@ const WorkoutEditor = ({ editMode }) => {
           color: "#fff",
         });
       } else {
+        console.log(
+          "Workout being submitted:",
+          JSON.stringify(workout, null, 2)
+        );
         const response = await workoutService.createWorkout(workout, auth);
         console.log("Response: ", response);
         Swal.fire({
