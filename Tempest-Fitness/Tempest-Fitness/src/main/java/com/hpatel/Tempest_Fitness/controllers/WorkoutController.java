@@ -84,8 +84,8 @@ public class WorkoutController extends APIController {
             return new ResponseEntity<>(errorResponse("User not found."), HttpStatus.NOT_FOUND);
         }
         if ( null != service.findByUserAndDate(user, workoutRequest.getDate() ) ) {
-            return new ResponseEntity<>( errorResponse( "Workout with the name " + workoutRequest.getDate() + " already exists" ),
-                    HttpStatus.CONFLICT );
+            return new ResponseEntity<>(errorResponse( "Workout with the name " + workoutRequest.getDate() + " already exists"),
+                    HttpStatus.CONFLICT);
         }
 
         // Create workout instance
@@ -99,9 +99,7 @@ public class WorkoutController extends APIController {
 
         service.save(saveWorkout);
 
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body("Workout created successfully for date: " + saveWorkout.getDate());
-
+        return new ResponseEntity<>(successResponse( "Workout created successfully for date: " + saveWorkout.getDate()), HttpStatus.CREATED);
     }
 
     /**
