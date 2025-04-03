@@ -40,7 +40,6 @@ const Workouts = () => {
   // Send to a different view to add a new workout
   const handleAddWorkout = () => {
     navigate("/workouts/new");
-    handleAddWorkout();
   };
 
   // Send to a different view to update an existing workout
