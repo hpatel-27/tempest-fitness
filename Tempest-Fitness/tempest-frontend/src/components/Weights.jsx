@@ -261,6 +261,7 @@ const Weights = () => {
             <Form.Group className="mb-3">
               <Form.Label>Weight (lbs)</Form.Label>
               <Form.Control
+                className="border-0 text-light"
                 type="number"
                 value={newWeight}
                 onChange={(e) => setNewWeight(e.target.value)}
@@ -277,6 +278,7 @@ const Weights = () => {
               <Form.Group className="mb-3">
                 <Form.Label>Date</Form.Label>
                 <Form.Control
+                  className="border-0 text-light"
                   type="date"
                   value={newDate}
                   onChange={(e) => setNewDate(e.target.value)}
