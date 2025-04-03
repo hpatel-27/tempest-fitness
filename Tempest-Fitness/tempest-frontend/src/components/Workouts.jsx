@@ -9,32 +9,50 @@ import { useNavigate } from "react-router-dom";
 
 const Workouts = () => {
   const [workouts, setWorkouts] = useState([]);
-  // const [sortOrder, setSortOrder] = useState("descent");
+  const [sortOrder, setSortOrder] = useState("descend");
   const { auth } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    loadWorkouts(auth);
-  }, [auth]);
+    const loadWorkouts = async (auth) => {
+      try {
+        workoutService.getWorkouts(auth).then((data) => {
+          sortWorkouts(data, sortOrder);
+        });
+      } catch (error) {
+        console.error(
+          "Failed to fetch the Workouts for the authenticated user. ",
+          error
+        );
+        Swal.fire({
+          title: "Error",
+          text: "Failed to fetch workouts.",
+          icon: "error",
+          confirmButtonColor: "#6b51ab",
+          background: "#242526",
+          color: "#fff",
+        });
+      }
+    };
 
-  const loadWorkouts = async (auth) => {
-    try {
-      const data = await workoutService.getWorkouts(auth);
-      setWorkouts(data);
-    } catch (error) {
-      console.error(
-        "Failed to fetch the Workouts for the authenticated user. ",
-        error
-      );
-      Swal.fire({
-        title: "Error",
-        text: "Failed to fetch workouts.",
-        icon: "error",
-        confirmButtonColor: "#6b51ab",
-        background: "#242526",
-        color: "#fff",
-      });
-    }
+    loadWorkouts(auth);
+  }, [auth, sortOrder]);
+
+  // Sort the workouts to be in newest first order
+  const sortWorkouts = (data, order) => {
+    const sorted = [...data].sort((a, b) => {
+      return order === "descend"
+        ? new Date(b.date) - new Date(a.date)
+        : new Date(a.date) - new Date(b.date);
+    });
+    setWorkouts(sorted);
+  };
+
+  // Toggle the sorting order
+  const toggleSortOrder = () => {
+    const newOrder = sortOrder === "descend" ? "ascend" : "descend";
+    setSortOrder(newOrder);
+    sortWorkouts(workouts, newOrder);
   };
 
   // Send to a different view to add a new workout
@@ -91,12 +109,26 @@ const Workouts = () => {
         <div className="card-body">
           <div className="d-flex justify-content-between align-items-center mb-3">
             <h2 className="mb-0">Workout Log</h2>
-            <button
-              className="btn btn-sm btn-outline-light btn-add-workout"
-              onClick={handleAddWorkout}
-            >
-              <i className="bi bi-plus-circle"></i>
-            </button>
+            <div className="d-flex align-items-center gap-1">
+              <button
+                className="btn btn-sm btn-outline-light btn-sort"
+                onClick={toggleSortOrder}
+              >
+                <i
+                  className={
+                    sortOrder === "descend"
+                      ? "bi bi-sort-down"
+                      : "bi bi-sort-up-alt"
+                  }
+                ></i>
+              </button>
+              <button
+                className="btn btn-sm btn-outline-light btn-add-workout"
+                onClick={handleAddWorkout}
+              >
+                <i className="bi bi-plus-circle"></i>
+              </button>
+            </div>
           </div>
 
           <Accordion className="workout-accordion border-0">
