@@ -1,8 +1,10 @@
 package com.hpatel.Tempest_Fitness.controllers;
 
+import com.hpatel.Tempest_Fitness.models.Exercise;
 import com.hpatel.Tempest_Fitness.models.User;
 import com.hpatel.Tempest_Fitness.models.UserExercise;
 import com.hpatel.Tempest_Fitness.models.Workout;
+import com.hpatel.Tempest_Fitness.services.ExerciseService;
 import com.hpatel.Tempest_Fitness.services.UserService;
 import com.hpatel.Tempest_Fitness.services.WorkoutService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,9 @@ public class WorkoutController extends APIController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ExerciseService exerciseService;
 
     /**
      * REST API method to provide GET access to all workouts for a user
@@ -93,6 +98,15 @@ public class WorkoutController extends APIController {
 
         // Link each UserExercise to this workout
         for (UserExercise ue : workoutRequest.getUserExercises()) {
+            Long exerciseId = ue.getExercise().getId();
+            Exercise existingExercise = exerciseService.findById(exerciseId);
+
+            if (existingExercise == null) {
+                return new ResponseEntity<>(errorResponse("Exercise not found for id: " + exerciseId), HttpStatus.NOT_FOUND);
+            }
+
+            // Manually set the exercise and workout, so that they are non-null
+            ue.setExercise(existingExercise);
             ue.setWorkout(saveWorkout);
             saveWorkout.addOrUpdateExercise(ue);
         }
