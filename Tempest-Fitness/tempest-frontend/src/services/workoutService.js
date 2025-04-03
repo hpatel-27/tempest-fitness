@@ -70,7 +70,7 @@ const createWorkout = async (workout, auth) => {
   return await response.json();
 };
 
-const deleteWorkout = async (auth, workoutDate) => {
+const deleteWorkout = async (workoutDate, auth) => {
   // Check if the user is authenticated
   if (!auth || !auth.basicAuth) {
     throw new Error("User is not authenticated");
@@ -91,7 +91,7 @@ const deleteWorkout = async (auth, workoutDate) => {
   return await response.json();
 };
 
-const updateWorkout = async (auth, workoutDate, workout) => {
+const updateWorkout = async (workoutDate, workout, auth) => {
   // Check if the user is authenticated
   if (!auth || !auth.basicAuth) {
     throw new Error("User is not authenticated");
