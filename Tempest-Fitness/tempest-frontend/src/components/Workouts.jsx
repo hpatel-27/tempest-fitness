@@ -2,21 +2,16 @@ import { useEffect, useState, useContext } from "react";
 import workoutService from "../services/workoutService";
 import { AuthContext } from "../contexts/AuthContext";
 import Swal from "sweetalert2";
-import Modal from "react-bootstrap/Modal";
-import { Form } from "react-bootstrap";
 import { Accordion } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
 import "../styles/index.css";
 import "../styles/workouts.css";
+import { useNavigate } from "react-router-dom";
 
 const Workouts = () => {
   const [workouts, setWorkouts] = useState([]);
-  const [sortOrder, setSortOrder] = useState("descent");
+  // const [sortOrder, setSortOrder] = useState("descent");
   const { auth } = useContext(AuthContext);
-  const [showModal, setShowModal] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [newWorkout, setNewWorkout] = useState("");
-  const [newDate, setNewDate] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadWorkouts(auth);
@@ -25,7 +20,6 @@ const Workouts = () => {
   const loadWorkouts = async (auth) => {
     try {
       const data = await workoutService.getWorkouts(auth);
-      console.log("Data: ", data);
       setWorkouts(data);
     } catch (error) {
       console.error(
@@ -43,28 +37,53 @@ const Workouts = () => {
     }
   };
 
-  const handleSave = () => {
-    console.log("Clicked add workout");
+  // Send to a different view to add a new workout
+  const handleAddWorkout = () => {
+    navigate("/workouts/new");
+    handleAddWorkout();
   };
 
-  const handleDeleteWorkout = () => {
-    console.log("Clicked delete workout");
+  // Send to a different view to update an existing workout
+  const handleEditWorkout = (workout) => {
+    navigate(`/workouts/edit/${workout.date}`);
   };
 
-  const formatDate = (dateString) => {
-    if (!dateString) return "Invalid Date";
+  // Delete a workout and then filter it out of the list to remove from view
+  const handleDeleteWorkout = async (date) => {
+    try {
+      const response = await workoutService.deleteWorkout(date, auth);
+      setWorkouts(workouts.filter((w) => w.date !== date));
 
-    const date = new Date(dateString + "T00:00:00");
-    if (isNaN(date.getTime())) {
-      console.error("Invalid date format: ", dateString);
-      return "Invalid Date";
+      if (response && response.status == "success") {
+        Swal.fire({
+          title: "Deleted!",
+          text: "Workout deleted successfully!",
+          icon: "success",
+          confirmButtonColor: "#6b51ab",
+          background: "#242526",
+          color: "#fff",
+        });
+      } else {
+        Swal.fire({
+          title: "Error",
+          text: "Workout could not be deleted.",
+          icon: "error",
+          confirmButtonColor: "#6b51ab",
+          background: "#242526",
+          color: "#fff",
+        });
+      }
+    } catch (err) {
+      console.error("Error: ", err);
+      Swal.fire({
+        title: "Error",
+        text: "Workout could not be deleted here.",
+        icon: "error",
+        confirmButtonColor: "#6b51ab",
+        background: "#242526",
+        color: "#fff",
+      });
     }
-
-    return new Intl.DateTimeFormat("en-US", {
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-    }).format(date);
   };
 
   return (
@@ -75,7 +94,7 @@ const Workouts = () => {
             <h2 className="mb-0">Workout Log</h2>
             <button
               className="btn btn-sm btn-outline-light btn-add-workout"
-              onClick={handleSave}
+              onClick={handleAddWorkout}
             >
               <i className="bi bi-plus-circle"></i>
             </button>
@@ -85,7 +104,7 @@ const Workouts = () => {
             {workouts.map((workout, date) => (
               <Accordion.Item
                 key={date}
-                eventKey={formatDate(date)}
+                eventKey={date}
                 className="bg-dark text-light"
               >
                 <div className="d-flex justify-content-between align-items-center p-3">
@@ -97,13 +116,13 @@ const Workouts = () => {
                   <div className="workout-actions ms-3">
                     <button
                       className="btn btn-sm btn-outline-primary me-1"
-                      onClick={() => handleSave()}
+                      onClick={() => handleEditWorkout(workout)}
                     >
                       <i className="bi bi-pencil"></i>
                     </button>
                     <button
                       className="btn btn-sm btn-outline-danger me-1"
-                      onClick={() => handleDeleteWorkout()}
+                      onClick={() => handleDeleteWorkout(workout.date)}
                     >
                       <i className="bi bi-trash"></i>
                     </button>
@@ -141,35 +160,6 @@ const Workouts = () => {
           </Accordion>
         </div>
       </div>
-
-      <Modal
-        className="custom-modal"
-        show={showModal}
-        onHide={() => {
-          setShowModal(false);
-          setIsEditing(false);
-          // setErrors({});
-        }}
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>
-            {isEditing ? "Edit Workout" : "Add New Workout"}
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form></Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            className="custom-save-btn"
-            onClick={handleSave}
-            disabled={!newWorkout || !newDate}
-          >
-            {isEditing ? "Update" : "Save"}
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </div>
   );
 };
