@@ -21,3 +21,7 @@ button:focus {
 button:focus {
   outline: none !important;
 }
+
+input[type="date"] {
+  color-scheme: dark;
+}
