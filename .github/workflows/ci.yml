@@ -4,8 +4,8 @@ on:
   pull_request:
     branches: [main]
     paths:
-      - "tempest-backend/**"
-      - "tempest-frontend/**"
+      - "Tempest-Fitness/Tempest-Fitness/**"
+      - "Tempest-Fitness/tempest-frontend/**"
       - ".github/workflows/**"
 
 jobs:
