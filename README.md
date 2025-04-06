@@ -85,125 +85,126 @@ Follow these steps to set up the Tempest-Fitness application locally:
 # Directory Structure:
 ```
 |-- Tempest-Fitness
-|   |-- Tempest-Fitness
-|   |   |-- mvnw
-|   |   |-- mvnw.cmd
-|   |   |-- pom.xml
-|   |   `-- src
-|   |       |-- main
-|   |       |   |-- java
-|   |       |   |   `-- com
-|   |       |   |       `-- hpatel
-|   |       |   |           `-- Tempest_Fitness
-|   |       |   |               |-- TempestFitnessApplication.java
-|   |       |   |               |-- config
-|   |       |   |               |   |-- CustomUserDetailsService.java
-|   |       |   |               |   |-- SecurityConfig.java
-|   |       |   |               |   `-- UserInitializer.java
-|   |       |   |               |-- controllers
-|   |       |   |               |   |-- APIController.java
-|   |       |   |               |   |-- AuthController.java
-|   |       |   |               |   |-- ExerciseController.java
-|   |       |   |               |   |-- UserController.java
-|   |       |   |               |   |-- UserExerciseController.java
-|   |       |   |               |   |-- WeightController.java
-|   |       |   |               |   `-- WorkoutController.java
-|   |       |   |               |-- dto
-|   |       |   |               |   `-- LoginRequest.java
-|   |       |   |               |-- models
-|   |       |   |               |   |-- DomainObject.java
-|   |       |   |               |   |-- Exercise.java
-|   |       |   |               |   |-- User.java
-|   |       |   |               |   |-- UserExercise.java
-|   |       |   |               |   |-- Weight.java
-|   |       |   |               |   `-- Workout.java
-|   |       |   |               |-- repositories
-|   |       |   |               |   |-- ExerciseRepository.java
-|   |       |   |               |   |-- UserExerciseRepository.java
-|   |       |   |               |   |-- UserRepository.java
-|   |       |   |               |   |-- WeightRepository.java
-|   |       |   |               |   `-- WorkoutRepository.java
-|   |       |   |               |-- services
-|   |       |   |               |   |-- CustomService.java
-|   |       |   |               |   |-- ExerciseService.java
-|   |       |   |               |   |-- UserExerciseService.java
-|   |       |   |               |   |-- UserService.java
-|   |       |   |               |   |-- WeightService.java
-|   |       |   |               |   `-- WorkoutService.java
-|   |       |   |               `-- utility
-|   |       |   `-- resources
-|   |       |       |-- application.properties
-|   |       |       |-- static
-|   |       |       `-- templates
-|   |       `-- test
-|   |           |-- java
-|   |           |   `-- com
-|   |           |       `-- hpatel
-|   |           |           `-- Tempest_Fitness
-|   |           |               |-- DBInteractionTest.java
-|   |           |               |-- TempestFitnessApplicationTests.java
-|   |           |               |-- TestConfig.java
-|   |           |               |-- common
-|   |           |               |   `-- TestUtils.java
-|   |           |               |-- controllers
-|   |           |               |   |-- APIExerciseTest.java
-|   |           |               |   |-- APIUserTest.java
-|   |           |               |   |-- APIWeightTest.java
-|   |           |               |   `-- APIWorkoutTest.java
-|   |           |               `-- models
-|   |           |                   |-- ExerciseTest.java
-|   |           |                   |-- UserExerciseTest.java
-|   |           |                   |-- UserTest.java
-|   |           |                   |-- WeightTest.java
-|   |           |                   `-- WorkoutTest.java
-|   |           `-- resources
-|   |               `-- application-test.properties
-|   |-- docs
-|   |   |-- Demo.mp4
-|   |   |-- LoginPage.png
-|   |   `-- RegisterPage.png
-|   `-- tempest-frontend
-|       |-- README.md
-|       |-- eslint.config.js
-|       |-- index.html
-|       |-- package-lock.json
-|       |-- package.json
-|       |-- public
-|       |   `-- thunder.svg
-|       |-- src
-|       |   |-- App.jsx
-|       |   |-- assets
-|       |   |   `-- storm_weather.png
-|       |   |-- components
-|       |   |   |-- Exercises.jsx
-|       |   |   |-- Home.jsx
-|       |   |   |-- Login.jsx
-|       |   |   |-- NavBar.jsx
-|       |   |   |-- Profile.jsx
-|       |   |   |-- ProtectedRoute.jsx
-|       |   |   |-- Register.jsx
-|       |   |   |-- Weights.jsx
-|       |   |   `-- Workouts.jsx
-|       |   |-- contexts
-|       |   |   `-- AuthContext.jsx
-|       |   |-- main.jsx
-|       |   |-- providers
-|       |   |   `-- AuthProvider.jsx
-|       |   |-- services
-|       |   |   |-- exerciseService.js
-|       |   |   |-- userService.js
-|       |   |   |-- weightService.js
-|       |   |   `-- workoutService.js
-|       |   `-- styles
-|       |       |-- exercise.css
-|       |       |-- home.css
-|       |       |-- index.css
-|       |       |-- login.css
-|       |       |-- navbar.css
-|       |       |-- register.css
-|       |       `-- weight.css
-|       `-- vite.config.js
+|   |-- mvnw
+|   |-- mvnw.cmd
+|   |-- pom.xml
+|   `-- src
+|       |-- main
+|       |   |-- java
+|       |   |   `-- com
+|       |   |       `-- hpatel
+|       |   |           `-- Tempest_Fitness
+|       |   |               |-- TempestFitnessApplication.java
+|       |   |               |-- config
+|       |   |               |   |-- CustomUserDetailsService.java
+|       |   |               |   |-- SecurityConfig.java
+|       |   |               |   `-- UserInitializer.java
+|       |   |               |-- controllers
+|       |   |               |   |-- APIController.java
+|       |   |               |   |-- AuthController.java
+|       |   |               |   |-- ExerciseController.java
+|       |   |               |   |-- UserController.java
+|       |   |               |   |-- UserExerciseController.java
+|       |   |               |   |-- WeightController.java
+|       |   |               |   `-- WorkoutController.java
+|       |   |               |-- dto
+|       |   |               |   `-- LoginRequest.java
+|       |   |               |-- models
+|       |   |               |   |-- DomainObject.java
+|       |   |               |   |-- Exercise.java
+|       |   |               |   |-- User.java
+|       |   |               |   |-- UserExercise.java
+|       |   |               |   |-- Weight.java
+|       |   |               |   `-- Workout.java
+|       |   |               |-- repositories
+|       |   |               |   |-- ExerciseRepository.java
+|       |   |               |   |-- UserExerciseRepository.java
+|       |   |               |   |-- UserRepository.java
+|       |   |               |   |-- WeightRepository.java
+|       |   |               |   `-- WorkoutRepository.java
+|       |   |               |-- services
+|       |   |               |   |-- CustomService.java
+|       |   |               |   |-- ExerciseService.java
+|       |   |               |   |-- UserExerciseService.java
+|       |   |               |   |-- UserService.java
+|       |   |               |   |-- WeightService.java
+|       |   |               |   `-- WorkoutService.java
+|       |   |               `-- utility
+|       |   `-- resources
+|       |       |-- application.properties
+|       |       |-- static
+|       |       `-- templates
+|       `-- test
+|           |-- java
+|           |   `-- com
+|           |       `-- hpatel
+|           |           `-- Tempest_Fitness
+|           |               |-- DBInteractionTest.java
+|           |               |-- TempestFitnessApplicationTests.java
+|           |               |-- TestConfig.java
+|           |               |-- common
+|           |               |   `-- TestUtils.java
+|           |               |-- controllers
+|           |               |   |-- APIExerciseTest.java
+|           |               |   |-- APIUserTest.java
+|           |               |   |-- APIWeightTest.java
+|           |               |   `-- APIWorkoutTest.java
+|           |               `-- models
+|           |                   |-- ExerciseTest.java
+|           |                   |-- UserExerciseTest.java
+|           |                   |-- UserTest.java
+|           |                   |-- WeightTest.java
+|           |                   `-- WorkoutTest.java
+|           `-- resources
+|               `-- application-test.properties
+|-- docs
+|   |-- Demo.mp4
+|   |-- LoginPage.png
+|   `-- RegisterPage.png
+|-- tempest-frontend
+|   |-- README.md
+|   |-- eslint.config.js
+|   |-- index.html
+|   |-- package-lock.json
+|   |-- package.json
+|   |-- public
+|   |   `-- thunder.svg
+|   |-- src
+|   |   |-- App.jsx
+|   |   |-- assets
+|   |   |   `-- storm_weather.png
+|   |   |-- components
+|   |   |   |-- Exercises.jsx
+|   |   |   |-- Home.jsx
+|   |   |   |-- Login.jsx
+|   |   |   |-- NavBar.jsx
+|   |   |   |-- Profile.jsx
+|   |   |   |-- ProtectedRoute.jsx
+|   |   |   |-- Register.jsx
+|   |   |   |-- Weights.jsx
+|   |   |   |-- WorkoutEditor.jsx
+|   |   |   `-- Workouts.jsx
+|   |   |-- contexts
+|   |   |   `-- AuthContext.jsx
+|   |   |-- main.jsx
+|   |   |-- providers
+|   |   |   `-- AuthProvider.jsx
+|   |   |-- services
+|   |   |   |-- exerciseService.js
+|   |   |   |-- userService.js
+|   |   |   |-- weightService.js
+|   |   |   `-- workoutService.js
+|   |   `-- styles
+|   |       |-- exercise.css
+|   |       |-- home.css
+|   |       |-- index.css
+|   |       |-- login.css
+|   |       |-- navbar.css
+|   |       |-- register.css
+|   |       |-- weight.css
+|   |       `-- workouts.css
+|   `-- vite.config.js
 
-37 directories, 87 files
+36 directories, 85 files
 ```
 
