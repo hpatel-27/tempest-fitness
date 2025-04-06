@@ -228,6 +228,7 @@ const Exercises = () => {
             <Form.Group className="mb-3">
               <Form.Label>Name</Form.Label>
               <Form.Control
+                className="border-0 text-light"
                 type="text"
                 value={currentExercise.name}
                 onChange={(e) =>
@@ -242,6 +243,7 @@ const Exercises = () => {
             <Form.Group className="mb-3">
               <Form.Label>Type</Form.Label>
               <Form.Select
+                className="border-0 text-light"
                 value={currentExercise.type}
                 onChange={(e) =>
                   setCurrentExercise({
@@ -263,6 +265,7 @@ const Exercises = () => {
             <Form.Group className="mb-3">
               <Form.Label>Muscle</Form.Label>
               <Form.Control
+                className="border-0 text-light"
                 type="text"
                 value={currentExercise.muscle}
                 onChange={(e) =>
@@ -277,6 +280,7 @@ const Exercises = () => {
             <Form.Group className="mb-3">
               <Form.Label>Equipment</Form.Label>
               <Form.Control
+                className="border-0 text-light"
                 type="text"
                 value={currentExercise.equipment}
                 onChange={(e) =>
@@ -291,6 +295,7 @@ const Exercises = () => {
             <Form.Group className="mb-3">
               <Form.Label>Difficulty</Form.Label>
               <Form.Select
+                className="border-0 text-light"
                 value={currentExercise.difficulty}
                 onChange={(e) =>
                   setCurrentExercise({

@@ -1,0 +1,132 @@
+.workout-accordion {
+  --bs-accordion-bg: #242526;
+  --bs-accordion-border-color: #2d2e2f;
+  --bs-accordion-active-bg: #2d2e2f;
+  --bs-accordion-active-color: #fff;
+  --bs-accordion-btn-bg: #242526;
+  --bs-accordion-btn-color: #fff;
+  --bs-accordion-btn-focus-border-color: #2d2e2f;
+  --bs-accordion-btn-focus-box-shadow: none;
+}
+
+.workout-accordion * {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+}
+
+.workout-accordion .accordion-button {
+  background-color: #333436;
+  color: #fff;
+  border: 1px solid #2d2e2f;
+  border-radius: 5px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.workout-accordion .accordion-button:not(.collapsed) {
+  background-color: #48494e;
+  color: #fff;
+  box-shadow: none;
+}
+
+.workout-accordion .accordion-button::after {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+.workout-accordion .accordion-item {
+  background-color: #242526;
+  border: 1px solid #2d2e2f;
+  margin-bottom: 0.5rem;
+}
+
+.workout-accordion .accordion-body {
+  background-color: #242526;
+  color: #fff;
+  border-top: 1px solid #2d2e2f;
+}
+
+.workout-actions {
+  pointer-events: auto;
+  user-select: none !important;
+}
+
+.workout-actions button {
+  pointer-events: auto;
+  user-select: none !important;
+}
+
+.workout-details {
+  user-select: none !important;
+  overflow-x: auto;
+}
+
+.workout-entry {
+  background-color: #24252600 !important;
+  border-color: #2d2e2f !important;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+}
+
+.workout-entry .entry-col {
+  flex: 1;
+  min-width: 100px;
+  text-align: center;
+  white-space: nowrap;
+  user-select: none !important;
+}
+
+.workout-entry .entry-col.exercise-name {
+  flex: 2;
+  text-align: left;
+}
+
+.workout-entry span {
+  user-select: none !important;
+}
+
+.workout-name {
+  user-select: none !important;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.workout-accordion .accordion-button:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.workout-accordion .accordion-button:active {
+  background-color: #2d2e2f;
+}
+
+.custom-modal *:not(input):not(textarea):not(button) {
+  user-select: none !important;
+}
+
+.workout-add-edit-card {
+  margin-left: 30%;
+  margin-right: 30%;
+}
+
+.remove-workout-exercise {
+  margin-left: auto;
+}
+.cancel-add-workout {
+  margin-top: 9px;
+}
+
+.workout-add-exercise {
+  margin-left: auto;
+}
+
+.form-select,
+.form-control {
+  background-color: #2d2e2f !important;
+}
+
+.form-control::placeholder {
+  color: grey !important;
+}
