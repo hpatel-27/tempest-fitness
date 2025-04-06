@@ -17,15 +17,16 @@
 }
 
 .workout-accordion .accordion-button {
-  background-color: #242526;
+  background-color: #333436;
   color: #fff;
   border: 1px solid #2d2e2f;
+  border-radius: 5px;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
 
 .workout-accordion .accordion-button:not(.collapsed) {
-  background-color: #2d2e2f;
+  background-color: #48494e;
   color: #fff;
   box-shadow: none;
 }
