@@ -6,6 +6,7 @@ import workoutService from "../services/workoutService";
 import { AuthContext } from "../contexts/AuthContext";
 import Swal from "sweetalert2";
 import PropTypes from "prop-types";
+import "../styles/workouts.css";
 
 const WorkoutEditor = ({ editMode }) => {
   const { auth } = useContext(AuthContext);
@@ -90,35 +91,55 @@ const WorkoutEditor = ({ editMode }) => {
 
     try {
       if (editMode) {
-        console.log(
-          "Workout being submitted:",
-          JSON.stringify(workout, null, 2)
+        const response = await workoutService.updateWorkout(
+          workoutDateParam,
+          workout,
+          auth
         );
-
-        await workoutService.updateWorkout(workoutDateParam, workout, auth);
-        Swal.fire({
-          title: "Updated!",
-          text: "Workout updated successfully!",
-          icon: "success",
-          confirmButtonColor: "#6b51ab",
-          background: "#242526",
-          color: "#fff",
-        });
+        // Something went wrong
+        if (response.status != "success") {
+          Swal.fire({
+            title: "Error",
+            text: "There was a problem updating your workout.",
+            icon: "error",
+            confirmButtonColor: "#6b51ab",
+            background: "#242526",
+            color: "#fff",
+          });
+        } else {
+          // Success
+          Swal.fire({
+            title: "Updated!",
+            text: "Workout updated successfully!",
+            icon: "success",
+            confirmButtonColor: "#6b51ab",
+            background: "#242526",
+            color: "#fff",
+          });
+        }
       } else {
-        console.log(
-          "Workout being submitted:",
-          JSON.stringify(workout, null, 2)
-        );
         const response = await workoutService.createWorkout(workout, auth);
-        console.log("Response: ", response);
-        Swal.fire({
-          title: "Created!",
-          text: "Workout created successfully!",
-          icon: "success",
-          confirmButtonColor: "#6b51ab",
-          background: "#242526",
-          color: "#fff",
-        });
+        // Something went wrong
+        if (response.status != "success") {
+          Swal.fire({
+            title: "Error",
+            text: "There was a problem creating your workout.",
+            icon: "error",
+            confirmButtonColor: "#6b51ab",
+            background: "#242526",
+            color: "#fff",
+          });
+        } else {
+          // Success
+          Swal.fire({
+            title: "Created!",
+            text: "Workout created successfully!",
+            icon: "success",
+            confirmButtonColor: "#6b51ab",
+            background: "#242526",
+            color: "#fff",
+          });
+        }
       }
       navigate("/workouts");
     } catch (err) {
@@ -136,13 +157,14 @@ const WorkoutEditor = ({ editMode }) => {
 
   return (
     <div className="container mt-4">
-      <Card className="bg-dark text-light p-4">
+      <Card className="bg-dark text-light p-4 workout-add-edit-card">
         <h3>{editMode ? "Edit Workout" : "New Workout"}</h3>
 
-        <Form className="mt-3">
+        <Form className="mt-3 bg-dark text-light">
           <Form.Group className="mb-3">
             <Form.Label>Date</Form.Label>
             <Form.Control
+              className="border-0 text-light"
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
@@ -155,7 +177,7 @@ const WorkoutEditor = ({ editMode }) => {
               className="d-flex align-items-end mb-3 gap-2 flex-wrap"
             >
               <Form.Select
-                className="flex-grow-1"
+                className="flex-grow-1 border-0 text-light"
                 value={ue.exercise?.id || ""}
                 onChange={(e) =>
                   handleExerciseChange(index, "exerciseId", e.target.value)
@@ -169,6 +191,7 @@ const WorkoutEditor = ({ editMode }) => {
                 ))}
               </Form.Select>
               <Form.Control
+                className="border-0 text-light"
                 type="number"
                 placeholder="Sets"
                 value={ue.sets}
@@ -177,6 +200,7 @@ const WorkoutEditor = ({ editMode }) => {
                 }
               />
               <Form.Control
+                className="border-0 text-light"
                 type="number"
                 placeholder="Reps"
                 value={ue.reps}
@@ -185,6 +209,7 @@ const WorkoutEditor = ({ editMode }) => {
                 }
               />
               <Form.Control
+                className="border-0 text-light"
                 type="number"
                 placeholder="Weight (lbs)"
                 value={ue.weight}
@@ -192,7 +217,9 @@ const WorkoutEditor = ({ editMode }) => {
                   handleExerciseChange(index, "weight", e.target.value)
                 }
               />
+
               <Button
+                className="remove-workout-exercise"
                 variant="danger"
                 onClick={() => handleRemoveExercise(index)}
               >
@@ -200,13 +227,22 @@ const WorkoutEditor = ({ editMode }) => {
               </Button>
             </div>
           ))}
-
-          <Button variant="secondary" onClick={handleAddExercise}>
-            <i className="bi bi-plus-circle" /> Add Exercise
-          </Button>
+          <div className="d-flex">
+            <Button
+              variant="secondary"
+              className="workout-add-exercise"
+              onClick={handleAddExercise}
+            >
+              <i className="bi bi-plus-circle" /> Add Exercise
+            </Button>
+          </div>
 
           <div className="mt-4 d-flex justify-content-between">
-            <Button variant="light" onClick={() => navigate("/workouts")}>
+            <Button
+              variant="danger"
+              className="cancel-add-workout"
+              onClick={() => navigate("/workouts")}
+            >
               Cancel
             </Button>
             <Button
