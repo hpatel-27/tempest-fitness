@@ -1,8 +1,10 @@
 package com.hpatel.Tempest_Fitness.controllers;
 
+import com.hpatel.Tempest_Fitness.models.Exercise;
 import com.hpatel.Tempest_Fitness.models.User;
 import com.hpatel.Tempest_Fitness.models.UserExercise;
 import com.hpatel.Tempest_Fitness.models.Workout;
+import com.hpatel.Tempest_Fitness.services.ExerciseService;
 import com.hpatel.Tempest_Fitness.services.UserService;
 import com.hpatel.Tempest_Fitness.services.WorkoutService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,9 @@ public class WorkoutController extends APIController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ExerciseService exerciseService;
 
     /**
      * REST API method to provide GET access to all workouts for a user
@@ -84,8 +89,8 @@ public class WorkoutController extends APIController {
             return new ResponseEntity<>(errorResponse("User not found."), HttpStatus.NOT_FOUND);
         }
         if ( null != service.findByUserAndDate(user, workoutRequest.getDate() ) ) {
-            return new ResponseEntity<>( errorResponse( "Workout with the name " + workoutRequest.getDate() + " already exists" ),
-                    HttpStatus.CONFLICT );
+            return new ResponseEntity<>(errorResponse( "Workout with the name " + workoutRequest.getDate() + " already exists"),
+                    HttpStatus.CONFLICT);
         }
 
         // Create workout instance
@@ -93,15 +98,22 @@ public class WorkoutController extends APIController {
 
         // Link each UserExercise to this workout
         for (UserExercise ue : workoutRequest.getUserExercises()) {
+            Long exerciseId = ue.getExercise().getId();
+            Exercise existingExercise = exerciseService.findById(exerciseId);
+
+            if (existingExercise == null) {
+                return new ResponseEntity<>(errorResponse("Exercise not found for id: " + exerciseId), HttpStatus.NOT_FOUND);
+            }
+
+            // Manually set the exercise and workout, so that they are non-null
+            ue.setExercise(existingExercise);
             ue.setWorkout(saveWorkout);
             saveWorkout.addOrUpdateExercise(ue);
         }
 
         service.save(saveWorkout);
 
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body("Workout created successfully for date: " + saveWorkout.getDate());
-
+        return new ResponseEntity<>(successResponse( "Workout created successfully for date: " + saveWorkout.getDate()), HttpStatus.CREATED);
     }
 
     /**

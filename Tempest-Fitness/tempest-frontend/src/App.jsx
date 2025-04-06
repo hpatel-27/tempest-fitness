@@ -14,6 +14,7 @@ import { AuthProvider } from "./providers/AuthProvider"; // Use AuthProvider ins
 import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import WorkoutEditor from "./components/WorkoutEditor";
 
 function AppContent() {
   const location = useLocation();
@@ -55,6 +56,22 @@ function AppContent() {
           element={
             <ProtectedRoute>
               <Workouts />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/workouts/new"
+          element={
+            <ProtectedRoute>
+              <WorkoutEditor />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/workouts/edit/:date"
+          element={
+            <ProtectedRoute>
+              <WorkoutEditor editMode />
             </ProtectedRoute>
           }
         />

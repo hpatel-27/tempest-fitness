@@ -29,7 +29,8 @@ const Login = () => {
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="form-control"
+              className="form-control border-0 text-light"
+              placeholder="jsmith123"
               required
             />
           </div>
@@ -39,7 +40,7 @@ const Login = () => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="form-control"
+              className="form-control border-0 text-light"
               required
             />
           </div>

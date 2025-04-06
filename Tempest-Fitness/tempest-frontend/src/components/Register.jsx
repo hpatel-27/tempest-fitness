@@ -47,7 +47,8 @@ const Register = () => {
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="form-control"
+              placeholder="jsmith123"
+              className="form-control border-0 text-light"
               required
             />
           </div>
@@ -57,7 +58,7 @@ const Register = () => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="form-control"
+              className="form-control border-0 text-light"
               required
             />
           </div>
@@ -67,7 +68,7 @@ const Register = () => {
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="form-control"
+              className="form-control border-0 text-light"
               required
             />
           </div>

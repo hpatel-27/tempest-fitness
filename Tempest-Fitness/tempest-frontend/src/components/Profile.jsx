@@ -49,7 +49,7 @@ const Profile = () => {
       {isEditing ? (
         <input
           type={type}
-          className="form-control"
+          className="form-control text-light border-0"
           value={formData[key]}
           onChange={(e) => setFormData({ ...formData, [key]: e.target.value })}
         />
