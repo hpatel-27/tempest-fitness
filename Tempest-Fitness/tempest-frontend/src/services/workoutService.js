@@ -6,7 +6,7 @@ const getWorkouts = async (auth) => {
     throw new Error("User is not authenticated.");
   }
 
-  // Encode credentials in Base64 for Basic Authentication and get from the weight api
+  // Encode credentials in Base64 for Basic Authentication and get from the workout API
   const response = await fetch(WORKOUT_API_URL, {
     method: "GET",
     headers: {
@@ -29,7 +29,7 @@ const getWorkoutByDate = async (date, auth) => {
     throw new Error("User is not authenticated.");
   }
 
-  // Encode credentials in Base64 for Basic Authentication and get from the weight api
+  // Encode credentials in Base64 for Basic Authentication and get from the workout API
   const response = await fetch(`${WORKOUT_API_URL}/${date}`, {
     method: "GET",
     headers: {
@@ -52,7 +52,7 @@ const createWorkout = async (workout, auth) => {
     throw new Error("User is not authenticated.");
   }
 
-  // Encode credentials in Base64 for Basic Authentication and get from the weight api
+  // Encode credentials in Base64 for Basic Authentication and get from the workout api
   const response = await fetch(WORKOUT_API_URL, {
     method: "POST",
     headers: {
