@@ -5,7 +5,9 @@
 # Application Preview
 Click on the thumbnail to be redirected to the demo.
 
-[![Demo of Tempest-Fitness](Tempest-Fitness/docs/LoginPage.png)](https://youtu.be/yGlsd5vD5jc)
+<a href="https://youtu.be/yGlsd5vD5jc" target="_blank">
+  <img src="Tempest-Fitness/docs/LoginPage.png" alt="Demo of Tempest-Fitness" />
+</a>
 
 ## Features
 
