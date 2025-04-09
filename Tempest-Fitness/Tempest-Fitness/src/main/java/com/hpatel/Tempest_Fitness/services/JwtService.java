@@ -1,4 +1,4 @@
-package com.hpatel.Tempest_Fitness.config;
+package com.hpatel.Tempest_Fitness.services;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
