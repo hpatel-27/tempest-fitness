@@ -4,7 +4,7 @@ package com.hpatel.Tempest_Fitness.dto;
  * Login DTO to protect against exposing sensitive User information
  * during the login process
  */
-public class LoginRequest {
+public class LoginRequestDTO {
     /** Username provided for the login request */
     private String username;
     /** Password provided for the login request */

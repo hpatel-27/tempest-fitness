@@ -1,6 +1,6 @@
 package com.hpatel.Tempest_Fitness.dto;
 
-public class RegisterRequest {
+public class RegisterRequestDTO {
     /** Username provided for the register request */
     private String username;
     /** Password provided for the register request */
