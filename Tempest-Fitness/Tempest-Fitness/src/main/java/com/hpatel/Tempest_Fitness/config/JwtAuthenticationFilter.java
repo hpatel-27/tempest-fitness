@@ -1,5 +1,6 @@
 package com.hpatel.Tempest_Fitness.config;
 
+import com.hpatel.Tempest_Fitness.services.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
