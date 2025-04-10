@@ -11,9 +11,6 @@ export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState(null); // null means not authenticated
 
   const login = async (username, password) => {
-    // Create Basic Auth header
-    const basicAuth = `Basic ${btoa(`${username}:${password}`)}`;
-
     // send a POST request to the server matching a LoginRequest DTO
     const response = await fetch(AUTH_API_URL, {
       method: "POST",
@@ -22,9 +19,11 @@ export const AuthProvider = ({ children }) => {
       },
       body: JSON.stringify({ username, password }),
     });
+    const token = response.json().token;
+
     // After getting the all-clear from the server, set the auth state
     if (response.ok) {
-      setAuth({ username, basicAuth });
+      setAuth({ username, token });
       return true;
     } else {
       throw new Error("Invalid credentials");
@@ -34,11 +33,11 @@ export const AuthProvider = ({ children }) => {
   // Call the backend logout endpoint and clear the auth state
   const logout = async () => {
     try {
-      if (auth?.basicAuth) {
+      if (auth?.token) {
         await fetch(LOGOUT_API_URL, {
           method: "POST",
           headers: {
-            Authorization: auth.basicAuth,
+            Authorization: auth.token,
           },
         });
       }
