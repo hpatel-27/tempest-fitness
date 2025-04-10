@@ -9,6 +9,8 @@ Click on the thumbnail to be redirected to the demo.
   <img src="Tempest-Fitness/docs/LoginPage.png" alt="Demo of Tempest-Fitness" />
 </a>
 
+# ER Diagram
+![Tempest ER diagram](Tempest-Fitness/docs/ERD.png)
 ## Features
 
 - **User Authentication:** Secure login and registration system to protect user data.
