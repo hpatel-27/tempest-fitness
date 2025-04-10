@@ -4,14 +4,14 @@ const UPDATE_API_URL = BASE_API_URL + "/users";
 // Get the current user, which should be the logged in user
 const getCurrentUser = async (auth) => {
   // Check that the auth is set since the user is supposed to be authenticated
-  if (!auth || !auth.basicAuth) {
+  if (!auth || !auth?.token) {
     throw new Error("User is not authenticated.");
   }
 
   // Hit the API for the current user
   const response = await fetch(USER_API_URL, {
     headers: {
-      Authorization: auth?.basicAuth,
+      Authorization: auth?.token,
       "Content-type": "application/json",
     },
     method: "GET",
@@ -27,14 +27,14 @@ const getCurrentUser = async (auth) => {
 
 const updateUser = async (auth, updatedUser, username) => {
   // Check that the auth is set since the user is supposed to be authenticated
-  if (!auth || !auth.basicAuth) {
+  if (!auth || !auth?.token) {
     throw new Error("User is not authenticated.");
   }
 
   // Hit the API for the current user
   const response = await fetch(`${UPDATE_API_URL}/${username}`, {
     headers: {
-      Authorization: auth?.basicAuth,
+      Authorization: auth?.token,
       "Content-type": "application/json",
     },
     method: "PUT",
