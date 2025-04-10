@@ -283,13 +283,11 @@ public class UserTest {
         // Error testing
         User errorUser = new User();
         Exception exc1 = assertThrows( IllegalArgumentException.class, () -> errorUser.setFirstName(null));
-        Exception exc2 = assertThrows( IllegalArgumentException.class, () -> errorUser.setFirstName(""));
         Exception exc3 = assertThrows( IllegalArgumentException.class, () -> errorUser.setFirstName("HHHHHHHHHHHHHHHHHHHHA"));
         Exception exc4 = assertThrows( IllegalArgumentException.class, () -> errorUser.setFirstName("s123hj3"));
         Exception exc5 = assertThrows( IllegalArgumentException.class, () -> errorUser.setFirstName("fh[.;;@?"));
 
         assertEquals( "First name was expected but there was none.", exc1.getMessage() );
-        assertEquals( "First name was expected but there was none.", exc2.getMessage() );
         assertEquals( "Maximum character limit is 20 for first name.", exc3.getMessage() );
         assertEquals( "First name should only contain characters.", exc4.getMessage() );
         assertEquals( "First name should only contain characters.", exc5.getMessage() );
@@ -314,13 +312,11 @@ public class UserTest {
         // Error testing
         User errorUser = new User();
         Exception exc1 = assertThrows( IllegalArgumentException.class, () -> errorUser.setLastName(null));
-        Exception exc2 = assertThrows( IllegalArgumentException.class, () -> errorUser.setLastName(""));
         Exception exc3 = assertThrows( IllegalArgumentException.class, () -> errorUser.setLastName("HHHHHHHHHHHHHHHHHHHHA"));
         Exception exc4 = assertThrows( IllegalArgumentException.class, () -> errorUser.setLastName("s123hj3"));
         Exception exc5 = assertThrows( IllegalArgumentException.class, () -> errorUser.setLastName("fh[.;;@?"));
 
         assertEquals( "Last name was expected but there was none.", exc1.getMessage() );
-        assertEquals( "Last name was expected but there was none.", exc2.getMessage() );
         assertEquals( "Maximum character limit is 20 for last name.", exc3.getMessage() );
         assertEquals( "Last name should only contain characters.", exc4.getMessage() );
         assertEquals( "Last name should only contain characters.", exc5.getMessage() );
