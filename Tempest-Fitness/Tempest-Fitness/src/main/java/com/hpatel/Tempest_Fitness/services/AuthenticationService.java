@@ -3,6 +3,7 @@ package com.hpatel.Tempest_Fitness.services;
 import com.hpatel.Tempest_Fitness.dto.AuthenticationResponse;
 import com.hpatel.Tempest_Fitness.dto.LoginRequestDTO;
 import com.hpatel.Tempest_Fitness.dto.RegisterRequestDTO;
+import com.hpatel.Tempest_Fitness.dto.UserDTO;
 import com.hpatel.Tempest_Fitness.models.User;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,18 +27,14 @@ public class AuthenticationService {
     }
 
 
-    public AuthenticationResponse register(RegisterRequestDTO requestDTO) {
+    public UserDTO register(RegisterRequestDTO requestDTO) {
         User user = new User();
         user.setUsername(requestDTO.getUsername());
         user.setPassword(passwordEncoder.encode(requestDTO.getPassword()));
         user.setRole("USER");
         userService.save(user);
 
-        String jwtToken = jwtService.generateToken(user);
-        AuthenticationResponse authResponse = new AuthenticationResponse();
-        authResponse.setToken(jwtToken);
-
-        return authResponse;
+        return new UserDTO(user);
     }
 
     public AuthenticationResponse login (LoginRequestDTO loginRequestDTO) {
