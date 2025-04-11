@@ -13,16 +13,23 @@ import java.util.Set;
 @Table(name = "app_user")
 public class User extends DomainObject implements UserDetails {
 
+    /** User's unique identifier */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /** User's username */
     @Column( nullable = false, unique = true )
     private String username;
 
+    /** User's password - hashed */
     private String password;
 
+    /** User's role (USER, ATHLETE, etc.) */
     private String role;
+
+    /** User's email */
+    private String email;
 
     /** User's first name */
     private String firstName;
@@ -141,6 +148,26 @@ public class User extends DomainObject implements UserDetails {
             throw new IllegalArgumentException("Role should only contain characters.");
         }
         this.role = role;
+    }
+
+    /**
+     * Get the user's email address
+     * @return User's email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * Set the user's email address field
+     * @param email The email to set for the user
+     */
+    public void setEmail(String email) {
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        if (!email.matches(emailRegex)) {
+            throw new IllegalArgumentException("Invalid email format");
+        }
+        this.email = email;
     }
 
     public String getFirstName() {

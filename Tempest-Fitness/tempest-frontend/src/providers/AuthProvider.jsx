@@ -1,5 +1,4 @@
-// src/AuthContext.js
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import PropTypes from "prop-types";
 
@@ -8,12 +7,20 @@ const AUTH_API_URL = BASE_API_URL + "/auth/login";
 const LOGOUT_API_URL = BASE_API_URL + "/auth/logout";
 
 export const AuthProvider = ({ children }) => {
-  const [auth, setAuth] = useState(null); // null means not authenticated
+  const [auth, setAuth] = useState(() => {
+    const storedAuth = localStorage.getItem("auth");
+    return storedAuth ? JSON.parse(storedAuth) : null;
+  });
+
+  useEffect(() => {
+    if (auth) {
+      localStorage.setItem("auth", JSON.stringify(auth));
+    } else {
+      localStorage.removeItem("auth");
+    }
+  }, [auth]);
 
   const login = async (username, password) => {
-    // Create Basic Auth header
-    const basicAuth = `Basic ${btoa(`${username}:${password}`)}`;
-
     // send a POST request to the server matching a LoginRequest DTO
     const response = await fetch(AUTH_API_URL, {
       method: "POST",
@@ -22,9 +29,13 @@ export const AuthProvider = ({ children }) => {
       },
       body: JSON.stringify({ username, password }),
     });
+
+    const data = await response.json();
+    const token = data.token;
+
     // After getting the all-clear from the server, set the auth state
     if (response.ok) {
-      setAuth({ username, basicAuth });
+      setAuth({ username, token });
       return true;
     } else {
       throw new Error("Invalid credentials");
@@ -34,18 +45,19 @@ export const AuthProvider = ({ children }) => {
   // Call the backend logout endpoint and clear the auth state
   const logout = async () => {
     try {
-      if (auth?.basicAuth) {
+      if (auth?.token) {
         await fetch(LOGOUT_API_URL, {
           method: "POST",
           headers: {
-            Authorization: auth.basicAuth,
+            Authorization: auth.token,
           },
         });
       }
     } catch (error) {
       console.error("Error during logout:", error);
     } finally {
-      // Always clear the auth state, even if the API call fails
+      // clear the auth state, even if the API call fails
+      localStorage.removeItem("auth");
       setAuth(null);
     }
   };
