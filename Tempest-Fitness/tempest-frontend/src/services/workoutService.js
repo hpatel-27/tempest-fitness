@@ -2,7 +2,7 @@ const WORKOUT_API_URL = import.meta.env.VITE_WORKOUT_API_URL;
 
 const getWorkouts = async (auth) => {
   // Check if the user is authenticated
-  if (!auth || !auth.basicAuth) {
+  if (!auth || !auth?.token) {
     throw new Error("User is not authenticated.");
   }
 
@@ -10,7 +10,7 @@ const getWorkouts = async (auth) => {
   const response = await fetch(WORKOUT_API_URL, {
     method: "GET",
     headers: {
-      Authorization: auth.basicAuth,
+      Authorization: `Bearer ${auth.token}`,
       "Content-Type": "application/json",
     },
   });
@@ -25,7 +25,7 @@ const getWorkouts = async (auth) => {
 
 const getWorkoutByDate = async (date, auth) => {
   // Check if the user is authenticated
-  if (!auth || !auth.basicAuth) {
+  if (!auth || !auth?.token) {
     throw new Error("User is not authenticated.");
   }
 
@@ -33,7 +33,7 @@ const getWorkoutByDate = async (date, auth) => {
   const response = await fetch(`${WORKOUT_API_URL}/${date}`, {
     method: "GET",
     headers: {
-      Authorization: auth.basicAuth,
+      Authorization: `Bearer ${auth.token}`,
       "Content-Type": "application/json",
     },
   });
@@ -48,7 +48,7 @@ const getWorkoutByDate = async (date, auth) => {
 
 const createWorkout = async (workout, auth) => {
   // Check if the user is authenticated
-  if (!auth || !auth.basicAuth) {
+  if (!auth || !auth?.token) {
     throw new Error("User is not authenticated.");
   }
 
@@ -56,7 +56,7 @@ const createWorkout = async (workout, auth) => {
   const response = await fetch(WORKOUT_API_URL, {
     method: "POST",
     headers: {
-      Authorization: auth.basicAuth,
+      Authorization: `Bearer ${auth.token}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(workout),
@@ -72,7 +72,7 @@ const createWorkout = async (workout, auth) => {
 
 const deleteWorkout = async (workoutDate, auth) => {
   // Check if the user is authenticated
-  if (!auth || !auth.basicAuth) {
+  if (!auth || !auth?.token) {
     throw new Error("User is not authenticated");
   }
 
@@ -80,7 +80,7 @@ const deleteWorkout = async (workoutDate, auth) => {
   const response = await fetch(`${WORKOUT_API_URL}/${workoutDate}`, {
     method: "DELETE",
     headers: {
-      Authorization: auth.basicAuth,
+      Authorization: `Bearer ${auth.token}`,
     },
   });
 
@@ -93,7 +93,7 @@ const deleteWorkout = async (workoutDate, auth) => {
 
 const updateWorkout = async (workoutDate, workout, auth) => {
   // Check if the user is authenticated
-  if (!auth || !auth.basicAuth) {
+  if (!auth || !auth?.token) {
     throw new Error("User is not authenticated");
   }
 
@@ -101,7 +101,7 @@ const updateWorkout = async (workoutDate, workout, auth) => {
   const response = await fetch(`${WORKOUT_API_URL}/${workoutDate}`, {
     method: "PUT",
     headers: {
-      Authorization: auth.basicAuth,
+      Authorization: `Bearer ${auth.token}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(workout),
