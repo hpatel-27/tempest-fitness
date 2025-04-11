@@ -109,7 +109,7 @@ const getExercises = async (auth) => {
     const response = await fetch(EXERCISE_API_URL, {
       method: "GET",
       headers: {
-        Authorization: auth?.token,
+        Authorization: `Bearer ${auth.token}`,
         "Content-Type": "application/json",
       },
       signal: controller.signal,
@@ -146,7 +146,7 @@ const addExercise = async (auth, exercise) => {
     const response = await fetch(EXERCISE_API_URL, {
       method: "POST",
       headers: {
-        Authorization: auth?.token,
+        Authorization: `Bearer ${auth.token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(sanitizedExercise),
@@ -185,7 +185,7 @@ const deleteExercise = async (auth, exerciseId) => {
     const response = await fetch(`${EXERCISE_API_URL}/${exerciseId}`, {
       method: "DELETE",
       headers: {
-        Authorization: auth?.token,
+        Authorization: `Bearer ${auth.token}`,
       },
       signal: controller.signal,
     });
@@ -224,7 +224,7 @@ const editExercise = async (auth, exerciseId, exercise) => {
     const response = await fetch(`${EXERCISE_API_URL}/${exerciseId}`, {
       method: "PUT",
       headers: {
-        Authorization: auth?.token,
+        Authorization: `Bearer ${auth.token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(sanitizedExercise),
