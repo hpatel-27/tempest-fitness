@@ -1,5 +1,4 @@
-// src/AuthContext.js
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import PropTypes from "prop-types";
 
@@ -8,7 +7,18 @@ const AUTH_API_URL = BASE_API_URL + "/auth/login";
 const LOGOUT_API_URL = BASE_API_URL + "/auth/logout";
 
 export const AuthProvider = ({ children }) => {
-  const [auth, setAuth] = useState(null); // null means not authenticated
+  const [auth, setAuth] = useState(() => {
+    const storedAuth = localStorage.getItem("auth");
+    return storedAuth ? JSON.parse(storedAuth) : null;
+  });
+
+  useEffect(() => {
+    if (auth) {
+      localStorage.setItem("auth", JSON.stringify(auth));
+    } else {
+      localStorage.removeItem("auth");
+    }
+  }, [auth]);
 
   const login = async (username, password) => {
     // send a POST request to the server matching a LoginRequest DTO
@@ -46,7 +56,8 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error("Error during logout:", error);
     } finally {
-      // Always clear the auth state, even if the API call fails
+      // clear the auth state, even if the API call fails
+      localStorage.removeItem("auth");
       setAuth(null);
     }
   };
