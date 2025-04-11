@@ -4,7 +4,7 @@ const WEIGHT_API_URL = BASE_API_URL + "/weights";
 // Gets all the weights that have been logged
 const getWeights = async (auth) => {
   // Check if the user is authenticated
-  if (!auth || !auth.basicAuth) {
+  if (!auth || !auth?.token) {
     throw new Error("User is not authenticated.");
   }
 
@@ -12,7 +12,7 @@ const getWeights = async (auth) => {
   const response = await fetch(WEIGHT_API_URL, {
     method: "GET",
     headers: {
-      Authorization: auth.basicAuth,
+      Authorization: `Bearer ${auth.token}`,
       "Content-Type": "application/json",
     },
   });
@@ -27,14 +27,14 @@ const getWeights = async (auth) => {
 
 const addWeight = async (auth, weight) => {
   // Check if the user is authenticated
-  if (!auth || !auth.basicAuth) {
+  if (!auth || !auth?.token) {
     throw new Error("User is not authenticated");
   }
   // Encode credentials in Base64 for Basic Authentication and post to the weight api
   const response = await fetch(WEIGHT_API_URL, {
     method: "POST",
     headers: {
-      Authorization: auth.basicAuth,
+      Authorization: `Bearer ${auth.token}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(weight),
@@ -50,7 +50,7 @@ const addWeight = async (auth, weight) => {
 
 const deleteWeight = async (auth, weightDate) => {
   // Check if the user is authenticated
-  if (!auth || !auth.basicAuth) {
+  if (!auth || !auth?.token) {
     throw new Error("User is not authenticated");
   }
 
@@ -58,7 +58,7 @@ const deleteWeight = async (auth, weightDate) => {
   const response = await fetch(`${WEIGHT_API_URL}/${weightDate}`, {
     method: "DELETE",
     headers: {
-      Authorization: auth.basicAuth,
+      Authorization: `Bearer ${auth.token}`,
     },
   });
 
@@ -71,7 +71,7 @@ const deleteWeight = async (auth, weightDate) => {
 
 const updateWeight = async (auth, weightDate, weight) => {
   // Check if the user is authenticated
-  if (!auth || !auth.basicAuth) {
+  if (!auth || !auth?.token) {
     throw new Error("User is not authenticated");
   }
 
@@ -79,7 +79,7 @@ const updateWeight = async (auth, weightDate, weight) => {
   const response = await fetch(`${WEIGHT_API_URL}/${weightDate}`, {
     method: "PUT",
     headers: {
-      Authorization: auth.basicAuth,
+      Authorization: `Bearer ${auth.token}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(weight),
