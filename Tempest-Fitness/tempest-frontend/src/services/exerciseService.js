@@ -98,7 +98,7 @@ const sanitizeExercise = (exercise) => {
 };
 
 const getExercises = async (auth) => {
-  if (!auth || !auth.basicAuth) {
+  if (!auth || !auth?.token) {
     throw new Error("User is not authenticated");
   }
 
@@ -109,7 +109,7 @@ const getExercises = async (auth) => {
     const response = await fetch(EXERCISE_API_URL, {
       method: "GET",
       headers: {
-        Authorization: auth.basicAuth,
+        Authorization: `Bearer ${auth.token}`,
         "Content-Type": "application/json",
       },
       signal: controller.signal,
@@ -132,7 +132,7 @@ const getExercises = async (auth) => {
 };
 
 const addExercise = async (auth, exercise) => {
-  if (!auth || !auth.basicAuth) {
+  if (!auth || !auth?.token) {
     throw new Error("User is not authenticated");
   }
 
@@ -146,7 +146,7 @@ const addExercise = async (auth, exercise) => {
     const response = await fetch(EXERCISE_API_URL, {
       method: "POST",
       headers: {
-        Authorization: auth.basicAuth,
+        Authorization: `Bearer ${auth.token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(sanitizedExercise),
@@ -170,7 +170,7 @@ const addExercise = async (auth, exercise) => {
 };
 
 const deleteExercise = async (auth, exerciseId) => {
-  if (!auth || !auth.basicAuth) {
+  if (!auth || !auth?.token) {
     throw new Error("User is not authenticated.");
   }
 
@@ -185,7 +185,7 @@ const deleteExercise = async (auth, exerciseId) => {
     const response = await fetch(`${EXERCISE_API_URL}/${exerciseId}`, {
       method: "DELETE",
       headers: {
-        Authorization: auth.basicAuth,
+        Authorization: `Bearer ${auth.token}`,
       },
       signal: controller.signal,
     });
@@ -206,7 +206,7 @@ const deleteExercise = async (auth, exerciseId) => {
 };
 
 const editExercise = async (auth, exerciseId, exercise) => {
-  if (!auth || !auth.basicAuth) {
+  if (!auth || !auth?.token) {
     throw new Error("User is not authenticated.");
   }
 
@@ -224,7 +224,7 @@ const editExercise = async (auth, exerciseId, exercise) => {
     const response = await fetch(`${EXERCISE_API_URL}/${exerciseId}`, {
       method: "PUT",
       headers: {
-        Authorization: auth.basicAuth,
+        Authorization: `Bearer ${auth.token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(sanitizedExercise),

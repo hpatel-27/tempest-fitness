@@ -2,7 +2,7 @@ package com.hpatel.Tempest_Fitness.controllers;
 
 import com.hpatel.Tempest_Fitness.TestConfig;
 import com.hpatel.Tempest_Fitness.common.TestUtils;
-import com.hpatel.Tempest_Fitness.dto.LoginRequest;
+import com.hpatel.Tempest_Fitness.dto.LoginRequestDTO;
 import com.hpatel.Tempest_Fitness.models.User;
 import com.hpatel.Tempest_Fitness.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -99,16 +99,16 @@ public class APIUserTest {
                         .andExpect(status().isCreated())
                         .andExpect(content().json("{\"status\":\"success\",\"message\":\"User registered successfully!\"}"));
 
-        LoginRequest loginRequest = new LoginRequest();
-        loginRequest.setUsername("TestUsername");
-        loginRequest.setPassword("TestPassword");
+        LoginRequestDTO loginRequestDTO = new LoginRequestDTO();
+        loginRequestDTO.setUsername("TestUsername");
+        loginRequestDTO.setPassword("TestPassword");
 
         mvc.perform(post("/api/v1/auth/login").contentType(MediaType.APPLICATION_JSON)
-                        .content(TestUtils.asJsonString(loginRequest)))
+                        .content(TestUtils.asJsonString(loginRequestDTO)))
                         .andExpect(status().isOk())
                         .andExpect(content().json("{\"status\":\"success\",\"message\":\"Login successful!\"}"));
 
-        LoginRequest badRequest = new LoginRequest();
+        LoginRequestDTO badRequest = new LoginRequestDTO();
         badRequest.setUsername("BadUsername");
         badRequest.setPassword("BadPassword");
 
@@ -194,11 +194,11 @@ public class APIUserTest {
                 .andExpect(content().json("{\"status\":\"success\",\"message\":\"User registered successfully!\"}"));
 
         // Login a user
-        LoginRequest loginRequest = new LoginRequest();
-        loginRequest.setUsername("testUser");
-        loginRequest.setPassword("testPass");
+        LoginRequestDTO loginRequestDTO = new LoginRequestDTO();
+        loginRequestDTO.setUsername("testUser");
+        loginRequestDTO.setPassword("testPass");
         mvc.perform(post("/api/v1/auth/login").contentType(MediaType.APPLICATION_JSON)
-                        .content(TestUtils.asJsonString(loginRequest)))
+                        .content(TestUtils.asJsonString(loginRequestDTO)))
                 .andExpect(status().isOk())
                 .andExpect(content().json("{\"status\":\"success\",\"message\":\"Login successful!\"}"));
 
