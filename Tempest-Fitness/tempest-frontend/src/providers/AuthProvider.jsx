@@ -19,7 +19,9 @@ export const AuthProvider = ({ children }) => {
       },
       body: JSON.stringify({ username, password }),
     });
-    const token = response.json().token;
+
+    const data = await response.json();
+    const token = data.token;
 
     // After getting the all-clear from the server, set the auth state
     if (response.ok) {
