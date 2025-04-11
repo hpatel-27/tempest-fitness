@@ -1,6 +1,6 @@
 # Tempest-Fitness
 
-**Tempest-Fitness** is a comprehensive fitness tracking application designed to help users monitor and manage their weight, exercises, and workouts. The application provides a user-friendly interface to store, display, and analyze fitness data, empowering users to achieve their health goals effectively. I personally have interest in fitness activities, such as weightlifting and long-distance running. I made this application to help me with my own fitness goals and I hope I can continue to work on this to introduce new features with data visualization and calorie tracking.
+**Tempest-Fitness** is a secure and responsive fitness tracking application designed to help users monitor and manage their weight, exercises, and workouts. The application provides a user-friendly interface to store, display, and analyze fitness data, empowering users to achieve their health goals effectively. I personally have interest in fitness activities, such as weightlifting and long-distance running. I made this application to help me with my own fitness goals and I hope I can continue to work on this to introduce new features with data visualization and calorie tracking.
 
 # Application Preview
 Click on the thumbnail to be redirected to the demo.
@@ -13,7 +13,7 @@ Click on the thumbnail to be redirected to the demo.
 ![Tempest ER diagram](Tempest-Fitness/docs/ERD.png)
 ## Features
 
-- **User Authentication:** Secure login and registration system to protect user data.
+- **User Authentication:** Secure login and registration system to protect user data with JWT Bearer tokens.
 - **Weight Tracking:** Record and view weight entries, sortable in ascending or descending order.
 - **Exercise Management:** Create, update, and categorize exercises tailored to individual routines.
 - **Workout Planning:** Develop and track workouts by combining various exercises.
