@@ -11,7 +11,7 @@ const getCurrentUser = async (auth) => {
   // Hit the API for the current user
   const response = await fetch(USER_API_URL, {
     headers: {
-      Authorization: auth?.token,
+      Authorization: `Bearer ${auth.token}`,
       "Content-type": "application/json",
     },
     method: "GET",
@@ -34,7 +34,7 @@ const updateUser = async (auth, updatedUser, username) => {
   // Hit the API for the current user
   const response = await fetch(`${UPDATE_API_URL}/${username}`, {
     headers: {
-      Authorization: auth?.token,
+      Authorization: `Bearer ${auth.token}`,
       "Content-type": "application/json",
     },
     method: "PUT",
